@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace BlobDefense
 {
-    public partial class Form1 : Form
+    public partial class GameDisplay : Form
     {
-        public Form1()
+        public GameDisplay()
         {
             InitializeComponent();
         }

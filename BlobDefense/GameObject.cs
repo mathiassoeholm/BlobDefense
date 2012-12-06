@@ -19,7 +19,7 @@
 
         /// <summary>
         /// Finalizes an instance of the <see cref="GameObject"/> class,
-        /// removing it from the game object list, when destructed.
+        /// removing it from the game object list.
         /// </summary>
         ~GameObject()
         {
