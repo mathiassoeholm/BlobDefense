@@ -8,6 +8,10 @@
     /// </summary>
     internal abstract class GameObject
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GameObject"/> class,
+        /// adding it to the game objects list.
+        /// </summary>
         protected GameObject()
         {
             // Initialize a new list if it is null
@@ -19,7 +23,7 @@
 
         /// <summary>
         /// Finalizes an instance of the <see cref="GameObject"/> class,
-        /// removing it from the game object list.
+        /// removing it from the game objects list.
         /// </summary>
         ~GameObject()
         {
