@@ -6,7 +6,7 @@
     /// <summary>
     /// Base class for all entities in the game.
     /// </summary>
-    internal abstract class GameObject
+    public abstract class GameObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GameObject"/> class,
@@ -16,6 +16,9 @@
         {
             // Initialize a new list if it is null
             AllGameObjects = AllGameObjects ?? new List<GameObject>();
+
+            // Load image if not set yet
+            SpriteSheet = SpriteSheet ?? Image.FromFile(@"Images\SpriteSheet.png");
 
             // Add this game object to the game objects list
             AllGameObjects.Add(this);
@@ -32,6 +35,11 @@
         }
 
         /// <summary>
+        /// Gets the sprite sheet used for all game objects
+        /// </summary>
+        public static Image SpriteSheet { get; private set; }
+
+        /// <summary>
         /// Gets a list of all the game objects created.
         /// </summary>
         public static List<GameObject> AllGameObjects { get; private set; }
@@ -44,12 +52,7 @@
         /// <summary>
         /// Gets or sets the source rectangle used on the sprite sheet.
         /// </summary>
-        protected RectangleF SpriteSheetSource { get; set; }
-
-        /// <summary>
-        /// Gets or sets the sprite sheet for this game object.
-        /// </summary>
-        protected Image SpriteSheet { get; set; }
+        public RectangleF SpriteSheetSource { get; set; }
 
         /// <summary>
         /// Displays the game object in the graphics context using pixel coordinates.
@@ -57,10 +60,10 @@
         /// <param name="context">
         /// The graphics context used to display the game object.
         /// </param>
-        public void Render(Graphics context)
+        public virtual void Render(Graphics context)
         {
             context.DrawImage(
-                image: this.SpriteSheet,
+                image: SpriteSheet,
                 x: (int)this.Position.X,
                 y: (int)this.Position.Y,
                 srcRect: this.SpriteSheetSource,
