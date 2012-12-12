@@ -1,16 +1,34 @@
 ﻿namespace BlobDefense
 {
     using System;
+    using System.Reflection;
 
-    public class Singleton<T> where T : class, new()
+    /// <summary>
+    /// http://www.sanity-free.com/132/generic_singleton_pattern_in_csharp.html
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class Singleton<T> where T : class
     {
-        protected Singleton()
+        static object SyncRoot = new object();
+        static T instance;
+        public static T Instance
         {
+            get
+            {
+                if (instance == null)
+                {
+                    lock (SyncRoot)
+                    {
+                        if (instance == null)
+                        {
+                            ConstructorInfo ci = typeof(T).GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, null, Type.EmptyTypes, null);
+                            if (ci == null) { throw new InvalidOperationException("class must contain a private constructor"); }
+                            instance = (T)ci.Invoke(null);
+                        }
+                    }
+                }
+                return instance;
+            }
         }
-
-        private static readonly Lazy<T> lazy =
-            new Lazy<T>(() => new T());
-
-        public static T Instance { get { return lazy.Value; } }
     }
 }
