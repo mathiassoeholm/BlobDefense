@@ -7,7 +7,7 @@
         public Tile()
         {
             // Add this kind of tile to the list of tiles.
-            TileEngine.Instance.AddTileType(this);
+            // TileEngine.Instance.AddTileType(this);
         }
 
         /// <summary>

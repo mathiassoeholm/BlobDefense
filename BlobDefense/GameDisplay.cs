@@ -19,10 +19,10 @@
             TileEngine.Instance.GenerateRandomMap();
 
             // Create a thread object, passing in the RenderLoop method
-            //var renderThread = new Thread(this.RenderLoop);
+            var renderThread = new Thread(this.RenderLoop);
 
             // Start the render thread
-            //renderThread.Start();
+            renderThread.Start();
         }
 
         private void RenderLoop()
@@ -34,6 +34,13 @@
                 {
                     context = BufferedGraphicsManager.Current;
                     buffer = context.Allocate(CreateGraphics(), this.DisplayRectangle);
+                }
+
+                buffer.Graphics.Clear(Color.White);
+
+                if (Keyboard.IsKeyDown(Keys.B))
+                {
+                    TileEngine.Instance.GenerateRandomMap();
                 }
 
                 //Use buffer for rendering of game

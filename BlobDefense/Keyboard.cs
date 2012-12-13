@@ -5,7 +5,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace TileEngine
+namespace BlobDefense
 {
     using System;
     using System.Runtime.InteropServices;
