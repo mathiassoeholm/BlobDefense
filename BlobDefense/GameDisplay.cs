@@ -15,7 +15,10 @@
         public GameDisplay()
         {
             this.InitializeComponent();
-            
+
+            this.Width = TileEngine.TilesX * 32 + 50;
+            this.Height = TileEngine.TilesY * 32 + 50;
+
             TileEngine.Instance.GenerateRandomMap();
 
             // Create a thread object, passing in the RenderLoop method
@@ -29,7 +32,7 @@
         {
             while (true)
             {
-                //Create buffer if it don't exist already
+                // Create buffer if it don't exist already
                 if (context == null)
                 {
                     context = BufferedGraphicsManager.Current;
@@ -43,10 +46,10 @@
                     TileEngine.Instance.GenerateRandomMap();
                 }
 
-                //Use buffer for rendering of game
+                // Use buffer for rendering of game
                 TileEngine.Instance.RenderTiles(buffer.Graphics);
 
-                //Transfer buffer to display - aka back/front buffer swaping 
+                // Transfer buffer to display - aka back/front buffer swaping 
                 buffer.Render();
             }
         }
