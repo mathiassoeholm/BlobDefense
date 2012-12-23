@@ -11,7 +11,9 @@
     {
         BufferedGraphicsContext context;
         BufferedGraphics buffer;
-        
+
+        private TileEngine tileEngine;
+
         public GameDisplay()
         {
             this.InitializeComponent();
@@ -19,7 +21,8 @@
             this.Width = TileEngine.TilesX * 32 + 50;
             this.Height = TileEngine.TilesY * 32 + 50;
 
-            TileEngine.Instance.GenerateRandomMap();
+            tileEngine = new TileEngine();
+            tileEngine.GenerateRandomMap();
 
             // Create a thread object, passing in the RenderLoop method
             var renderThread = new Thread(this.RenderLoop);
@@ -43,11 +46,11 @@
 
                 if (Keyboard.IsKeyDown(Keys.B))
                 {
-                    TileEngine.Instance.GenerateRandomMap();
+                    tileEngine.GenerateRandomMap();
                 }
 
                 // Use buffer for rendering of game
-                TileEngine.Instance.RenderTiles(buffer.Graphics);
+                tileEngine.RenderTiles(buffer.Graphics);
 
                 // Transfer buffer to display - aka back/front buffer swaping 
                 buffer.Render();

@@ -47,7 +47,7 @@
         /// <summary>
         /// Gets or sets the position of the game object in pixel coordinates.
         /// </summary>
-        public PointF Position { get; protected set; }
+        public PointF Position { get; set; }
 
         /// <summary>
         /// Gets or sets the source rectangle used on the sprite sheet.
@@ -63,11 +63,13 @@
         public virtual void Render(Graphics context)
         {
             context.DrawImage(
-                image: SpriteSheet,
-                x: (int)this.Position.X,
-                y: (int)this.Position.Y,
-                srcRect: this.SpriteSheetSource,
-                srcUnit: GraphicsUnit.Pixel);
+                SpriteSheet,
+                new Rectangle((int)this.Position.X, (int)this.Position.Y, (int)this.SpriteSheetSource.Width, (int)this.SpriteSheetSource.Height),
+                this.SpriteSheetSource.X,
+                this.SpriteSheetSource.Y,
+                this.SpriteSheetSource.Width,
+                this.SpriteSheetSource.Height,
+                GraphicsUnit.Pixel);
         }
     }
 }

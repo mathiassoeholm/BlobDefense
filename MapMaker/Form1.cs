@@ -1,0 +1,124 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace MapMaker
+{
+    using System.Threading;
+
+    using BlobDefense;
+
+    public partial class Form1 : Form
+    {
+        BufferedGraphicsContext context;
+        BufferedGraphics buffer;
+
+        private TileEngine tileEngine;
+
+        private Point currentSelection;
+
+        private Image selectionOverlay;
+
+        private bool lockSelection;
+
+        public Form1()
+        {
+            InitializeComponent();
+
+            this.tileEngine = new TileEngine();
+            this.tileEngine.GenerateRandomMap();
+
+            this.selectionOverlay = new Bitmap(@"Images/SelectionOverlay.png");
+
+            // Create a thread object, passing in the RenderLoop method
+            var renderThread = new Thread(this.RenderLoop);
+
+            // Start the render thread
+            renderThread.Start();
+        }
+
+        private void RenderLoop()
+        {
+            while (true)
+            {
+                // Create buffer if it don't exist already
+                if (context == null)
+                {
+                    context = BufferedGraphicsManager.Current;
+                    buffer = context.Allocate(CreateGraphics(), this.DisplayRectangle);
+                }
+
+                buffer.Graphics.Clear(this.BackColor);
+
+                // Use buffer for rendering of game
+                tileEngine.RenderTiles(buffer.Graphics, 1, 2);
+
+                buffer.Graphics.DrawImage(selectionOverlay, 32 + currentSelection.X * 32, 64 + currentSelection.Y * 32, 32, 32);
+
+                if (Keyboard.IsKeyDown(Keys.D1))
+                {
+                    tileEngine.ChangeTile(currentSelection.X, currentSelection.Y, 0);
+                }
+                else if (Keyboard.IsKeyDown(Keys.D2))
+                {
+                    tileEngine.ChangeTile(currentSelection.X, currentSelection.Y, 1);
+                }
+                else if (Keyboard.IsKeyDown(Keys.D3))
+                {
+                    tileEngine.ChangeTile(currentSelection.X, currentSelection.Y, 2);
+                }
+
+                if (Keyboard.IsKeyDown(Keys.Right))
+                {
+                    if (!lockSelection)
+                    {
+                        this.currentSelection = new Point(
+                            Math.Min(TileEngine.TilesX - 1, this.currentSelection.X + 1), currentSelection.Y);
+                    }
+
+                    lockSelection = true;
+                }
+                else if (Keyboard.IsKeyDown(Keys.Left))
+                {
+                    if (!lockSelection)
+                    {
+                        this.currentSelection = new Point(Math.Max(0, this.currentSelection.X - 1), currentSelection.Y);
+                    }
+
+                    lockSelection = true;
+                }
+                else if (Keyboard.IsKeyDown(Keys.Up))
+                {
+                    if (!lockSelection)
+                    {
+                        this.currentSelection = new Point(this.currentSelection.X, Math.Max(0, currentSelection.Y - 1));
+                    }
+
+                    lockSelection = true;
+                }
+                else if (Keyboard.IsKeyDown(Keys.Down))
+                {
+                    if (!lockSelection)
+                    {
+                        this.currentSelection = new Point(this.currentSelection.X, Math.Min(TileEngine.TilesY - 1, this.currentSelection.Y + 1));
+                    }
+
+                    lockSelection = true;
+                }
+                else
+                {
+                    lockSelection = false;
+                }
+
+                // Transfer buffer to display - aka back/front buffer swaping 
+                buffer.Render();
+            }
+        }
+    }
+}
