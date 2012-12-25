@@ -18,11 +18,11 @@
         {
             this.InitializeComponent();
 
-            this.Width = TileEngine.TilesX * 32 + 50;
-            this.Height = TileEngine.TilesY * 32 + 50;
+            this.Width = TileEngine.TilesX * TileEngine.TilesOnSpriteSize + 50;
+            this.Height = TileEngine.TilesY * TileEngine.TilesOnSpriteSize + 50;
 
             tileEngine = new TileEngine();
-            tileEngine.GenerateRandomMap();
+            tileEngine.LoadMapFromXml();
 
             // Create a thread object, passing in the RenderLoop method
             var renderThread = new Thread(this.RenderLoop);

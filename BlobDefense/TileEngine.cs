@@ -1,27 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BlobDefense
 {
     using System.Drawing;
     using System.IO;
-    using System.Windows.Forms;
-    using System.Xml;
-    using System.Xml.Schema;
     using System.Xml.Serialization;
+    using System.Linq;
 
     public class TileEngine 
     {
         public const int TilesX = 10;
         public const int TilesY = 10;
+
+        public const int TilesOnSpriteSheetX = 8;
+        public const int TilesOnSpriteSheetY = 8;
+
+        public const int TilesOnSpriteSize = 32;
         
         /// <summary>
-        /// Different kinds of tiles, each kind of tile is automatically added by the Tile class.
+        /// Gets the fifferent kinds of tiles, each kind of tile is automatically added by the Tile class.
         /// </summary>
-        private List<Tile> tilesTypes = new List<Tile>(); 
+        public List<Tile> tilesTypes { get; private set; } 
 
         /// <summary>
         /// A two dimensional map of tile indexes, rendered to the screen.
@@ -30,21 +30,20 @@ namespace BlobDefense
 
         public TileEngine()
         {
-            //Tile tempTile1 = new Tile();
-            //tempTile1.SpriteSheetSource = new RectangleF(0, 0, 32, 32);
-            //this.AddTileType(tempTile1);
+            this.tilesTypes = new List<Tile>(TilesOnSpriteSheetX * TilesOnSpriteSheetY);
+            
+            for (int y = 0; y < TilesOnSpriteSheetY; y++)
+            {
+                for (int x = 0; x < TilesOnSpriteSheetX; x++)
+                {
+                    // Create new tile object
+                    var tile = new Tile();
+                    tile.SpriteSheetSource = new RectangleF(x * TilesOnSpriteSize, y * TilesOnSpriteSize, TilesOnSpriteSize, TilesOnSpriteSize);
 
-            //Tile tempTile2 = new Tile();
-            //tempTile2.SpriteSheetSource = new RectangleF(32, 0, 32, 32);
-            //this.AddTileType(tempTile2);
-
-            //Tile tempTile3 = new Tile();
-            //tempTile3.SpriteSheetSource = new RectangleF(0, 0, 32, 32);
-            //this.AddTileType(tempTile3);
-
-            //this.SaveTileTypesToXml();
-
-            this.LoadTileTypesfromXml();
+                    // Add the new tile type
+                    this.AddTileType(tile);
+                }
+            }
         }
 
         public void AddTileType(Tile tile)
@@ -54,7 +53,7 @@ namespace BlobDefense
 
         public void GenerateRandomMap()
         {
-            Random random = new Random();
+            var random = new Random();
 
             for (int x = 0; x < this.tileMap.GetLength(0); x++)
             {
@@ -88,43 +87,50 @@ namespace BlobDefense
             }
         }
 
-        private void SaveTileTypesToXml()
+        public void SaveMapToXml()
         {
-            var serializer = new XmlSerializer(typeof(List<Tile>));
-
-            using (TextWriter textWriter = new StreamWriter(@"C:\BlobDefense\TileTypes.xml"))
+            // Flatten 2d in array
+            int[] map = new int[tileMap.Length];
+            int i = 0;
+            foreach (int tile in this.tileMap)
             {
-                serializer.Serialize(textWriter, this.tilesTypes);
+                map[i] = tile;
+                i++;
             }
-        }
-
-        private void LoadTileTypesfromXml()
-        {
-            var deserializer = new XmlSerializer(typeof(List<Tile>));
-
-            using (TextReader textReader = new StreamReader(@"C:\BlobDefense\TileTypes.xml"))
-            {
-                this.tilesTypes = (List<Tile>)deserializer.Deserialize(textReader);
-            }
-        }
-
-        private void SaveMapToXml()
-        {
-            var serializer = new XmlSerializer(typeof(int[,]));
+            
+            var serializer = new XmlSerializer(typeof(int[]));
 
             using (TextWriter textWriter = new StreamWriter(@"C:\BlobDefense\TileMap.xml"))
             {
-                serializer.Serialize(textWriter, this.tileMap);
+                serializer.Serialize(textWriter, map);
             }
         }
 
-        private void LoadMapFromXml()
+        public void LoadMapFromXml()
         {
-            var deserializer = new XmlSerializer(typeof(int[,]));
+            int[] map;
+            
+            var deserializer = new XmlSerializer(typeof(int[]));
 
             using (TextReader textReader = new StreamReader(@"C:\BlobDefense\TileMap.xml"))
             {
-                this.tileMap = (int[,])deserializer.Deserialize(textReader);
+                map = (int[])deserializer.Deserialize(textReader);
+            }
+
+            // Convert array to 2D array
+            int i = 0;
+            for (int y = 0; y < this.tileMap.GetLength(1); y++)
+            {
+                for (int x = 0; x < this.tileMap.GetLength(0); x++)
+                {
+                    if (i >= map.Length)
+                    {
+                        return;
+                    }
+                    
+                    this.tileMap[y, x] = map[i];
+                    i++;
+                }
             }
         }
     }

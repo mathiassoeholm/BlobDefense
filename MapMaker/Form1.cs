@@ -27,12 +27,16 @@ namespace MapMaker
 
         private bool lockSelection;
 
+        private int selectedTileType;
+
+
+
         public Form1()
         {
             InitializeComponent();
 
             this.tileEngine = new TileEngine();
-            this.tileEngine.GenerateRandomMap();
+            this.tileEngine.LoadMapFromXml();
 
             this.selectionOverlay = new Bitmap(@"Images/SelectionOverlay.png");
 
@@ -59,20 +63,9 @@ namespace MapMaker
                 // Use buffer for rendering of game
                 tileEngine.RenderTiles(buffer.Graphics, 1, 2);
 
-                buffer.Graphics.DrawImage(selectionOverlay, 32 + currentSelection.X * 32, 64 + currentSelection.Y * 32, 32, 32);
+                tileEngine.tilesTypes[selectedTileType].Render(12, 11, buffer.Graphics);
 
-                if (Keyboard.IsKeyDown(Keys.D1))
-                {
-                    tileEngine.ChangeTile(currentSelection.X, currentSelection.Y, 0);
-                }
-                else if (Keyboard.IsKeyDown(Keys.D2))
-                {
-                    tileEngine.ChangeTile(currentSelection.X, currentSelection.Y, 1);
-                }
-                else if (Keyboard.IsKeyDown(Keys.D3))
-                {
-                    tileEngine.ChangeTile(currentSelection.X, currentSelection.Y, 2);
-                }
+                buffer.Graphics.DrawImage(selectionOverlay, 32 + currentSelection.X * 32, 64 + currentSelection.Y * 32, 32, 32);
 
                 if (Keyboard.IsKeyDown(Keys.Right))
                 {
@@ -111,6 +104,42 @@ namespace MapMaker
 
                     lockSelection = true;
                 }
+                else if (Keyboard.IsKeyDown(Keys.W))
+                {
+                    if (!lockSelection)
+                    {
+                        // Change tile type
+                        this.selectedTileType++;
+                        this.selectedTileType %= tileEngine.tilesTypes.Count;
+                    }
+
+                    lockSelection = true;
+                }
+                else if (Keyboard.IsKeyDown(Keys.Q))
+                {
+                    if (!lockSelection)
+                    {
+                        // Change tile type
+                        this.selectedTileType--;
+
+                        if (this.selectedTileType < 0)
+                        {
+                            this.selectedTileType = tileEngine.tilesTypes.Count - 1;
+                        }
+                    }
+
+                    lockSelection = true;
+                }
+                else if (Keyboard.IsKeyDown(Keys.Space))
+                {
+                    if (!lockSelection)
+                    {
+                        // Assign tile
+                        tileEngine.ChangeTile(currentSelection.X, currentSelection.Y, (uint)selectedTileType);
+                    }
+
+                    lockSelection = true;
+                }
                 else
                 {
                     lockSelection = false;
@@ -119,6 +148,11 @@ namespace MapMaker
                 // Transfer buffer to display - aka back/front buffer swaping 
                 buffer.Render();
             }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.tileEngine.SaveMapToXml();
         }
     }
 }
