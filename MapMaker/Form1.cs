@@ -63,7 +63,7 @@ namespace MapMaker
                 // Use buffer for rendering of game
                 tileEngine.RenderTiles(buffer.Graphics, 1, 2);
 
-                tileEngine.tilesTypes[selectedTileType].Render(12, 11, buffer.Graphics);
+                tileEngine.tilesTypes[selectedTileType].Render(17, 11, buffer.Graphics);
 
                 buffer.Graphics.DrawImage(selectionOverlay, 32 + currentSelection.X * 32, 64 + currentSelection.Y * 32, 32, 32);
 

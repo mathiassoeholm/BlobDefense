@@ -10,8 +10,8 @@ namespace BlobDefense
 
     public class TileEngine 
     {
-        public const int TilesX = 10;
-        public const int TilesY = 10;
+        public const int TilesX = 15;
+        public const int TilesY = 15;
 
         public const int TilesOnSpriteSheetX = 8;
         public const int TilesOnSpriteSheetY = 8;

@@ -46,7 +46,7 @@
             this.mapToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(690, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(895, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -68,7 +68,7 @@
             // pictureBox1
             // 
             this.pictureBox1.ImageLocation = "C:\\Users\\Mathias\\Dropbox\\GitHub\\BlobDefense\\BlobDefense\\Images\\SpriteSheet.png";
-            this.pictureBox1.Location = new System.Drawing.Point(416, 51);
+            this.pictureBox1.Location = new System.Drawing.Point(576, 78);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(256, 256);
             this.pictureBox1.TabIndex = 2;
@@ -77,7 +77,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(413, 35);
+            this.label1.Location = new System.Drawing.Point(573, 35);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(60, 13);
             this.label1.TabIndex = 3;
@@ -95,7 +95,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(365, 328);
+            this.label3.Location = new System.Drawing.Point(529, 337);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(69, 13);
             this.label3.TabIndex = 5;
@@ -104,7 +104,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(421, 357);
+            this.label4.Location = new System.Drawing.Point(599, 374);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(251, 13);
             this.label4.TabIndex = 6;
@@ -114,7 +114,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(690, 407);
+            this.ClientSize = new System.Drawing.Size(895, 561);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
