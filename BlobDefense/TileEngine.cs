@@ -26,7 +26,7 @@ namespace BlobDefense
         /// <summary>
         /// A two dimensional map of tile indexes, rendered to the screen.
         /// </summary>
-        private int[,] tileMap = new int[TilesX, TilesY];
+        private MapNode[,] nodeMap = new MapNode[TilesX, TilesY];
 
         public TileEngine()
         {
@@ -55,11 +55,11 @@ namespace BlobDefense
         {
             var random = new Random();
 
-            for (int x = 0; x < this.tileMap.GetLength(0); x++)
+            for (int x = 0; x < this.nodeMap.GetLength(0); x++)
             {
-                for (int y = 0; y < this.tileMap.GetLength(1); y++)
+                for (int y = 0; y < this.nodeMap.GetLength(1); y++)
                 {
-                    this.tileMap[x, y] = random.Next(0, this.tilesTypes.Count);
+                    this.nodeMap[x, y] = new MapNode { TileType = random.Next(0, this.tilesTypes.Count) };
                 }
             }
         }
@@ -71,34 +71,44 @@ namespace BlobDefense
                 return;
             }
             
-            tileMap[y, x] = (int)tileType;
+            this.nodeMap[y, x].TileType = (int)tileType;
             
         }
 
         public void RenderTiles(Graphics context, int offsetLeft = 0, int offsetTop = 0)
         {
-            for (int x = 0; x < this.tileMap.GetLength(0); x++)
+            for (int x = 0; x < this.nodeMap.GetLength(0); x++)
             {
-                for (int y = 0; y < this.tileMap.GetLength(1); y++)
+                for (int y = 0; y < this.nodeMap.GetLength(1); y++)
                 {
                     // Render the tile
-                    this.tilesTypes[this.tileMap[y, x]].Render(x + offsetLeft, y + offsetTop, context);
+                    this.tilesTypes[this.nodeMap[y, x].TileType].Render(x + offsetLeft, y + offsetTop, context);
                 }
             }
         }
 
         public void SaveMapToXml()
         {
-            // Flatten 2d array
-            int[] map = new int[tileMap.Length];
-            int i = 0;
-            foreach (int tile in this.tileMap)
+            // Set node positions 
+            for (int y = 0; y < this.nodeMap.GetLength(1); y++)
             {
-                map[i] = tile;
-                i++;
+                for (int x = 0; x < this.nodeMap.GetLength(0); x++)
+                {
+                    this.nodeMap[x, y].X = (x * TilesOnSpriteSize) + (TilesOnSpriteSize / 2);
+                    this.nodeMap[x, y].Y = (y * TilesOnSpriteSize) + (TilesOnSpriteSize / 2);
+                }
             }
             
-            var serializer = new XmlSerializer(typeof(int[]));
+            // Flatten 2d array
+            var map = new MapNode[this.nodeMap.Length];
+            int i = 0;
+            foreach (MapNode node in this.nodeMap)
+            {
+                map[i] = node;
+                i++;
+            }
+
+            var serializer = new XmlSerializer(typeof(MapNode[]));
 
             using (TextWriter textWriter = new StreamWriter(@"C:\BlobDefense\TileMap.xml"))
             {
@@ -108,27 +118,27 @@ namespace BlobDefense
 
         public void LoadMapFromXml()
         {
-            int[] map;
-            
-            var deserializer = new XmlSerializer(typeof(int[]));
+            MapNode[] map;
+
+            var deserializer = new XmlSerializer(typeof(MapNode[]));
 
             using (TextReader textReader = new StreamReader(@"C:\BlobDefense\TileMap.xml"))
             {
-                map = (int[])deserializer.Deserialize(textReader);
+                map = (MapNode[])deserializer.Deserialize(textReader);
             }
 
             // Convert array to 2D array
             int i = 0;
-            for (int y = 0; y < this.tileMap.GetLength(1); y++)
+            for (int y = 0; y < this.nodeMap.GetLength(1); y++)
             {
-                for (int x = 0; x < this.tileMap.GetLength(0); x++)
+                for (int x = 0; x < this.nodeMap.GetLength(0); x++)
                 {
                     if (i >= map.Length)
                     {
                         return;
                     }
                     
-                    this.tileMap[y, x] = map[i];
+                    this.nodeMap[y, x] = map[i];
                     i++;
                 }
             }

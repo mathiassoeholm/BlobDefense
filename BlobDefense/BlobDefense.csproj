@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enemy.cs" />
+    <Compile Include="MapNode.cs" />
     <Compile Include="MovingGameObject.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="GameDisplay.cs">
@@ -91,6 +92,12 @@
     <Content Include="Images\SpriteSheet.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AStar\SpatialAStar\SpatialAStar.csproj">
+      <Project>{f1af3392-22d1-4b03-9c3b-c10da9b1bccd}</Project>
+      <Name>SpatialAStar</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
