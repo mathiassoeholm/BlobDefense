@@ -89,7 +89,7 @@ namespace BlobDefense
 
         public void SaveMapToXml()
         {
-            // Flatten 2d in array
+            // Flatten 2d array
             int[] map = new int[tileMap.Length];
             int i = 0;
             foreach (int tile in this.tileMap)
