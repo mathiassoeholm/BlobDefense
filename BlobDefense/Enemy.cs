@@ -6,27 +6,66 @@ using System.Threading.Tasks;
 
 namespace BlobDefense
 {
-    internal abstract class Enemy : MovingGameObject, IUpdateBehaviour
+    internal abstract class Enemy : MovingGameObject, IUpdateBehaviour, IAnimated
     {
-        int targetNode;
+        private int targetNode;
 
         protected Enemy()
         {
             this.targetNode = 1;
-            Position = GameDisplay.testPath[0].Position;
-            CurrentTarget = GameDisplay.testPath[this.targetNode].Position;
+            this.Position = GameDisplay.testPath[0].Position;
+            this.CurrentTarget = GameDisplay.testPath[this.targetNode].Position;
         }
 
-        protected override void OnTargetHit()
+        public Animation CurrentAnimation { get; private set; }
+
+        protected Animation WalkRightAnimation { get; set; }
+
+        protected Animation WalkLeftAnimation { get; set; }
+
+        protected Animation WalkUpAnimation { get; set; }
+
+        protected Animation WalkDownAnimation { get; set; }
+
+        public void RunAnimation()
         {
-            this.targetNode++;
-            CurrentTarget = GameDisplay.testPath[this.targetNode].Position;
+            this.CurrentAnimation.RunAnimation();
         }
 
         // Call move each update
+        protected override void OnTargetHit()
+        {
+            this.targetNode++;
+            this.CurrentTarget = GameDisplay.testPath[this.targetNode].Position;
+            this.AssignCurrentAnimation();
+        }
+
         public void Update()
         {
             this.Move();
+        }
+
+        /// <summary>
+        /// Assigns the current animation based on relative position to the target.
+        /// </summary>
+        protected void AssignCurrentAnimation()
+        {
+            if (this.CurrentTarget.X > this.Position.X)
+            {
+                this.CurrentAnimation = this.WalkRightAnimation;
+            }
+            else if (this.CurrentTarget.X < this.Position.X)
+            {
+                this.CurrentAnimation = this.WalkLeftAnimation;
+            }
+            else if (this.CurrentTarget.Y > this.Position.Y)
+            {
+                this.CurrentAnimation = this.WalkDownAnimation;
+            }
+            else
+            {
+                this.CurrentAnimation = this.WalkUpAnimation;
+            }
         }
     }
 }

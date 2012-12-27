@@ -2,6 +2,8 @@
 {
     internal interface IAnimated
     {
-        void RunAnimation(Animation animation);
+        Animation CurrentAnimation { get; }
+        
+        void RunAnimation();
     }
 }

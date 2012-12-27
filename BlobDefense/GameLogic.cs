@@ -33,6 +33,12 @@ namespace BlobDefense
                     (gameObject as IUpdateBehaviour).Update();
                 }
 
+                // Run animations
+                if (gameObject is IAnimated)
+                {
+                    (gameObject as IAnimated).RunAnimation();
+                }
+
                 // Don't render tiles, they are handled elsewhere
                 if (!(gameObject is Tile))
                 {
