@@ -21,15 +21,16 @@ namespace BlobDefense
         /// <summary>
         /// Gets the fifferent kinds of tiles, each kind of tile is automatically added by the Tile class.
         /// </summary>
-        public List<Tile> tilesTypes { get; private set; } 
+        public List<Tile> tilesTypes { get; private set; }
 
         /// <summary>
         /// A two dimensional map of tile indexes, rendered to the screen.
         /// </summary>
-        private MapNode[,] nodeMap = new MapNode[TilesX, TilesY];
+        public MapNode[,] NodeMap { get; private set; }
 
         public TileEngine()
         {
+            this.NodeMap = new MapNode[TilesX, TilesY];
             this.tilesTypes = new List<Tile>(TilesOnSpriteSheetX * TilesOnSpriteSheetY);
             
             for (int y = 0; y < TilesOnSpriteSheetY; y++)
@@ -55,11 +56,11 @@ namespace BlobDefense
         {
             var random = new Random();
 
-            for (int x = 0; x < this.nodeMap.GetLength(0); x++)
+            for (int x = 0; x < this.NodeMap.GetLength(0); x++)
             {
-                for (int y = 0; y < this.nodeMap.GetLength(1); y++)
+                for (int y = 0; y < this.NodeMap.GetLength(1); y++)
                 {
-                    this.nodeMap[x, y] = new MapNode { TileType = random.Next(0, this.tilesTypes.Count) };
+                    this.NodeMap[x, y] = new MapNode { TileType = random.Next(0, this.tilesTypes.Count) };
                 }
             }
         }
@@ -71,38 +72,44 @@ namespace BlobDefense
                 return;
             }
             
-            this.nodeMap[y, x].TileType = (int)tileType;
+            this.NodeMap[y, x].TileType = (int)tileType;
             
         }
 
         public void RenderTiles(Graphics context, int offsetLeft = 0, int offsetTop = 0)
         {
-            for (int x = 0; x < this.nodeMap.GetLength(0); x++)
+            for (int x = 0; x < this.NodeMap.GetLength(0); x++)
             {
-                for (int y = 0; y < this.nodeMap.GetLength(1); y++)
+                for (int y = 0; y < this.NodeMap.GetLength(1); y++)
                 {
                     // Render the tile
-                    this.tilesTypes[this.nodeMap[y, x].TileType].Render(x + offsetLeft, y + offsetTop, context);
+                    this.tilesTypes[this.NodeMap[y, x].TileType].Render(x + offsetLeft, y + offsetTop, context);
                 }
             }
         }
 
         public void SaveMapToXml()
         {
-            // Set node positions 
-            for (int y = 0; y < this.nodeMap.GetLength(1); y++)
+            // If the file does not exist, create one
+            if (!Directory.Exists(@"C:\BlobDefense"))
             {
-                for (int x = 0; x < this.nodeMap.GetLength(0); x++)
+                Directory.CreateDirectory(@"C:\BlobDefense");
+            }
+            
+            // Set node positions 
+            for (int y = 0; y < this.NodeMap.GetLength(1); y++)
+            {
+                for (int x = 0; x < this.NodeMap.GetLength(0); x++)
                 {
-                    this.nodeMap[x, y].X = (x * TilesOnSpriteSize) + (TilesOnSpriteSize / 2);
-                    this.nodeMap[x, y].Y = (y * TilesOnSpriteSize) + (TilesOnSpriteSize / 2);
+                    this.NodeMap[x, y].X = (x * TilesOnSpriteSize) + (TilesOnSpriteSize / 2);
+                    this.NodeMap[x, y].Y = (y * TilesOnSpriteSize) + (TilesOnSpriteSize / 2);
                 }
             }
             
             // Flatten 2d array
-            var map = new MapNode[this.nodeMap.Length];
+            var map = new MapNode[this.NodeMap.Length];
             int i = 0;
-            foreach (MapNode node in this.nodeMap)
+            foreach (MapNode node in this.NodeMap)
             {
                 map[i] = node;
                 i++;
@@ -118,6 +125,13 @@ namespace BlobDefense
 
         public void LoadMapFromXml()
         {
+            // If the file does not exist, generate a random map and save it
+            if (!File.Exists(@"C:\BlobDefense\TileMap.xml"))
+            {
+                this.GenerateRandomMap();
+                this.SaveMapToXml();
+            }
+
             MapNode[] map;
 
             var deserializer = new XmlSerializer(typeof(MapNode[]));
@@ -129,16 +143,16 @@ namespace BlobDefense
 
             // Convert array to 2D array
             int i = 0;
-            for (int y = 0; y < this.nodeMap.GetLength(1); y++)
+            for (int y = 0; y < this.NodeMap.GetLength(1); y++)
             {
-                for (int x = 0; x < this.nodeMap.GetLength(0); x++)
+                for (int x = 0; x < this.NodeMap.GetLength(0); x++)
                 {
                     if (i >= map.Length)
                     {
                         return;
                     }
                     
-                    this.nodeMap[y, x] = map[i];
+                    this.NodeMap[y, x] = map[i];
                     i++;
                 }
             }

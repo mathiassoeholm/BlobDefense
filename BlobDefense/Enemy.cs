@@ -6,14 +6,27 @@ using System.Threading.Tasks;
 
 namespace BlobDefense
 {
-    internal class Enemy : MovingGameObject
+    internal abstract class Enemy : MovingGameObject, IUpdateBehaviour
     {
-        private int targetNode;
-        
+        int targetNode;
+
+        protected Enemy()
+        {
+            this.targetNode = 1;
+            Position = GameDisplay.testPath[0].Position;
+            CurrentTarget = GameDisplay.testPath[this.targetNode].Position;
+        }
+
         protected override void OnTargetHit()
         {
-            // TODO: Select new target in the path list, and set targetNode
-            throw new NotImplementedException();
+            this.targetNode++;
+            CurrentTarget = GameDisplay.testPath[this.targetNode].Position;
+        }
+
+        // Call move each update
+        public void Update()
+        {
+            this.Move();
         }
     }
 }

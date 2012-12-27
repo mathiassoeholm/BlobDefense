@@ -19,22 +19,16 @@ namespace Extensions
         /// <returns>
         /// The normalized point.
         /// </returns>
-        public static PointF Normalize(this PointF pointF)
+        public static PointF Normalized(this PointF pointF)
         {
-            var distance = (float)Math.Sqrt((pointF.X * pointF.X) + (pointF.Y * pointF.Y));
+            // Do nothing if it is a zero vector
+            if(pointF.X == 0 && pointF.Y == 0)
+            {
+                return pointF;
+            }
+            
+            float distance = (float)Math.Sqrt((pointF.X * pointF.X) + (pointF.Y * pointF.Y));
             return new PointF(pointF.X / distance, pointF.Y / distance);
-        }
-
-        /// <summary>
-        /// Normalizes a point, as if it was a vector.
-        /// </summary>
-        /// <param name="pointF">
-        /// The point to normalize.
-        /// </param>
-        public static void Normalized(this PointF pointF)
-        {
-            var distance = (float)Math.Sqrt((pointF.X * pointF.X) + (pointF.Y * pointF.Y));
-            pointF = new PointF(pointF.X / distance, pointF.Y / distance);
         }
 
         /// <summary>
@@ -46,10 +40,10 @@ namespace Extensions
         /// <param name="magnitude">
         /// The new magnitude/length.
         /// </param>
-        public static void SetMagnitude(this PointF pointF, float magnitude)
+        public static void SetMagnitude(ref PointF pointF, float magnitude)
         {
-            pointF.Normalize();
-            pointF.SetXY(pointF.X * magnitude, pointF.X * magnitude);
+            pointF = pointF.Normalized();
+            SetXY(ref pointF, pointF.X * magnitude, pointF.Y * magnitude);
         }
         
         /// <summary>
@@ -61,9 +55,9 @@ namespace Extensions
         /// <param name="otherPoint">
         /// The point to add.
         /// </param>
-        public static void Add(this PointF pointF, PointF otherPoint)
+        public static void Add(ref PointF pointF, PointF otherPoint)
         {
-            pointF.SetXY(pointF.X + otherPoint.X, pointF.Y + otherPoint.Y);
+            SetXY(ref pointF, pointF.X + otherPoint.X, pointF.Y + otherPoint.Y);
         }
         
         /// <summary>
@@ -75,7 +69,7 @@ namespace Extensions
         /// <param name="x">
         /// The new x coordinate.
         /// </param>
-        public static void SetX(this PointF pointF, float x)
+        public static void SetX(ref PointF pointF, float x)
         {
             pointF = new PointF(x, pointF.Y);
         }
@@ -89,7 +83,7 @@ namespace Extensions
         /// <param name="y">
         /// The new y coordinate.
         /// </param>
-        public static void SetY(this PointF pointF, float y)
+        public static void SetY(ref PointF pointF, float y)
         {
             pointF = new PointF(pointF.Y, y);
         }
@@ -106,7 +100,7 @@ namespace Extensions
         /// <param name="y">
         /// The new y coordinate.
         /// </param>
-        public static void SetXY(this PointF pointF, float x, float y)
+        public static void SetXY(ref PointF pointF, float x, float y)
         {
             pointF = new PointF(x, y);
         }

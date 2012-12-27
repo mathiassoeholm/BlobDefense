@@ -25,16 +25,6 @@
         }
 
         /// <summary>
-        /// Finalizes an instance of the <see cref="GameObject"/> class,
-        /// removing it from the game objects list.
-        /// </summary>
-        ~GameObject()
-        {
-            // Remove this game object from the game objects list
-            AllGameObjects.Remove(this);
-        }
-
-        /// <summary>
         /// Gets the sprite sheet used for all game objects
         /// </summary>
         public static Image SpriteSheet { get; private set; }

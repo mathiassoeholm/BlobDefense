@@ -12,34 +12,40 @@ namespace BlobDefense
     internal abstract class MovingGameObject : GameObject
     {
         /// <summary>
-        /// The current target this game object is moving towards.
+        /// Gets or sets the current target this game object is moving towards.
         /// </summary>
-        private PointF currentTarget;
+        protected PointF CurrentTarget { get; set; }
 
         /// <summary>
         /// Gets or sets the move speed.
         /// </summary>
         protected float MoveSpeed { get; set; }
 
+        /// <summary>
         /// Moves the game object towards the current target.
         /// </summary>
         public void Move()
         {
             // Get the move direction
-            var moveDirection = new PointF(this.currentTarget.X - this.Position.X, this.currentTarget.Y - this.Position.Y);
+            var moveDirection = new PointF(this.CurrentTarget.X - this.Position.X, this.CurrentTarget.Y - this.Position.Y);
 
             // Set length of the move direction based on the move speed
-            moveDirection.SetMagnitude(this.MoveSpeed * Time.DeltaTime);
-            
+            ExtensionMethods.SetMagnitude(ref moveDirection, this.MoveSpeed * Time.DeltaTime);
+
+            PointF newPosition = this.Position;
+            ExtensionMethods.Add(ref newPosition, moveDirection);
+
             // Check if we pass the target in any axis
-            if ((this.Position.X > this.currentTarget.X && this.Position.X + moveDirection.X < this.currentTarget.X)
-                || (this.Position.X < this.currentTarget.X && this.Position.X + moveDirection.X > this.currentTarget.X)
-                || (this.Position.Y < this.currentTarget.Y && this.Position.Y + moveDirection.Y > this.currentTarget.Y)
-                || (this.Position.Y > this.currentTarget.Y && this.Position.Y + moveDirection.Y > this.currentTarget.Y))
+            if ((this.Position.X > this.CurrentTarget.X && newPosition.X < this.CurrentTarget.X)
+                || (this.Position.X < this.CurrentTarget.X && newPosition.X > this.CurrentTarget.X)
+                || (this.Position.Y < this.CurrentTarget.Y && newPosition.Y > this.CurrentTarget.Y)
+                || (this.Position.Y > this.CurrentTarget.Y && newPosition.Y < this.CurrentTarget.Y)
+                || (moveDirection.X == 0 && moveDirection.Y == 0))
             {
                 
                 // Set position to target
-                this.Position = this.currentTarget;
+                
+                //this.Position = this.CurrentTarget;
 
                 // Perform on hit action
                 this.OnTargetHit();
@@ -47,8 +53,8 @@ namespace BlobDefense
                 return;
             }
 
-            // Add the movement to our position
-            this.Position.Add(moveDirection);
+            // Move our positon
+            this.Position = newPosition;
         }
 
         protected abstract void OnTargetHit();

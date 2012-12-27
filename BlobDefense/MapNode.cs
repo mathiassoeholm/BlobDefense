@@ -6,15 +6,46 @@ using System.Threading.Tasks;
 
 namespace BlobDefense
 {
-    using SettlersEngine;
+    using System.Drawing;
 
-    public class MapNode : IPathNode<Object>
+
+    public class MapNode
     {
+        public MapNode()
+        {
+            this.Position = new Point();
+        }
 
         public int TileType { get; set; }
-        public int X { get; set; }
-        public int Y { get; set; }
+
         public bool IsWall { get; set; }
+
+        public int X
+        {
+            get
+            {
+                return this.Position.X;
+            }
+            set
+            {
+                this.Position = new Point(value, this.Position.Y);
+            }
+        }
+
+        public int Y
+        {
+            get
+            {
+                return this.Position.Y;
+            }
+            set
+            {
+                this.Position = new Point(this.Position.X, value);
+            }
+        }
+
+        public Point Position { get; set; }
+
 
         public bool IsWalkable(Object unused)
         {

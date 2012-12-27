@@ -5,8 +5,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlobDefense", "BlobDefense.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapMaker", "..\MapMaker\MapMaker.csproj", "{01CC6B63-9D65-4C3F-974E-FD1D8B1F2289}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpatialAStar", "..\AStar\SpatialAStar\SpatialAStar.csproj", "{F1AF3392-22D1-4B03-9C3B-C10DA9B1BCCD}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,16 +35,6 @@ Global
 		{01CC6B63-9D65-4C3F-974E-FD1D8B1F2289}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{01CC6B63-9D65-4C3F-974E-FD1D8B1F2289}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{01CC6B63-9D65-4C3F-974E-FD1D8B1F2289}.Release|x86.ActiveCfg = Release|Any CPU
-		{F1AF3392-22D1-4B03-9C3B-C10DA9B1BCCD}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{F1AF3392-22D1-4B03-9C3B-C10DA9B1BCCD}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{F1AF3392-22D1-4B03-9C3B-C10DA9B1BCCD}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{F1AF3392-22D1-4B03-9C3B-C10DA9B1BCCD}.Debug|x86.ActiveCfg = Debug|x86
-		{F1AF3392-22D1-4B03-9C3B-C10DA9B1BCCD}.Debug|x86.Build.0 = Debug|x86
-		{F1AF3392-22D1-4B03-9C3B-C10DA9B1BCCD}.Release|Any CPU.ActiveCfg = Release|x86
-		{F1AF3392-22D1-4B03-9C3B-C10DA9B1BCCD}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{F1AF3392-22D1-4B03-9C3B-C10DA9B1BCCD}.Release|Mixed Platforms.Build.0 = Release|x86
-		{F1AF3392-22D1-4B03-9C3B-C10DA9B1BCCD}.Release|x86.ActiveCfg = Release|x86
-		{F1AF3392-22D1-4B03-9C3B-C10DA9B1BCCD}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
