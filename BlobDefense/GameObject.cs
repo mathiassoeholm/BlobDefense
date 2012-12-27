@@ -50,16 +50,22 @@
         /// <param name="context">
         /// The graphics context used to display the game object.
         /// </param>
-        public virtual void Render(Graphics context)
+        /// <param name="centerPivot">
+        /// A value indicating whether to render from the middle or from the top left.
+        /// </param>
+        public virtual void Render(Graphics context, bool centerPivot = false)
         {
             context.DrawImage(
-                SpriteSheet,
-                new Rectangle((int)this.Position.X, (int)this.Position.Y, (int)this.SpriteSheetSource.Width, (int)this.SpriteSheetSource.Height),
-                this.SpriteSheetSource.X,
-                this.SpriteSheetSource.Y,
-                this.SpriteSheetSource.Width,
-                this.SpriteSheetSource.Height,
-                GraphicsUnit.Pixel);
+                image: SpriteSheet,
+                destRect: new Rectangle((int)(centerPivot ? this.Position.X - (this.SpriteSheetSource.Width / 2) : this.Position.X),
+                    (int)(centerPivot ? this.Position.Y - (this.SpriteSheetSource.Height / 2) : this.Position.Y),
+                    (int)this.SpriteSheetSource.Width,
+                    (int)this.SpriteSheetSource.Height),
+                srcX: this.SpriteSheetSource.X,
+                srcY: this.SpriteSheetSource.Y,
+                srcWidth: this.SpriteSheetSource.Width,
+                srcHeight: this.SpriteSheetSource.Height,
+                srcUnit: GraphicsUnit.Pixel);
         }
     }
 }

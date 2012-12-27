@@ -12,7 +12,7 @@ namespace BlobDefense
     {
         public StandardEnemy()
         {
-            SpriteSheetSource = new RectangleF(32, 0, 32, 32);
+            SpriteSheetSource = new RectangleF(32, 32, 32, 32);
             MoveSpeed = 0.25f;
         }
     }

@@ -8,7 +8,7 @@ namespace BlobDefense
     using System.Xml.Serialization;
     using System.Linq;
 
-    public class TileEngine 
+    public class TileEngine : Singleton<TileEngine>
     {
         public const int TilesX = 15;
         public const int TilesY = 15;
@@ -28,11 +28,14 @@ namespace BlobDefense
         /// </summary>
         public MapNode[,] NodeMap { get; private set; }
 
-        public TileEngine()
+        /// <summary>
+        /// Prevents a default instance of the <see cref="TileEngine"/> class from being created.
+        /// </summary>
+        private TileEngine()
         {
             this.NodeMap = new MapNode[TilesX, TilesY];
             this.tilesTypes = new List<Tile>(TilesOnSpriteSheetX * TilesOnSpriteSheetY);
-            
+
             for (int y = 0; y < TilesOnSpriteSheetY; y++)
             {
                 for (int x = 0; x < TilesOnSpriteSheetX; x++)

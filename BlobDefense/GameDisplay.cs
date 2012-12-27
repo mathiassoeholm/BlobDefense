@@ -12,9 +12,18 @@
     public partial class GameDisplay : Form
     {
         BufferedGraphicsContext context;
-        BufferedGraphics buffer;
 
-        private TileEngine tileEngine;
+        private BufferedGraphics buffer;
+
+        public static GameDisplay Instance { get; private set; }
+
+        public static BufferedGraphics Buffer
+        {
+            get
+            {
+                return Instance.buffer;
+            }
+        }
 
         public static List<MapNode> testPath;
 
@@ -24,12 +33,13 @@
         {
             this.InitializeComponent();
 
+            Instance = this;
+
+            TileEngine.Instance.LoadMapFromXml();
+
             // Temp stuff start -------
             this.Width = TileEngine.TilesX * TileEngine.TilesOnSpriteSize + 50;
             this.Height = TileEngine.TilesY * TileEngine.TilesOnSpriteSize + 50;
-
-            tileEngine = new TileEngine();
-            tileEngine.LoadMapFromXml();
 
             this.SetUpTestPath();
 
@@ -37,14 +47,14 @@
 
             // Temp stuff end -------
 
-            // Create a thread object, passing in the RenderLoop method
-            var renderThread = new Thread(this.RenderLoop);
+            // Create a thread object, passing in the MainLoop method
+            var gameThread = new Thread(this.MainLoop);
 
             // Start the render thread
-            renderThread.Start();
+            gameThread.Start();
         }
 
-        private void RenderLoop()
+        private void MainLoop()
         {
             while (true)
             {
@@ -52,40 +62,23 @@
                 if (context == null)
                 {
                     context = BufferedGraphicsManager.Current;
-                    buffer = context.Allocate(CreateGraphics(), this.DisplayRectangle);
+                    this.buffer = context.Allocate(CreateGraphics(), this.DisplayRectangle);
                 }
 
-                buffer.Graphics.Clear(Color.White);
+                // Clear the screen with the forms back color
+                this.buffer.Graphics.Clear(this.BackColor);
 
-                if (Keyboard.IsKeyDown(Keys.B))
-                {
-                    tileEngine.GenerateRandomMap();
-                }
+                // Buffer the map tiles
+                TileEngine.Instance.RenderTiles(this.buffer.Graphics);
 
-
-                // Use buffer for rendering of game
-                tileEngine.RenderTiles(buffer.Graphics);
-
-                // Render all gameobjects
-                foreach (GameObject gameObject in GameObject.AllGameObjects)
-                {
-                    // Update behaviours
-                    if (gameObject is IUpdateBehaviour)
-                    {
-                        (gameObject as IUpdateBehaviour).Update();
-                    }
-
-                    // Don't render tiles, they are handled elsewhere
-                    if (!(gameObject is Tile))
-                    {
-                        gameObject.Render(buffer.Graphics);
-                    }
-                }
-
+                // Draw the enemies path
                 this.buffer.Graphics.DrawLines(new Pen(Color.Red, 5), testPath.Select(mapNode => mapNode.Position).ToArray());
 
-                // Transfer buffer to display - aka back/front buffer swaping 
-                buffer.Render();
+                // Run logic
+                GameLogic.Instance.RunLogic();
+
+                // Transfer buffer to display - aka back/front buffer swapping 
+                this.buffer.Render();
             }
         }
 
@@ -93,15 +86,15 @@
         {
             testPath = new List<MapNode>
                 {
-                    tileEngine.NodeMap[0, TileEngine.TilesY - 1],
-                    tileEngine.NodeMap[1, TileEngine.TilesY - 1],
-                    tileEngine.NodeMap[1, TileEngine.TilesY - 2],
-                    tileEngine.NodeMap[2, TileEngine.TilesY - 2],
-                    tileEngine.NodeMap[2, TileEngine.TilesY - 3],
-                    tileEngine.NodeMap[3, TileEngine.TilesY - 3],
-                    tileEngine.NodeMap[3, TileEngine.TilesY - 4],
-                    tileEngine.NodeMap[4, TileEngine.TilesY - 4],
-                    tileEngine.NodeMap[4, TileEngine.TilesY - 5],
+                    TileEngine.Instance.NodeMap[0, TileEngine.TilesY - 1],
+                    TileEngine.Instance.NodeMap[1, TileEngine.TilesY - 1],
+                    TileEngine.Instance.NodeMap[1, TileEngine.TilesY - 2],
+                    TileEngine.Instance.NodeMap[2, TileEngine.TilesY - 2],
+                    TileEngine.Instance.NodeMap[2, TileEngine.TilesY - 3],
+                    TileEngine.Instance.NodeMap[3, TileEngine.TilesY - 3],
+                    TileEngine.Instance.NodeMap[3, TileEngine.TilesY - 4],
+                    TileEngine.Instance.NodeMap[4, TileEngine.TilesY - 4],
+                    TileEngine.Instance.NodeMap[4, TileEngine.TilesY - 5],
 
                 };
         }

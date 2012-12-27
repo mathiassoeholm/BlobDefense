@@ -44,7 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Animation.cs" />
     <Compile Include="Enemy.cs" />
+    <Compile Include="GameLogic.cs" />
     <Compile Include="IUpdateBehaviour.cs" />
     <Compile Include="MapNode.cs" />
     <Compile Include="MovingGameObject.cs" />

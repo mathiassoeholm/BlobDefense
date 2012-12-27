@@ -19,8 +19,6 @@ namespace MapMaker
         BufferedGraphicsContext context;
         BufferedGraphics buffer;
 
-        private TileEngine tileEngine;
-
         private Point currentSelection;
 
         private Image selectionOverlay;
@@ -35,8 +33,7 @@ namespace MapMaker
         {
             InitializeComponent();
 
-            this.tileEngine = new TileEngine();
-            this.tileEngine.LoadMapFromXml();
+            TileEngine.Instance.LoadMapFromXml();
 
             this.selectionOverlay = new Bitmap(@"Images/SelectionOverlay.png");
 
@@ -61,9 +58,9 @@ namespace MapMaker
                 buffer.Graphics.Clear(this.BackColor);
 
                 // Use buffer for rendering of game
-                tileEngine.RenderTiles(buffer.Graphics, 1, 2);
+                TileEngine.Instance.RenderTiles(buffer.Graphics, 1, 2);
 
-                tileEngine.tilesTypes[selectedTileType].Render(17, 11, buffer.Graphics);
+                TileEngine.Instance.tilesTypes[selectedTileType].Render(17, 11, buffer.Graphics);
 
                 buffer.Graphics.DrawImage(selectionOverlay, 32 + currentSelection.X * 32, 64 + currentSelection.Y * 32, 32, 32);
 
@@ -110,7 +107,7 @@ namespace MapMaker
                     {
                         // Change tile type
                         this.selectedTileType++;
-                        this.selectedTileType %= tileEngine.tilesTypes.Count;
+                        this.selectedTileType %= TileEngine.Instance.tilesTypes.Count;
                     }
 
                     lockSelection = true;
@@ -124,7 +121,7 @@ namespace MapMaker
 
                         if (this.selectedTileType < 0)
                         {
-                            this.selectedTileType = tileEngine.tilesTypes.Count - 1;
+                            this.selectedTileType = TileEngine.Instance.tilesTypes.Count - 1;
                         }
                     }
 
@@ -135,7 +132,7 @@ namespace MapMaker
                     if (!lockSelection)
                     {
                         // Assign tile
-                        tileEngine.ChangeTile(currentSelection.X, currentSelection.Y, (uint)selectedTileType);
+                        TileEngine.Instance.ChangeTile(currentSelection.X, currentSelection.Y, (uint)selectedTileType);
                     }
 
                     lockSelection = true;
@@ -152,7 +149,7 @@ namespace MapMaker
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.tileEngine.SaveMapToXml();
+            TileEngine.Instance.SaveMapToXml();
         }
     }
 }

@@ -42,10 +42,8 @@ namespace BlobDefense
                 || (this.Position.Y > this.CurrentTarget.Y && newPosition.Y < this.CurrentTarget.Y)
                 || (moveDirection.X == 0 && moveDirection.Y == 0))
             {
-                
                 // Set position to target
-                
-                //this.Position = this.CurrentTarget;
+                this.Position = this.CurrentTarget;
 
                 // Perform on hit action
                 this.OnTargetHit();
