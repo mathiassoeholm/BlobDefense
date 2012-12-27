@@ -6,15 +6,17 @@ using System.Threading.Tasks;
 
 namespace BlobDefense
 {
-    public class Time
+    public static class Time
     {
-        // TODO: Implement delta time
-        public static float DeltaTime
+        private static DateTime lastFrameTime;
+
+        public static float DeltaTime { get; set; }
+        
+        public static void SetDeltaTime()
         {
-            get
-            {
-                return 1;
-            }
+            DeltaTime = (float)DateTime.Now.Subtract(lastFrameTime).TotalSeconds;
+
+            lastFrameTime = DateTime.Now;
         }
     }
 }
