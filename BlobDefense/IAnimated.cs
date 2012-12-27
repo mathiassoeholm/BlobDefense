@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BlobDefense
+﻿namespace BlobDefense
 {
-    interface IAnimated
+    internal interface IAnimated
     {
-        void Animate();
+        void RunAnimation(Animation animation);
     }
 }
