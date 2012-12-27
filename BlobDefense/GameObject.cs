@@ -17,6 +17,9 @@
             // Initialize a new list if it is null
             AllGameObjects = AllGameObjects ?? new List<GameObject>();
 
+            // Initialize a new queue if it is null
+            GameObjectsToDestroy = GameObjectsToDestroy ?? new Queue<GameObject>();
+
             // Load image if not set yet
             SpriteSheet = SpriteSheet ?? Image.FromFile(@"Images\SpriteSheet.png");
 
@@ -35,6 +38,11 @@
         public static List<GameObject> AllGameObjects { get; private set; }
 
         /// <summary>
+        /// Gets a queue containing game objects which will be removed from the game.
+        /// </summary>
+        public static Queue<GameObject> GameObjectsToDestroy { get; private set; }
+
+        /// <summary>
         /// Gets or sets the position of the game object in pixel coordinates.
         /// </summary>
         public PointF Position { get; set; }
@@ -43,6 +51,32 @@
         /// Gets or sets the source rectangle used on the sprite sheet.
         /// </summary>
         public RectangleF SpriteSheetSource { get; set; }
+
+        /// <summary>
+        /// Removes any destroyed game objects from the global game object list.
+        /// </summary>
+        public static void EmptyDestroyQueue()
+        {
+            int amount = GameObjectsToDestroy.Count;
+
+            if (amount == 0)
+            {
+                return;
+            }
+            
+            for (int i = 0; i < GameObjectsToDestroy.Count; i++)
+            {
+                AllGameObjects.Remove(GameObjectsToDestroy.Dequeue());
+            }
+        }
+
+        /// <summary>
+        /// Adds the game object to the destroy queue.
+        /// </summary>
+        public void Destroy()
+        {
+            GameObjectsToDestroy.Enqueue(this);
+        }
 
         /// <summary>
         /// Displays the game object in the graphics context using pixel coordinates.

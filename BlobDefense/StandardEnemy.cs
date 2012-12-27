@@ -13,8 +13,8 @@ namespace BlobDefense
         public StandardEnemy()
         {
             // Assign properties for this enemy
-            this.SpriteSheetSource = new RectangleF(32, 32, 32, 32);
-            this.MoveSpeed = 0.25f;
+            this.SpriteSheetSource = new RectangleF(32, 64, 32, 32);
+            this.MoveSpeed = 25f;
 
             // TODO: Remove hard coded values, consider just writing in indexes and not sizes
             this.WalkRightAnimation = new Animation(6, this, new Rectangle(128, 32, 32, 32), new Rectangle(160, 32, 32, 32), new Rectangle(192, 32, 32, 32));

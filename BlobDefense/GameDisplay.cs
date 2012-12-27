@@ -29,6 +29,10 @@
 
         private Enemy testEnemy;
 
+        private int currentFps;
+
+        private DateTime lastFpsUpdate;
+
         public GameDisplay()
         {
             this.InitializeComponent();
@@ -45,6 +49,8 @@
 
             this.testEnemy = new StandardEnemy();
 
+            Time.SetDeltaTime();
+
             // Temp stuff end -------
 
             // Create a thread object, passing in the MainLoop method
@@ -58,6 +64,9 @@
         {
             while (true)
             {
+                // Set the frame delta time
+                Time.SetDeltaTime();
+                
                 // Create buffer if it don't exist already
                 if (context == null)
                 {
@@ -77,9 +86,26 @@
                 // Run logic
                 GameLogic.Instance.RunLogic();
 
+                // Write fps
+                this.WriteFps();
+
                 // Transfer buffer to display - aka back/front buffer swapping 
                 this.buffer.Render();
             }
+        }
+
+        private void WriteFps()
+        {
+            // Only update fps every 0.5 seconds
+            if (DateTime.Now.Subtract(this.lastFpsUpdate).TotalSeconds > 0.5f)
+            {
+                this.currentFps = (int)(1 / Time.DeltaTime);
+
+                this.lastFpsUpdate = DateTime.Now;
+            }
+
+
+            this.buffer.Graphics.DrawString("FPS: " + this.currentFps.ToString(), new Font("Arial", 12), new SolidBrush(Color.Green), 0, 0);
         }
 
         private void SetUpTestPath()

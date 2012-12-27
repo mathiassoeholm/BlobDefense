@@ -19,9 +19,9 @@ namespace BlobDefense
 
         public void RunLogic()
         {
-            if (Keyboard.IsKeyDown(Keys.B))
+            if (Keyboard.IsKeyDown(Keys.E))
             {
-                TileEngine.Instance.GenerateRandomMap();
+                var enemy = new StandardEnemy();
             }
             
             // Update game objects
@@ -45,6 +45,8 @@ namespace BlobDefense
                     gameObject.Render(GameDisplay.Buffer.Graphics, centerPivot: true);
                 }
             }
+
+            GameObject.EmptyDestroyQueue();
         }
     }
 }

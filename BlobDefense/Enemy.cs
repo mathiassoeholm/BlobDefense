@@ -17,7 +17,7 @@ namespace BlobDefense
             this.CurrentTarget = GameDisplay.testPath[this.targetNode].Position;
         }
 
-        public Animation CurrentAnimation { get; private set; }
+        public Animation CurrentAnimation { get; protected set; }
 
         protected Animation WalkRightAnimation { get; set; }
 
@@ -36,13 +36,27 @@ namespace BlobDefense
         protected override void OnTargetHit()
         {
             this.targetNode++;
+
+            if (this.targetNode >= GameDisplay.testPath.Count)
+            {
+                this.ReachGoal();
+                return;
+            }
+
             this.CurrentTarget = GameDisplay.testPath[this.targetNode].Position;
+
             this.AssignCurrentAnimation();
         }
 
         public void Update()
         {
             this.Move();
+        }
+
+        private void ReachGoal()
+        {
+            // Destroy the enemy
+            this.Destroy();
         }
 
         /// <summary>
