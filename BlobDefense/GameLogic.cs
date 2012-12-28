@@ -23,6 +23,16 @@ namespace BlobDefense
             {
                 var enemy = new StandardEnemy();
             }
+
+            if (Keyboard.IsKeyDown(Keys.R))
+            {
+                var enemy = new PikachuEnemy();
+            }
+
+            if (Keyboard.IsKeyDown(Keys.T))
+            {
+                var enemy = new FastEnemy();
+            }
             
             // Update game objects
             foreach (GameObject gameObject in GameObject.AllGameObjects)
