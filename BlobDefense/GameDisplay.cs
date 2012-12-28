@@ -6,6 +6,9 @@
     using System.Threading;
     using System.Windows.Forms;
     using System.Linq;
+
+    using BlobDefense.WaveSpawner;
+
     /// <summary>
     /// The windows form which is responsible of displaying the game.
     /// </summary>
@@ -15,16 +18,6 @@
 
         private BufferedGraphics buffer;
 
-        public static GameDisplay Instance { get; private set; }
-
-        public static BufferedGraphics Buffer
-        {
-            get
-            {
-                return Instance.buffer;
-            }
-        }
-
         public static List<MapNode> testPath;
 
         private Enemy testEnemy;
@@ -33,11 +26,15 @@
 
         private DateTime lastFpsUpdate;
 
+        private MouseCursor mouseCursor;
+
         public GameDisplay()
         {
             this.InitializeComponent();
 
-            Instance = this;
+            Cursor.Hide();
+
+            mouseCursor = new MouseCursor();
 
             TileEngine.Instance.LoadMapFromXml();
 
@@ -46,8 +43,6 @@
             this.Height = TileEngine.TilesY * TileEngine.TilesOnSpriteSize + 50;
 
             this.SetUpTestPath();
-
-            this.testEnemy = new StandardEnemy();
 
             Time.SetDeltaTime();
 
@@ -59,6 +54,8 @@
             // Start the render thread
             gameThread.Start();
         }
+
+
 
         private void MainLoop()
         {
@@ -84,13 +81,29 @@
                 this.buffer.Graphics.DrawLines(new Pen(Color.Red, 5), testPath.Select(mapNode => mapNode.Position).ToArray());
 
                 // Run logic
-                GameLogic.Instance.RunLogic();
+                GameLogic.Instance.RunLogic(this.buffer.Graphics);
 
                 // Write fps
                 this.WriteFps();
 
+                this.SetMouseCursorPosition();
+                this.mouseCursor.Render(this.buffer.Graphics);
+
                 // Transfer buffer to display - aka back/front buffer swapping 
                 this.buffer.Render();
+            }
+        }
+
+        private void SetMouseCursorPosition()
+        {
+            if (this.InvokeRequired)
+            {
+                Action d = this.SetMouseCursorPosition;
+                this.Invoke(d);
+            }
+            else
+            {
+                this.mouseCursor.SetPosition(new Point(Cursor.Position.X - this.Left, Cursor.Position.Y - this.Top));
             }
         }
 
@@ -124,5 +137,12 @@
 
                 };
         }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
 }

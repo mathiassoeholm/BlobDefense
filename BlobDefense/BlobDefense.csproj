@@ -45,6 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animation.cs" />
+    <Compile Include="WaveSpawner\IEnemyWave.cs" />
+    <Compile Include="MouseCursor.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="FastEnemy.cs" />
     <Compile Include="GameLogic.cs" />
@@ -69,6 +71,8 @@
     <Compile Include="Tile.cs" />
     <Compile Include="TileEngine.cs" />
     <Compile Include="Time.cs" />
+    <Compile Include="WaveSpawner\Wave.cs" />
+    <Compile Include="WaveSpawner\WaveManager.cs" />
     <EmbeddedResource Include="GameDisplay.resx">
       <DependentUpon>GameDisplay.cs</DependentUpon>
     </EmbeddedResource>
@@ -100,6 +104,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

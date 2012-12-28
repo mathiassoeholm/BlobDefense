@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace BlobDefense
 {
+    using System.Drawing;
     using System.Windows.Forms;
+
+    using BlobDefense.WaveSpawner;
 
     internal class GameLogic : Singleton<GameLogic>
     {
@@ -17,26 +20,17 @@ namespace BlobDefense
         {
         }
 
-        public void RunLogic()
+        public void RunLogic(Graphics graphicsContext)
         {
-            if (Keyboard.IsKeyDown(Keys.E))
+            if (Keyboard.IsKeyDown(Keys.W))
             {
-                var enemy = new StandardEnemy();
+                WaveManager.Instance.StartWave();
             }
 
-            if (Keyboard.IsKeyDown(Keys.R))
+            for (int i = 0; i < GameObject.AllGameObjects.Count; i++)
             {
-                var enemy = new PikachuEnemy();
-            }
+                GameObject gameObject = GameObject.AllGameObjects[i];
 
-            if (Keyboard.IsKeyDown(Keys.T))
-            {
-                var enemy = new FastEnemy();
-            }
-            
-            // Update game objects
-            foreach (GameObject gameObject in GameObject.AllGameObjects)
-            {
                 // Update behaviours
                 if (gameObject is IUpdateBehaviour)
                 {
@@ -50,9 +44,9 @@ namespace BlobDefense
                 }
 
                 // Don't render tiles, they are handled elsewhere
-                if (!(gameObject is Tile))
+                if (!(gameObject is Tile) && !(gameObject is MouseCursor))
                 {
-                    gameObject.Render(GameDisplay.Buffer.Graphics, centerPivot: true);
+                    gameObject.Render(graphicsContext, centerPivot: true);
                 }
             }
 
