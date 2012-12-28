@@ -25,6 +25,7 @@ namespace BlobDefense.WaveSpawner
         {            
             this.waves = new List<IEnemyWave>()
                 {
+                    new Wave<FastEnemy>(10),
                     new Wave<StandardEnemy>(10),
                     new Wave<StandardEnemy, PikachuEnemy>(10, 5),
                     new Wave<StandardEnemy, PikachuEnemy>(5, 10),

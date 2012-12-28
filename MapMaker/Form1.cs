@@ -22,6 +22,7 @@ namespace MapMaker
         private Point currentSelection;
 
         private Image selectionOverlay;
+        private Image closedOverlay;
 
         private bool lockSelection;
 
@@ -36,6 +37,7 @@ namespace MapMaker
             TileEngine.Instance.LoadMapFromXml();
 
             this.selectionOverlay = new Bitmap(@"Images/SelectionOverlay.png");
+            this.closedOverlay = new Bitmap(@"Images/ClosedOverlay.png");
 
             // Create a thread object, passing in the RenderLoop method
             var renderThread = new Thread(this.RenderLoop);
@@ -61,6 +63,14 @@ namespace MapMaker
                 TileEngine.Instance.RenderTiles(buffer.Graphics, 1, 2);
 
                 TileEngine.Instance.tilesTypes[selectedTileType].Render(17, 11, buffer.Graphics);
+
+                foreach (MapNode mapNode in TileEngine.Instance.NodeMap)
+                {
+                    if (mapNode.IsClosed)
+                    {
+                        buffer.Graphics.DrawImage(closedOverlay,  mapNode.Y + 16, 32 + mapNode.X + 16, 32, 32);
+                    }
+                }
 
                 buffer.Graphics.DrawImage(selectionOverlay, 32 + currentSelection.X * 32, 64 + currentSelection.Y * 32, 32, 32);
 
@@ -133,6 +143,16 @@ namespace MapMaker
                     {
                         // Assign tile
                         TileEngine.Instance.ChangeTile(currentSelection.X, currentSelection.Y, (uint)selectedTileType);
+                    }
+
+                    lockSelection = true;
+                }
+                else if (Keyboard.IsKeyDown(Keys.ShiftKey))
+                {
+                    if (!lockSelection)
+                    {
+                        // Assign tile
+                        TileEngine.Instance.ToggleCloseTile(currentSelection.X, currentSelection.Y);
                     }
 
                     lockSelection = true;

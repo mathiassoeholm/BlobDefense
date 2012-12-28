@@ -78,12 +78,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AStar\AStar.csproj">
+      <Project>{6343B059-6F7D-4FC2-9AED-882C9E7CA695}</Project>
+      <Name>AStar</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BlobDefense\BlobDefense.csproj">
       <Project>{d59460d6-2cd8-46f1-855c-faf60b9c06cf}</Project>
       <Name>BlobDefense</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\ClosedOverlay.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\SelectionOverlay.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

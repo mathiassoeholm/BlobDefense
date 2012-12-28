@@ -81,6 +81,11 @@ namespace BlobDefense
             }
         }
 
+        public void ToggleCloseTile(int x, int y)
+        {
+            this.NodeMap[x, y].IsClosed = !this.NodeMap[x, y].IsClosed;
+        }
+
         public void ChangeTile(int x, int y, uint tileType)
         {
             if (tilesTypes.Count <= tileType)
@@ -88,18 +93,18 @@ namespace BlobDefense
                 return;
             }
             
-            this.NodeMap[y, x].TileType = (int)tileType;
+            this.NodeMap[x, y].TileType = (int)tileType;
             
         }
 
         public void RenderTiles(Graphics context, int offsetLeft = 0, int offsetTop = 0)
         {
-            for (int x = 0; x < this.NodeMap.GetLength(0); x++)
+            for (int y = 0; y < this.NodeMap.GetLength(1); y++)
             {
-                for (int y = 0; y < this.NodeMap.GetLength(1); y++)
+                for (int x = 0; x < this.NodeMap.GetLength(0); x++)
                 {
                     // Render the tile
-                    this.tilesTypes[this.NodeMap[y, x].TileType].Render(x + offsetLeft, y + offsetTop, context);
+                    this.tilesTypes[this.NodeMap[x, y].TileType].Render(x + offsetLeft, y + offsetTop, context);
                 }
             }
         }

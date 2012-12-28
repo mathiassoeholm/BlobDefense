@@ -40,11 +40,11 @@
 
             TileEngine.Instance.LoadMapFromXml();
 
+            // Temp stuff start -------
             Astar<MapNode>.ConnectNodes(TileEngine.Instance.NodeMap);
 
-            testPath = Astar<MapNode>.GeneratePath(TileEngine.Instance.NodeMap[0, 0], TileEngine.Instance.NodeMap[TileEngine.TilesX - 1, 0]);
+            testPath = Astar<MapNode>.GeneratePath(TileEngine.Instance.NodeMap[0, TileEngine.TilesY - 1], TileEngine.Instance.NodeMap[TileEngine.TilesX - 1, 0]);
 
-            // Temp stuff start -------
             this.Width = TileEngine.TilesX * TileEngine.TilesOnSpriteSize + 50;
             this.Height = TileEngine.TilesY * TileEngine.TilesOnSpriteSize + 50;
 
@@ -109,7 +109,7 @@
             }
             else
             {
-                this.mouseCursor.SetPosition(new Point(Cursor.Position.X - this.Left, Cursor.Position.Y - this.Top));
+                this.mouseCursor.SetPosition(new Point(Cursor.Position.X - this.Location.X, Cursor.Position.Y - this.Location.Y));
             }
         }
 
@@ -133,7 +133,7 @@
             {
                 foreach (MapNode neighbor in mapNode.Neighbors)
                 {
-                    buffer.Graphics.DrawLine(new Pen(Color.Blue, 4), mapNode.Position, neighbor.Position);
+                    buffer.Graphics.DrawLine(new Pen(Color.Blue, 2), mapNode.Position, neighbor.Position);
                 }
             }
         }
