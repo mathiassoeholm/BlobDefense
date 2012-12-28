@@ -68,7 +68,7 @@ namespace MapMaker
                 {
                     if (mapNode.IsClosed)
                     {
-                        buffer.Graphics.DrawImage(closedOverlay,  mapNode.Y + 16, 32 + mapNode.X + 16, 32, 32);
+                        buffer.Graphics.DrawImage(closedOverlay, mapNode.X + 16, mapNode.Y + 16 + 32, 32, 32);
                     }
                 }
 
@@ -147,7 +147,7 @@ namespace MapMaker
 
                     lockSelection = true;
                 }
-                else if (Keyboard.IsKeyDown(Keys.ShiftKey))
+                else if (Keyboard.IsKeyDown(Keys.C))
                 {
                     if (!lockSelection)
                     {
