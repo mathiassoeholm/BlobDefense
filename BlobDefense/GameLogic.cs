@@ -27,7 +27,9 @@ namespace BlobDefense
                 WaveManager.Instance.StartWave();
             }
 
-            for (int i = 0; i < GameObject.AllGameObjects.Count; i++)
+            int gameObjectCount = GameObject.AllGameObjects.Count;
+
+            for (int i = 0; i < gameObjectCount; i++)
             {
                 GameObject gameObject = GameObject.AllGameObjects[i];
 
