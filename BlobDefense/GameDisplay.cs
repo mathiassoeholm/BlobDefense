@@ -14,13 +14,11 @@
     /// </summary>
     public partial class GameDisplay : Form
     {
-        BufferedGraphicsContext context;
+        private BufferedGraphicsContext context;
 
         private BufferedGraphics buffer;
 
         public static List<MapNode> testPath;
-
-        private Enemy testEnemy;
 
         private int currentFps;
 
