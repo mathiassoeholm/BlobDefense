@@ -34,9 +34,6 @@ public static class Astar<TNode> where TNode : class, IPathNode<TNode>, ICompara
         PriorityQueue<TNode> openList = new PriorityQueue<TNode>();
         openList.Enqueue(start);
 
-        // Create the closed list of nodes, initially empty
-        List<TNode> closedList = new List<TNode>();
-
         while (openList.Count() > 0)
         {
             // Consider the best node in the open list (the node with the lowest f value)
@@ -48,8 +45,8 @@ public static class Astar<TNode> where TNode : class, IPathNode<TNode>, ICompara
                 return BuildPath(currentNode);
             }
             
-            // Move the current node to the closed list 
-            closedList.Add(currentNode);
+            // Close the node
+            currentNode.IsClosed = true;
 
             // Consider all of its neighbors
             foreach (TNode neighbor in currentNode.Neighbors)
@@ -66,7 +63,7 @@ public static class Astar<TNode> where TNode : class, IPathNode<TNode>, ICompara
                     openList.Enqueue(neighbor);
                     neighbor.Parent = currentNode;
                     neighbor.GScore = neighborGScore;
-                    neighbor.HScore = 0; // TODO: Implement heuristic
+                    neighbor.HScore = Euclidean(neighbor, goal);
                 }
                 else if (neighborGScore < neighbor.GScore)
                 {
@@ -80,6 +77,11 @@ public static class Astar<TNode> where TNode : class, IPathNode<TNode>, ICompara
         return null;
     }
 
+    private static float Euclidean(TNode nodeA, TNode goal)
+    {
+        return (float)Math.Sqrt(Math.Pow(nodeA.X - goal.X, 2) + Math.Pow(nodeA.Y - goal.Y, 2));
+    }
+
     private static List<TNode> BuildPath(TNode goal)
     {
         List<TNode> path = new List<TNode>();
@@ -88,7 +90,7 @@ public static class Astar<TNode> where TNode : class, IPathNode<TNode>, ICompara
         while (node != null)
         {
             path.Add(node);
-            node = (TNode)node.Parent;
+            node = node.Parent;
         }
 
         path.Reverse();

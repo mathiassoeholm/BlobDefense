@@ -68,6 +68,19 @@ namespace BlobDefense
             }
         }
 
+        public void SetAllTilesTo(int i)
+        {
+            var random = new Random();
+
+            for (int x = 0; x < this.NodeMap.GetLength(0); x++)
+            {
+                for (int y = 0; y < this.NodeMap.GetLength(1); y++)
+                {
+                    this.NodeMap[x, y] = new MapNode { TileType = i };
+                }
+            }
+        }
+
         public void ChangeTile(int x, int y, uint tileType)
         {
             if (tilesTypes.Count <= tileType)

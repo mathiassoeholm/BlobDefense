@@ -14,11 +14,10 @@ namespace BlobDefense
         public MapNode()
         {
             this.Position = new Point();
+            this.Neighbors = new List<MapNode>(4);
         }
 
         public int TileType { get; set; }
-
-        public bool IsWall { get; set; }
 
         public int X
         {
@@ -47,11 +46,6 @@ namespace BlobDefense
         public bool IsClosed { get; set; }
 
         public Point Position { get; set; }
-
-        public bool IsWalkable(Object unused)
-        {
-            return !IsWall;
-        }
 
         public float GScore { get; set; }
 

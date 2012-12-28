@@ -42,13 +42,13 @@
 
             Astar<MapNode>.ConnectNodes(TileEngine.Instance.NodeMap);
 
-            testPath = Astar<MapNode>.GeneratePath(TileEngine.Instance.NodeMap[0, 0], TileEngine.Instance.NodeMap[5, 5]);
+            testPath = Astar<MapNode>.GeneratePath(TileEngine.Instance.NodeMap[0, 0], TileEngine.Instance.NodeMap[TileEngine.TilesX - 1, 0]);
 
             // Temp stuff start -------
             this.Width = TileEngine.TilesX * TileEngine.TilesOnSpriteSize + 50;
             this.Height = TileEngine.TilesY * TileEngine.TilesOnSpriteSize + 50;
 
-            this.SetUpTestPath();
+           // this.SetUpTestPath();
 
             Time.SetDeltaTime();
 
@@ -127,6 +127,17 @@
             this.buffer.Graphics.DrawString("FPS: " + this.currentFps.ToString(), new Font("Arial", 12), new SolidBrush(Color.Green), 0, 0);
         }
 
+        private void DrawNeighbors()
+        {
+            foreach (MapNode mapNode in TileEngine.Instance.NodeMap)
+            {
+                foreach (MapNode neighbor in mapNode.Neighbors)
+                {
+                    buffer.Graphics.DrawLine(new Pen(Color.Blue, 4), mapNode.Position, neighbor.Position);
+                }
+            }
+        }
+
         private void SetUpTestPath()
         {
             testPath = new List<MapNode>
@@ -140,15 +151,7 @@
                     TileEngine.Instance.NodeMap[3, TileEngine.TilesY - 4],
                     TileEngine.Instance.NodeMap[4, TileEngine.TilesY - 4],
                     TileEngine.Instance.NodeMap[4, TileEngine.TilesY - 5],
-
                 };
         }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-
-        }
-
-        
     }
 }
