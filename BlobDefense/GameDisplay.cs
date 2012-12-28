@@ -7,6 +7,8 @@
     using System.Windows.Forms;
     using System.Linq;
 
+    using AStar;
+
     using BlobDefense.WaveSpawner;
 
     /// <summary>
@@ -26,6 +28,8 @@
 
         private MouseCursor mouseCursor;
 
+
+
         public GameDisplay()
         {
             this.InitializeComponent();
@@ -35,6 +39,10 @@
             mouseCursor = new MouseCursor();
 
             TileEngine.Instance.LoadMapFromXml();
+
+            Astar<MapNode>.ConnectNodes(TileEngine.Instance.NodeMap);
+
+            testPath = Astar<MapNode>.GeneratePath(TileEngine.Instance.NodeMap[0, 0], TileEngine.Instance.NodeMap[5, 5]);
 
             // Temp stuff start -------
             this.Width = TileEngine.TilesX * TileEngine.TilesOnSpriteSize + 50;

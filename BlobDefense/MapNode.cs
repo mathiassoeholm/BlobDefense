@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace BlobDefense
 {
     using System.Drawing;
+    using AStar;
 
-
-    public class MapNode
+    public class MapNode : IPathNode<MapNode>, IComparable<MapNode>
     {
         public MapNode()
         {
@@ -44,12 +44,48 @@ namespace BlobDefense
             }
         }
 
-        public Point Position { get; set; }
+        public bool IsClosed { get; set; }
 
+        public Point Position { get; set; }
 
         public bool IsWalkable(Object unused)
         {
             return !IsWall;
         }
+
+        public float GScore { get; set; }
+
+        public float HScore { get; set; }
+
+        public List<MapNode> Neighbors { get; set; }
+
+        public MapNode Parent { get; set; }
+
+        public float FScore
+        {
+            get
+            {
+                return this.GScore + HScore;
+            }
+        }
+
+        public void ConnectTo(MapNode node)
+        {
+            if (!this.Neighbors.Contains(node))
+            {
+                this.Neighbors.Add(node);
+            }
+        }
+
+        public int CompareTo(MapNode other)
+        {
+            if (this.FScore < other.FScore)
+            {
+                return 1;
+            }
+
+            return -1;
+        }
+
     }
 }
