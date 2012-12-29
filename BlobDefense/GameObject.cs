@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Drawing;
+    using System.Drawing.Drawing2D;
 
     /// <summary>
     /// Base class for all entities in the game.
@@ -62,6 +63,23 @@
         public RectangleF SpriteSheetSource { get; set; }
 
         /// <summary>
+        /// Gets or sets the rotation of this game object.
+        /// </summary>
+        public float Rotation { get; set; }
+
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to draw from the center,
+        /// no matter what else was specified to the render method.
+        /// </summary>
+        public bool ForceDrawFromCenter { get; set; }
+
+        /// <summary>
+        /// Gets or sets an optional image to render instead of using the sprite sheet.
+        /// </summary>
+        protected Image AlternativeImage { get; set; }
+
+        /// <summary>
         /// Removes any destroyed game objects from the global game object list.
         /// </summary>
         public static void EmptyDestroyQueue()
@@ -98,8 +116,23 @@
         /// </param>
         public virtual void Render(Graphics context, bool centerPivot = false)
         {
+            if (this.ForceDrawFromCenter)
+            {
+                centerPivot = true;
+            }
+
+            // Rotate the graphics if a rotation is specified.
+            if (this.Rotation != 0)
+            {
+                using (Matrix m = new Matrix())
+                {
+                    m.RotateAt(Rotation, Position);
+                    context.Transform = m;
+                }
+            }
+            
             context.DrawImage(
-                image: SpriteSheet,
+                image: this.AlternativeImage == null ? SpriteSheet : AlternativeImage,
                 destRect: new Rectangle(
                     (int)(centerPivot ? this.Position.X - (this.SpriteSheetSource.Width / 2) : this.Position.X),
                     (int)(centerPivot ? this.Position.Y - (this.SpriteSheetSource.Height / 2) : this.Position.Y),
@@ -110,6 +143,12 @@
                 srcWidth: this.SpriteSheetSource.Width,
                 srcHeight: this.SpriteSheetSource.Height,
                 srcUnit: GraphicsUnit.Pixel);
+
+            // Rotate back
+            if (this.Rotation != 0)
+            {
+                context.ResetTransform();
+            }
         }
 
         public int CompareTo(GameObject other)

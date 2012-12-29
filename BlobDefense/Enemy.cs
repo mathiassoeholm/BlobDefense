@@ -61,7 +61,7 @@ namespace BlobDefense
         }
 
         /// <summary>
-        /// Assigns the current animation based on relative position to the target.
+        /// Assigns the current animation based on relative position to the EnemyTarget.
         /// </summary>
         protected void AssignCurrentAnimation()
         {

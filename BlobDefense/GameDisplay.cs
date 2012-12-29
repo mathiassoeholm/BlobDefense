@@ -9,6 +9,7 @@
 
     using AStar;
 
+    using BlobDefense.Towers;
     using BlobDefense.WaveSpawner;
 
     /// <summary>
@@ -23,6 +24,10 @@
         private readonly MouseCursor mouseCursor;
 
         private readonly GameObject goalGraphic;
+
+        private readonly MapNode goalNode;
+
+        private readonly MapNode startNode;
 
         private BufferedGraphicsContext context;
 
@@ -43,26 +48,32 @@
             // Render mouse on top of everything else
             this.mouseCursor = new MouseCursor { DepthLevel = int.MaxValue };
 
-            this.goalGraphic = new GameObject();
-            this.goalGraphic.SpriteSheetSource = new RectangleF(160, 0, 96, 96);
-            this.goalGraphic.Position = new PointF(TileEngine.TilesX * TileEngine.TilesOnSpriteSize - (this.goalGraphic.SpriteSheetSource.Width / 2), (this.goalGraphic.SpriteSheetSource.Height / 2));
-            this.goalGraphic.DepthLevel = 1;
-
             TileEngine.Instance.LoadMapFromXml();
 
+            // Assign start and goal nodes
+            this.startNode = TileEngine.Instance.NodeMap[0, TileEngine.TilesY - 1];
+            this.goalNode = TileEngine.Instance.NodeMap[TileEngine.TilesX - 2, 0];
+
+            // Set up goal graphic
+            this.goalGraphic = new GameObject();
+            this.goalGraphic.SpriteSheetSource = new RectangleF(128, 0, 72, 83);
+            this.goalGraphic.DepthLevel = 1;
+            this.goalGraphic.Position = new PointF(this.goalNode.Position.X, this.goalGraphic.SpriteSheetSource.Height / 2);
+            
             // Temp stuff start -------
             Astar<MapNode>.ConnectNodes(TileEngine.Instance.NodeMap);
 
-            TestPath = Astar<MapNode>.GeneratePath(TileEngine.Instance.NodeMap[0, TileEngine.TilesY - 1], TileEngine.Instance.NodeMap[TileEngine.TilesX - 2, 0]);
+            TestPath = Astar<MapNode>.GeneratePath(this.startNode, this.goalNode);
 
-            this.Width = TileEngine.TilesX * TileEngine.TilesOnSpriteSize + 50;
-            this.Height = TileEngine.TilesY * TileEngine.TilesOnSpriteSize + 50;
+            StandardTower testTower = new StandardTower();
+            testTower.Position = TileEngine.Instance.NodeMap[2, TileEngine.TilesY - 1].Position;
 
-           // this.SetUpTestPath();
-
-            Time.SetDeltaTime();
+            this.Width = (TileEngine.TilesX * TileEngine.TilesOnSpriteSize) + 50;
+            this.Height = (TileEngine.TilesY * TileEngine.TilesOnSpriteSize) + 50;
 
             // Temp stuff end -------
+
+            Time.SetDeltaTime();
 
             // Create a thread object, passing in the MainLoop method
             var gameThread = new Thread(this.MainLoop);
@@ -71,7 +82,7 @@
             gameThread.Start();
         }
 
-        public static Point MousePosition
+        public static new Point MousePosition
         {
             get
             {
@@ -109,6 +120,8 @@
                 this.WriteFps();
 
                 this.SetMouseCursorPosition();
+
+                //// DrawNeighbors();
 
                 // Transfer buffer to display - aka back/front buffer swapping 
                 this.buffer.Render();
@@ -148,7 +161,7 @@
             {
                 foreach (MapNode neighbor in mapNode.Neighbors)
                 {
-                    buffer.Graphics.DrawLine(new Pen(Color.Blue, 2), mapNode.Position, neighbor.Position);
+                    buffer.Graphics.DrawLine(new Pen(Color.Blue, 1), mapNode.Position, neighbor.Position);
                 }
             }
         }

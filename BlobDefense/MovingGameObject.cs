@@ -12,7 +12,7 @@ namespace BlobDefense
     internal abstract class MovingGameObject : GameObject
     {
         /// <summary>
-        /// Gets or sets the current target this game object is moving towards.
+        /// Gets or sets the current EnemyTarget this game object is moving towards.
         /// </summary>
         protected PointF CurrentTarget { get; set; }
 
@@ -22,7 +22,7 @@ namespace BlobDefense
         protected float MoveSpeed { get; set; }
 
         /// <summary>
-        /// Moves the game object towards the current target.
+        /// Moves the game object towards the current EnemyTarget.
         /// </summary>
         public void Move()
         {
@@ -35,14 +35,14 @@ namespace BlobDefense
             PointF newPosition = this.Position;
             ExtensionMethods.Add(ref newPosition, moveDirection);
 
-            // Check if we pass the target in any axis
+            // Check if we pass the EnemyTarget in any axis
             if ((this.Position.X > this.CurrentTarget.X && newPosition.X < this.CurrentTarget.X)
                 || (this.Position.X < this.CurrentTarget.X && newPosition.X > this.CurrentTarget.X)
                 || (this.Position.Y < this.CurrentTarget.Y && newPosition.Y > this.CurrentTarget.Y)
                 || (this.Position.Y > this.CurrentTarget.Y && newPosition.Y < this.CurrentTarget.Y)
                 || (moveDirection.X == 0 && moveDirection.Y == 0))
             {
-                // Set position to target
+                // Set position to EnemyTarget
                 this.Position = this.CurrentTarget;
 
                 // Perform on hit action

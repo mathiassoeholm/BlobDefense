@@ -75,6 +75,41 @@ namespace Extensions
         }
 
         /// <summary>
+        /// Calculates the distance to another point.
+        /// </summary>
+        /// <param name="pointF">
+        /// The first point.
+        /// </param>
+        /// <param name="otherPos">
+        /// The second point.
+        /// </param>
+        /// <returns>
+        /// The distance to the other point.
+        /// </returns>
+        public static float DistanceTo(this PointF pointF, PointF otherPos)
+        {
+            return (float)Math.Sqrt(Math.Pow(otherPos.X - pointF.X, 2) + Math.Pow(otherPos.Y - pointF.Y, 2));
+        }
+
+        /// <summary>
+        /// Calculates the distance to another point without taking square root.
+        /// This can be used to compare distances and is much faster, however you don't get the real distance.
+        /// </summary>
+        /// <param name="pointF">
+        /// The first point.
+        /// </param>
+        /// <param name="otherPos">
+        /// The second point.
+        /// </param>
+        /// <returns>
+        /// The distance to the other point.
+        /// </returns>
+        public static float SqrDistanceTo(this PointF pointF, PointF otherPos)
+        {
+            return (float)(Math.Pow(otherPos.X - pointF.X, 2) + Math.Pow(otherPos.Y - pointF.Y, 2));
+        }
+
+        /// <summary>
         /// Sets the y coordinate of a point.
         /// </summary>
         /// <param name="pointF">
