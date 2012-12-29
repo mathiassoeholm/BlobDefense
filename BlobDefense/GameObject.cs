@@ -1,12 +1,13 @@
 ﻿namespace BlobDefense
 {
+    using System;
     using System.Collections.Generic;
     using System.Drawing;
 
     /// <summary>
     /// Base class for all entities in the game.
     /// </summary>
-    public abstract class GameObject
+    public abstract class GameObject : IComparable<GameObject>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GameObject"/> class,
@@ -25,7 +26,15 @@
 
             // Add this game object to the game objects list
             AllGameObjects.Add(this);
+
+            // Sort the list
+            AllGameObjects.Sort();
         }
+
+        /// <summary>
+        /// Gameobjects with higher values gets renderes on top of gameobjects with lower values
+        /// </summary>
+        public int DepthLevel { get; set; }
 
         /// <summary>
         /// Gets the sprite sheet used for all game objects
@@ -91,7 +100,8 @@
         {
             context.DrawImage(
                 image: SpriteSheet,
-                destRect: new Rectangle((int)(centerPivot ? this.Position.X - (this.SpriteSheetSource.Width / 2) : this.Position.X),
+                destRect: new Rectangle(
+                    (int)(centerPivot ? this.Position.X - (this.SpriteSheetSource.Width / 2) : this.Position.X),
                     (int)(centerPivot ? this.Position.Y - (this.SpriteSheetSource.Height / 2) : this.Position.Y),
                     (int)this.SpriteSheetSource.Width,
                     (int)this.SpriteSheetSource.Height),
@@ -100,6 +110,16 @@
                 srcWidth: this.SpriteSheetSource.Width,
                 srcHeight: this.SpriteSheetSource.Height,
                 srcUnit: GraphicsUnit.Pixel);
+        }
+
+        public int CompareTo(GameObject other)
+        {
+            if (this.DepthLevel == other.DepthLevel)
+            {
+                return 0;
+            }
+
+            return this.DepthLevel < other.DepthLevel ? -1 : 1;
         }
     }
 }

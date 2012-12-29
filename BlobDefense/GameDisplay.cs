@@ -28,15 +28,16 @@
 
         private MouseCursor mouseCursor;
 
-
-
         public GameDisplay()
         {
             this.InitializeComponent();
 
             Cursor.Hide();
 
-            mouseCursor = new MouseCursor();
+            this.mouseCursor = new MouseCursor();
+
+            // Render mouse on top of everything else
+            this.mouseCursor.DepthLevel = int.MaxValue;
 
             TileEngine.Instance.LoadMapFromXml();
 
@@ -93,7 +94,6 @@
                 this.WriteFps();
 
                 this.SetMouseCursorPosition();
-                this.mouseCursor.Render(this.buffer.Graphics);
 
                 // Transfer buffer to display - aka back/front buffer swapping 
                 this.buffer.Render();
