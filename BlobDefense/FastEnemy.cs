@@ -13,35 +13,35 @@ namespace BlobDefense
         public FastEnemy()
         {
             // Assign properties for this enemy
-            this.SpriteSheetSource = new RectangleF(0, 160, 16, 32);
+            this.SpriteSheetSource = new Rectangle(0, 131, 15, 23);
             this.MoveSpeed = 40;
 
             this.WalkRightAnimation = new Animation(
                 fps: 6,
                 animatedObject: this,
                 frameCount: 3,
-                firstFrame: new Rectangle(64, 160, 32, 32),
+                firstFrame: new Rectangle(45, 131, 23, 23),
                 tileDirection: TileDirection.Right);
 
             this.WalkLeftAnimation = new Animation(
                 fps: 6,
                 animatedObject: this,
                 frameCount: 3,
-                firstFrame: new Rectangle(64, 192, 32, 32),
+                firstFrame: new Rectangle(46, 155, 23, 23),
                 tileDirection: TileDirection.Right);
 
             this.WalkUpAnimation = new Animation(
                 fps: 6,
                 animatedObject: this,
                 frameCount: 3,
-                firstFrame: new Rectangle(0, 160, 16, 32),
+                firstFrame: new Rectangle(0, 131, 15, 23),
                 tileDirection: TileDirection.Right);
 
             this.WalkDownAnimation = new Animation(
                 fps: 6,
                 animatedObject: this,
                 frameCount: 3,
-                firstFrame: new Rectangle(0, 192, 16, 32),
+                firstFrame: new Rectangle(0, 155, 15, 23),
                 tileDirection: TileDirection.Right);
 
             this.AssignCurrentAnimation();

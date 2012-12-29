@@ -13,12 +13,12 @@ namespace BlobDefense
     {
         public MouseCursor()
         {
-            this.SpriteSheetSource = new Rectangle(48, 160, 16, 16);
+            this.SpriteSheetSource = new Rectangle(128, 84, 16, 16);
         }
 
         public void SetPosition(Point position)
         {
-            this.Position = position;
+            this.Position = GameDisplay.MousePosition;
         }
     }
 }

@@ -29,6 +29,7 @@ namespace BlobDefense
 
         public void RunAnimation()
         {
+            // TODO: Fix null ref
             this.CurrentAnimation.RunAnimation();
         }
 

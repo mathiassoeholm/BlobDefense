@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Animation.cs" />
     <Compile Include="Enumerations.cs" />
+    <Compile Include="InputManager.cs" />
     <Compile Include="WaveSpawner\IEnemyWave.cs" />
     <Compile Include="MouseCursor.cs" />
     <Compile Include="Enemy.cs" />

@@ -20,28 +20,28 @@ namespace BlobDefense
                 fps: 6,
                 animatedObject: this,
                 frameCount: 3,
-                firstFrame: new Rectangle(0, 96, 32, 32),
+                firstFrame: new Rectangle(0, 76, 23, 27),
                 tileDirection: TileDirection.Right);
 
             this.WalkLeftAnimation = new Animation(
                 fps: 6,
                 animatedObject: this,
                 frameCount: 3,
-                firstFrame: new Rectangle(0, 128, 32, 32),
+                firstFrame: new Rectangle(0, 103, 23, 27),
                 tileDirection: TileDirection.Right);
 
             this.WalkUpAnimation = new Animation(
                 fps: 6,
                 animatedObject: this,
                 frameCount: 3,
-                firstFrame: new Rectangle(96, 128, 32, 32),
+                firstFrame: new Rectangle(70, 103, 24, 23),
                 tileDirection: TileDirection.Right);
 
             this.WalkDownAnimation = new Animation(
                 fps: 6,
                 animatedObject: this,
                 frameCount: 3,
-                firstFrame: new Rectangle(96, 96, 32, 32),
+                firstFrame: new Rectangle(71, 75, 19, 25),
                 tileDirection: TileDirection.Right);
 
             this.AssignCurrentAnimation();

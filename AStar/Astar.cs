@@ -58,17 +58,16 @@ public static class Astar<TNode> where TNode : class, IPathNode<TNode>, ICompara
 
                 float neighborGScore = currentNode.GScore + 1;
 
-                if (!openList.Contains(neighbor))
+                if (!openList.Contains(neighbor) || neighborGScore <= neighbor.GScore)
                 {
-                    openList.Enqueue(neighbor);
                     neighbor.Parent = currentNode;
                     neighbor.GScore = neighborGScore;
                     neighbor.HScore = Euclidean(neighbor, goal);
-                }
-                else if (neighborGScore < neighbor.GScore)
-                {
-                    neighbor.Parent = currentNode;
-                    neighbor.GScore = neighborGScore;
+
+                    if (!openList.Contains(neighbor))
+                    {
+                        openList.Enqueue(neighbor);
+                    }
                 }
             }
         }

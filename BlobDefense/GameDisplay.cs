@@ -18,6 +18,8 @@
     {
         public static List<MapNode> TestPath;
 
+        private static GameDisplay instance;
+
         private readonly MouseCursor mouseCursor;
 
         private readonly GameObject goalGraphic;
@@ -36,6 +38,8 @@
 
             Cursor.Hide();
 
+            instance = this;
+
             // Render mouse on top of everything else
             this.mouseCursor = new MouseCursor { DepthLevel = int.MaxValue };
 
@@ -49,7 +53,7 @@
             // Temp stuff start -------
             Astar<MapNode>.ConnectNodes(TileEngine.Instance.NodeMap);
 
-            TestPath = Astar<MapNode>.GeneratePath(TileEngine.Instance.NodeMap[0, TileEngine.TilesY - 1], TileEngine.Instance.NodeMap[TileEngine.TilesX - 1, 0]);
+            TestPath = Astar<MapNode>.GeneratePath(TileEngine.Instance.NodeMap[0, TileEngine.TilesY - 1], TileEngine.Instance.NodeMap[TileEngine.TilesX - 2, 0]);
 
             this.Width = TileEngine.TilesX * TileEngine.TilesOnSpriteSize + 50;
             this.Height = TileEngine.TilesY * TileEngine.TilesOnSpriteSize + 50;
@@ -67,7 +71,13 @@
             gameThread.Start();
         }
 
-
+        public static Point MousePosition
+        {
+            get
+            {
+                return instance.PointToClient(Cursor.Position);
+            }
+        }
 
         private void MainLoop()
         {
