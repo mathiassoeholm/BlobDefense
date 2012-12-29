@@ -53,6 +53,8 @@ namespace BlobDefense
             }
 
             GameObject.EmptyDestroyQueue();
+
+            GameObject.SortGameObjectsByDepth();
         }
     }
 }

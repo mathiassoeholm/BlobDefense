@@ -20,7 +20,7 @@ namespace BlobDefense.Towers
             // TODO: Implement give enemy damage
             
             // Destroy enemy (TEMP)
-            this.enemyTarget.Destroy();
+            //this.enemyTarget.Destroy();
 
             // Destroy this projectile
             this.Destroy();

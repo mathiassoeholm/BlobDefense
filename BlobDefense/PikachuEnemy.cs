@@ -13,7 +13,7 @@ namespace BlobDefense
         public PikachuEnemy()
         {
             // Assign properties for this enemy
-            this.SpriteSheetSource = new RectangleF(96, 128, 32, 32);
+            this.SpriteSheetSource = new Rectangle(70, 103, 24, 23);
             this.MoveSpeed = 25f;
 
             this.WalkRightAnimation = new Animation(

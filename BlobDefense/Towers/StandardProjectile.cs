@@ -15,7 +15,7 @@ namespace BlobDefense.Towers
         {
             this.SpriteSheetSource = new RectangleF(100, 179, 14, 7);
             this.Position = spawnPosition;
-            this.MoveSpeed = 80;
+            this.MoveSpeed = 100;
         }
     }
 }

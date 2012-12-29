@@ -10,6 +10,8 @@
     /// </summary>
     public class GameObject : IComparable<GameObject>
     {
+        private static bool aNewGameObjectWasCreated;
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="GameObject"/> class,
         /// adding it to the game objects list.
@@ -28,8 +30,7 @@
             // Add this game object to the game objects list
             AllGameObjects.Add(this);
 
-            // Sort the list
-            AllGameObjects.Sort();
+            aNewGameObjectWasCreated = true;
         }
 
         /// <summary>
@@ -94,6 +95,17 @@
             for (int i = 0; i < GameObjectsToDestroy.Count; i++)
             {
                 AllGameObjects.Remove(GameObjectsToDestroy.Dequeue());
+            }
+        }
+
+        public static void SortGameObjectsByDepth()
+        {
+            if (aNewGameObjectWasCreated)
+            {
+                // Sort the list
+                AllGameObjects.Sort();
+
+                aNewGameObjectWasCreated = false;
             }
         }
 

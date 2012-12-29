@@ -23,7 +23,7 @@ namespace BlobDefense.Towers
 
             this.CurrentAnimation = this.IdleAnimation;
 
-            this.ShootCooldown = 1f;
+            this.ShootCooldown = 0.4f;
             this.ShootRange = 200;
         }
         
