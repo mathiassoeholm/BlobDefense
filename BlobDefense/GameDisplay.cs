@@ -16,17 +16,19 @@
     /// </summary>
     public partial class GameDisplay : Form
     {
+        public static List<MapNode> TestPath;
+
+        private readonly MouseCursor mouseCursor;
+
+        private readonly GameObject goalGraphic;
+
         private BufferedGraphicsContext context;
 
         private BufferedGraphics buffer;
 
-        public static List<MapNode> testPath;
-
         private int currentFps;
 
         private DateTime lastFpsUpdate;
-
-        private MouseCursor mouseCursor;
 
         public GameDisplay()
         {
@@ -34,17 +36,20 @@
 
             Cursor.Hide();
 
-            this.mouseCursor = new MouseCursor();
-
             // Render mouse on top of everything else
-            this.mouseCursor.DepthLevel = int.MaxValue;
+            this.mouseCursor = new MouseCursor { DepthLevel = int.MaxValue };
+
+            this.goalGraphic = new GameObject();
+            this.goalGraphic.SpriteSheetSource = new RectangleF(160, 0, 96, 96);
+            this.goalGraphic.Position = new PointF(TileEngine.TilesX * TileEngine.TilesOnSpriteSize - (this.goalGraphic.SpriteSheetSource.Width / 2), (this.goalGraphic.SpriteSheetSource.Height / 2));
+            this.goalGraphic.DepthLevel = 1;
 
             TileEngine.Instance.LoadMapFromXml();
 
             // Temp stuff start -------
             Astar<MapNode>.ConnectNodes(TileEngine.Instance.NodeMap);
 
-            testPath = Astar<MapNode>.GeneratePath(TileEngine.Instance.NodeMap[0, TileEngine.TilesY - 1], TileEngine.Instance.NodeMap[TileEngine.TilesX - 1, 0]);
+            TestPath = Astar<MapNode>.GeneratePath(TileEngine.Instance.NodeMap[0, TileEngine.TilesY - 1], TileEngine.Instance.NodeMap[TileEngine.TilesX - 1, 0]);
 
             this.Width = TileEngine.TilesX * TileEngine.TilesOnSpriteSize + 50;
             this.Height = TileEngine.TilesY * TileEngine.TilesOnSpriteSize + 50;
@@ -85,7 +90,7 @@
                 TileEngine.Instance.RenderTiles(this.buffer.Graphics);
 
                 // Draw the enemies path
-                this.buffer.Graphics.DrawLines(new Pen(Color.Red, 5), testPath.Select(mapNode => mapNode.Position).ToArray());
+                this.buffer.Graphics.DrawLines(new Pen(Color.Red, 5), TestPath.Select(mapNode => mapNode.Position).ToArray());
 
                 // Run logic
                 GameLogic.Instance.RunLogic(this.buffer.Graphics);
@@ -140,7 +145,7 @@
 
         private void SetUpTestPath()
         {
-            testPath = new List<MapNode>
+            TestPath = new List<MapNode>
                 {
                     TileEngine.Instance.NodeMap[0, TileEngine.TilesY - 1],
                     TileEngine.Instance.NodeMap[1, TileEngine.TilesY - 1],

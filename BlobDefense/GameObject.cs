@@ -7,13 +7,13 @@
     /// <summary>
     /// Base class for all entities in the game.
     /// </summary>
-    public abstract class GameObject : IComparable<GameObject>
+    public class GameObject : IComparable<GameObject>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GameObject"/> class,
         /// adding it to the game objects list.
         /// </summary>
-        protected GameObject()
+        public GameObject()
         {
             // Initialize a new list if it is null
             AllGameObjects = AllGameObjects ?? new List<GameObject>();

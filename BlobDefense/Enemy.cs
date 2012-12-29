@@ -13,8 +13,8 @@ namespace BlobDefense
         protected Enemy()
         {
             this.targetNode = 1;
-            this.Position = GameDisplay.testPath[0].Position;
-            this.CurrentTarget = GameDisplay.testPath[this.targetNode].Position;
+            this.Position = GameDisplay.TestPath[0].Position;
+            this.CurrentTarget = GameDisplay.TestPath[this.targetNode].Position;
         }
 
         public Animation CurrentAnimation { get; protected set; }
@@ -37,13 +37,13 @@ namespace BlobDefense
         {
             this.targetNode++;
 
-            if (this.targetNode >= GameDisplay.testPath.Count)
+            if (this.targetNode >= GameDisplay.TestPath.Count)
             {
                 this.ReachGoal();
                 return;
             }
 
-            this.CurrentTarget = GameDisplay.testPath[this.targetNode].Position;
+            this.CurrentTarget = GameDisplay.TestPath[this.targetNode].Position;
 
             this.AssignCurrentAnimation();
         }
