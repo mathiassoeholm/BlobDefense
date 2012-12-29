@@ -12,9 +12,9 @@ namespace BlobDefense.WaveSpawner
     {
         private const int MillisBetweenEachEnemy = 1000;
 
-        private Timer enemySpawnTimer;
+        private readonly List<IEnemyWave> waves;
 
-        private List<IEnemyWave> waves;
+        private Timer enemySpawnTimer;
 
         private int currentWave;
 

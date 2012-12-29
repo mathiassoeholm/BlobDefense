@@ -30,6 +30,35 @@ namespace BlobDefense
         /// </summary>
         private DateTime lastFrameChange;
 
+
+        public Animation(int fps, GameObject animatedObject, int frameCount, Rectangle firstFrame, TileDirection tileDirection)
+        {
+            // Assign class members
+            this.animatedObject = animatedObject;
+
+            // Calculate the time duration between each frame.
+            this.frameDeltaTime = 1f / fps;
+
+            // We changed frame, so next frame will be in 'frame delta' seconds
+            this.lastFrameChange = DateTime.Now;
+
+            // Set frame sources
+            this.frameSources = new Rectangle[frameCount];
+
+            for (int i = 0; i < frameCount; i++)
+            {
+                switch (tileDirection)
+                {
+                    case TileDirection.Down:
+                        this.frameSources[i] = new Rectangle(firstFrame.X, firstFrame.Y + (firstFrame.Height * i), firstFrame.Width, firstFrame.Height);
+                        break;
+                    case TileDirection.Right:
+                        this.frameSources[i] = new Rectangle(firstFrame.X + (firstFrame.Width * i), firstFrame.Y, firstFrame.Width, firstFrame.Height);
+                        break;
+                }
+            }
+        }
+
         public Animation(int fps, GameObject animatedObject, params Rectangle[] frameSources)
         {
             // Assign class members

@@ -16,14 +16,33 @@ namespace BlobDefense
             this.SpriteSheetSource = new RectangleF(0, 160, 16, 32);
             this.MoveSpeed = 40;
 
-            // TODO: Remove hard coded values, consider just writing in indexes and not sizes
-            this.WalkRightAnimation = new Animation(6, this, new Rectangle(64, 160, 32, 32), new Rectangle(96, 160, 32, 32), new Rectangle(128, 160, 32, 32));
+            this.WalkRightAnimation = new Animation(
+                fps: 6,
+                animatedObject: this,
+                frameCount: 3,
+                firstFrame: new Rectangle(64, 160, 32, 32),
+                tileDirection: TileDirection.Right);
 
-            this.WalkLeftAnimation = new Animation(6, this, new Rectangle(64, 196, 32, 32), new Rectangle(96, 196, 32, 32), new Rectangle(128, 196, 32, 32));
+            this.WalkLeftAnimation = new Animation(
+                fps: 6,
+                animatedObject: this,
+                frameCount: 3,
+                firstFrame: new Rectangle(64, 192, 32, 32),
+                tileDirection: TileDirection.Right);
 
-            this.WalkUpAnimation = new Animation(6, this, new Rectangle(0, 160, 16, 32), new Rectangle(16, 160, 16, 32), new Rectangle(32, 160, 16, 32));
+            this.WalkUpAnimation = new Animation(
+                fps: 6,
+                animatedObject: this,
+                frameCount: 3,
+                firstFrame: new Rectangle(0, 160, 16, 32),
+                tileDirection: TileDirection.Right);
 
-            this.WalkDownAnimation = new Animation(6, this, new Rectangle(0, 196, 16, 32), new Rectangle(16, 196, 16, 32), new Rectangle(32, 196, 16, 32));
+            this.WalkDownAnimation = new Animation(
+                fps: 6,
+                animatedObject: this,
+                frameCount: 3,
+                firstFrame: new Rectangle(0, 192, 16, 32),
+                tileDirection: TileDirection.Right);
 
             this.AssignCurrentAnimation();
         }
