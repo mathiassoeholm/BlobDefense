@@ -18,6 +18,47 @@ namespace BlobDefense
         /// </summary>
         private GameLogic()
         {
+            // Connect nodes for the AStar
+            Astar<MapNode>.ConnectNodes(TileEngine.Instance.NodeMap);
+
+            // Assign start and goal nodes
+            this.StartNode = TileEngine.Instance.NodeMap[0, TileEngine.TilesY - 1];
+            this.GoalNode = TileEngine.Instance.NodeMap[TileEngine.TilesX - 2, 0];
+        }
+
+        public static List<MapNode> EnemyPath { get; set; } 
+
+        public MapNode StartNode { get; private set; }
+
+        public MapNode GoalNode { get; private set; }
+
+        /// <summary>
+        /// Tries to create a new path, if unsucessful the current path remains unchanged.
+        /// </summary>
+        /// <returns>
+        /// A value indicating whether a new path would be blocked or not.
+        /// </returns>
+        public bool TryCreateNewPath()
+        {
+            // Unclose all nodes
+            foreach (MapNode mapNode in TileEngine.Instance.NodeMap)
+            {
+                mapNode.IsClosed = false;
+            }
+            
+            // Generate the new path
+            List<MapNode> newPath = Astar<MapNode>.GeneratePath(this.StartNode, this.GoalNode);
+
+            // Return false if the path was null
+            if (newPath == null)
+            {
+                return false;
+            }
+
+            // Set the new path and return true
+            EnemyPath = newPath;
+
+            return true;
         }
 
         public void RunLogic(Graphics graphicsContext)
@@ -27,12 +68,8 @@ namespace BlobDefense
                 WaveManager.Instance.StartWave();
             }
 
-            int gameObjectCount = GameObject.AllGameObjects.Count;
-
-            for (int i = 0; i < gameObjectCount; i++)
+            foreach (GameObject gameObject in GameObject.AllGameObjects)
             {
-                GameObject gameObject = GameObject.AllGameObjects[i];
-
                 // Update behaviours
                 if (gameObject is IUpdateBehaviour)
                 {
@@ -54,7 +91,7 @@ namespace BlobDefense
 
             GameObject.EmptyDestroyQueue();
 
-            GameObject.SortGameObjectsByDepth();
+            GameObject.AddAllNewGameObjects();
         }
     }
 }

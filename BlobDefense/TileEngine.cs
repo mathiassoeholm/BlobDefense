@@ -82,9 +82,9 @@ namespace BlobDefense
             }
         }
 
-        public void ToggleCloseTile(int x, int y)
+        public void ToggleBlockedTile(int x, int y)
         {
-            this.NodeMap[x, y].IsClosed = !this.NodeMap[x, y].IsClosed;
+            this.NodeMap[x, y].IsBlocked = !this.NodeMap[x, y].IsBlocked;
         }
 
         public void ChangeTile(int x, int y, uint tileType)

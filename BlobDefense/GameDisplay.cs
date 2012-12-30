@@ -6,6 +6,7 @@
     using System.Threading;
     using System.Windows.Forms;
     using System.Linq;
+    using Extensions;
 
     using AStar;
 
@@ -17,17 +18,11 @@
     /// </summary>
     public partial class GameDisplay : Form
     {
-        public static List<MapNode> TestPath;
-
         private static GameDisplay instance;
 
         private readonly MouseCursor mouseCursor;
 
         private readonly GameObject goalGraphic;
-
-        private readonly MapNode goalNode;
-
-        private readonly MapNode startNode;
 
         private BufferedGraphicsContext context;
 
@@ -47,28 +42,24 @@
 
             instance = this;
 
+            // Initialize the input manager
+            InputManager.Instance.Initialize();
+
             // Render mouse on top of everything else
             this.mouseCursor = new MouseCursor { DepthLevel = int.MaxValue };
 
             TileEngine.Instance.LoadMapFromXml();
 
-            // Assign start and goal nodes
-            this.startNode = TileEngine.Instance.NodeMap[0, TileEngine.TilesY - 1];
-            this.goalNode = TileEngine.Instance.NodeMap[TileEngine.TilesX - 2, 0];
+            GameLogic.Instance.TryCreateNewPath();
 
             // Set up goal graphic
             this.goalGraphic = new GameObject();
             this.goalGraphic.SpriteSheetSource = new RectangleF(128, 0, 72, 83);
             this.goalGraphic.DepthLevel = 1;
-            this.goalGraphic.Position = new PointF(this.goalNode.Position.X, this.goalGraphic.SpriteSheetSource.Height / 2);
+            this.goalGraphic.Position = new PointF(GameLogic.Instance.GoalNode.Position.X, this.goalGraphic.SpriteSheetSource.Height / 2);
             
             // Temp stuff start -------
-            Astar<MapNode>.ConnectNodes(TileEngine.Instance.NodeMap);
 
-            TestPath = Astar<MapNode>.GeneratePath(this.startNode, this.goalNode);
-
-            StandardTower testTower = new StandardTower();
-            testTower.Position = TileEngine.Instance.NodeMap[2, TileEngine.TilesY - 1].Position;
 
             this.Width = (TileEngine.TilesX * TileEngine.TilesOnSpriteSize) + 50;
             this.Height = (TileEngine.TilesY * TileEngine.TilesOnSpriteSize) + 50;
@@ -76,15 +67,18 @@
             // Temp stuff end -------
 
             Time.SetDeltaTime();
+
+            this.DoubleBuffered = true;
+            this.ResizeRedraw = true;
         }
 
         private void GameDisplay_Load(object sender, EventArgs e)
         {
-            // Create a thread object, passing in the MainLoop method
-            gameThread = new Thread(this.MainLoop);
+            //// Create a thread object, passing in the MainLoop method
+            //gameThread = new Thread(this.MainLoop);
             
-            // Start the render thread
-            gameThread.Start();
+            //// Start the render thread
+            //gameThread.Start();
         }
 
         public static new Point MousePosition
@@ -95,41 +89,42 @@
             }
         }
 
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            RenderScene(e.Graphics);
+            this.Invalidate();
+        }
+
+        private void RenderScene(Graphics graphics)
+        {
+            // Set the frame delta time
+            Time.SetDeltaTime();
+
+            // Clear the screen with the forms back color
+            //this.buffer.Graphics.Clear(this.BackColor);
+
+            // Buffer the map tiles
+            TileEngine.Instance.RenderTiles(graphics);
+
+            // Draw the enemies path
+            graphics.DrawLines(new Pen(Color.Red, 5), GameLogic.EnemyPath.Select(mapNode => mapNode.Position).ToArray());
+
+            // Run logic
+            GameLogic.Instance.RunLogic(graphics);
+
+            // Write fps
+            this.WriteFps(graphics);
+
+            this.SetMouseCursorPosition();
+
+            //// DrawNeighbors();
+        }
+
         private void MainLoop()
         {
             while (true)
             {
-                // Set the frame delta time
-                Time.SetDeltaTime();
                 
-                // Create buffer if it don't exist already
-                if (context == null)
-                {
-                    context = BufferedGraphicsManager.Current;
-                    this.buffer = context.Allocate(CreateGraphics(), this.DisplayRectangle);
-                }
-
-                // Clear the screen with the forms back color
-                this.buffer.Graphics.Clear(this.BackColor);
-
-                // Buffer the map tiles
-                TileEngine.Instance.RenderTiles(this.buffer.Graphics);
-
-                // Draw the enemies path
-                this.buffer.Graphics.DrawLines(new Pen(Color.Red, 5), TestPath.Select(mapNode => mapNode.Position).ToArray());
-
-                // Run logic
-                GameLogic.Instance.RunLogic(this.buffer.Graphics);
-
-                // Write fps
-                this.WriteFps();
-
-                this.SetMouseCursorPosition();
-
-                //// DrawNeighbors();
-
-                // Transfer buffer to display - aka back/front buffer swapping 
-                this.buffer.Render();
             }
         }
 
@@ -146,7 +141,7 @@
             }
         }
 
-        private void WriteFps()
+        private void WriteFps(Graphics graphics)
         {
             // Only update fps every 0.5 seconds
             if (DateTime.Now.Subtract(this.lastFpsUpdate).TotalSeconds > 0.5f)
@@ -157,7 +152,7 @@
             }
 
 
-            this.buffer.Graphics.DrawString("FPS: " + this.currentFps.ToString(), new Font("Arial", 12), new SolidBrush(Color.Green), 0, 0);
+            graphics.DrawString("FPS: " + this.currentFps.ToString(), new Font("Arial", 12), new SolidBrush(Color.Green), 0, 0);
         }
 
         private void DrawNeighbors()
@@ -171,22 +166,9 @@
             }
         }
 
-        private void SetUpTestPath()
+        private void GameDisplay_Click(object sender, EventArgs e)
         {
-            TestPath = new List<MapNode>
-                {
-                    TileEngine.Instance.NodeMap[0, TileEngine.TilesY - 1],
-                    TileEngine.Instance.NodeMap[1, TileEngine.TilesY - 1],
-                    TileEngine.Instance.NodeMap[1, TileEngine.TilesY - 2],
-                    TileEngine.Instance.NodeMap[2, TileEngine.TilesY - 2],
-                    TileEngine.Instance.NodeMap[2, TileEngine.TilesY - 3],
-                    TileEngine.Instance.NodeMap[3, TileEngine.TilesY - 3],
-                    TileEngine.Instance.NodeMap[3, TileEngine.TilesY - 4],
-                    TileEngine.Instance.NodeMap[4, TileEngine.TilesY - 4],
-                    TileEngine.Instance.NodeMap[4, TileEngine.TilesY - 5],
-                };
+            EventManager.Instance.OnMouseClick.SafeInvoke(MousePosition);
         }
-
-        
     }
 }

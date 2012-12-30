@@ -14,6 +14,8 @@ namespace AStar
 
         bool IsClosed { get; set; }
 
+        bool IsBlocked { get; set; }
+
         float GScore { get; set; }
 
         float HScore { get; set; }

@@ -10,8 +10,6 @@
     /// </summary>
     public class GameObject : IComparable<GameObject>
     {
-        private static bool aNewGameObjectWasCreated;
-        
         /// <summary>
         /// Initializes a new instance of the <see cref="GameObject"/> class,
         /// adding it to the game objects list.
@@ -24,13 +22,14 @@
             // Initialize a new queue if it is null
             GameObjectsToDestroy = GameObjectsToDestroy ?? new Queue<GameObject>();
 
+            // Initialize a new queue if it is null
+            NewGameObjects = NewGameObjects ?? new Queue<GameObject>();
+
             // Load image if not set yet
             SpriteSheet = SpriteSheet ?? Image.FromFile(@"Images\SpriteSheet.png");
 
-            // Add this game object to the game objects list
-            AllGameObjects.Add(this);
-
-            aNewGameObjectWasCreated = true;
+            // This game object will be added to the game after the current fram
+            NewGameObjects.Enqueue(this);
         }
 
         /// <summary>
@@ -52,6 +51,11 @@
         /// Gets a queue containing game objects which will be removed from the game.
         /// </summary>
         public static Queue<GameObject> GameObjectsToDestroy { get; private set; }
+
+        /// <summary>
+        /// Gets a queue containing game objects which will be added to the game.
+        /// </summary>
+        public static Queue<GameObject> NewGameObjects { get; private set; }
 
         /// <summary>
         /// Gets or sets the position of the game object in pixel coordinates.
@@ -98,15 +102,21 @@
             }
         }
 
-        public static void SortGameObjectsByDepth()
+        public static void AddAllNewGameObjects()
         {
-            if (aNewGameObjectWasCreated)
+            if (NewGameObjects.Count == 0)
             {
-                // Sort the list
-                AllGameObjects.Sort();
-
-                aNewGameObjectWasCreated = false;
+                return;
             }
+   
+            while (NewGameObjects.Count > 0)
+            {
+                // Add this game object to the game objects list
+                AllGameObjects.Add(NewGameObjects.Dequeue());
+            }
+
+            // Resort the game objects by depth
+            AllGameObjects.Sort();
         }
 
         /// <summary>

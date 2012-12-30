@@ -51,7 +51,7 @@ public static class Astar<TNode> where TNode : class, IPathNode<TNode>, ICompara
             // Consider all of its neighbors
             foreach (TNode neighbor in currentNode.Neighbors)
             {
-                if (neighbor.IsClosed)
+                if (neighbor.IsClosed || neighbor.IsBlocked)
                 {
                     continue;
                 }

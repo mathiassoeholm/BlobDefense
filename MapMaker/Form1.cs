@@ -28,8 +28,6 @@ namespace MapMaker
 
         private int selectedTileType;
 
-
-
         public Form1()
         {
             InitializeComponent();
@@ -39,6 +37,11 @@ namespace MapMaker
             this.selectionOverlay = new Bitmap(@"Images/SelectionOverlay.png");
             this.closedOverlay = new Bitmap(@"Images/ClosedOverlay.png");
 
+            TileEngine.Instance.LoadMapFromXml();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
             // Create a thread object, passing in the RenderLoop method
             var renderThread = new Thread(this.RenderLoop);
 
@@ -66,7 +69,7 @@ namespace MapMaker
 
                 foreach (MapNode mapNode in TileEngine.Instance.NodeMap)
                 {
-                    if (mapNode.IsClosed)
+                    if (mapNode.IsBlocked)
                     {
                         buffer.Graphics.DrawImage(closedOverlay, mapNode.X + 16, mapNode.Y + 16 + 32, 32, 32);
                     }
@@ -152,7 +155,7 @@ namespace MapMaker
                     if (!lockSelection)
                     {
                         // Assign tile
-                        TileEngine.Instance.ToggleCloseTile(currentSelection.X, currentSelection.Y);
+                        TileEngine.Instance.ToggleBlockedTile(currentSelection.X, currentSelection.Y);
                     }
 
                     lockSelection = true;
@@ -171,5 +174,7 @@ namespace MapMaker
         {
             TileEngine.Instance.SaveMapToXml();
         }
+
+        
     }
 }

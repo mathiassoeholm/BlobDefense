@@ -11,6 +11,40 @@ namespace Extensions
     public static class ExtensionMethods
     {
         /// <summary>
+        /// Invokes an action if it is not null, otherwise it does nothing.
+        /// </summary>
+        /// <param name="action">
+        /// The action to invoke.
+        /// </param>
+        public static void SafeInvoke(this Action action)
+        {
+            if (action != null)
+            {
+                action();
+            }
+        }
+
+        /// <summary>
+        /// Invokes an action with an argument if it is not null, otherwise it does nothing.
+        /// </summary>
+        /// <param name="action">
+        /// The action to invoke.
+        /// </param>
+        /// <param name="argument">
+        /// The generic argument.
+        /// </param>
+        /// <typeparam name="T">
+        /// The type of argument passed along with the action.
+        /// </typeparam>
+        public static void SafeInvoke<T>(this Action<T> action, T argument)
+        {
+            if (action != null)
+            {
+                action(argument);
+            }
+        }
+        
+        /// <summary>
         /// Normalizes a point, as if it was a vector.
         /// </summary>
         /// <param name="pointF">

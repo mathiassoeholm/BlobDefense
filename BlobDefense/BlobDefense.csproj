@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Animation.cs" />
     <Compile Include="Enumerations.cs" />
+    <Compile Include="EventManager.cs" />
     <Compile Include="InputManager.cs" />
     <Compile Include="Towers\Projectile.cs" />
     <Compile Include="Towers\StandardProjectile.cs" />

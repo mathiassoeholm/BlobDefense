@@ -38,6 +38,7 @@
             this.Name = "GameDisplay";
             this.Text = "GameDisplay";
             this.Load += new System.EventHandler(this.GameDisplay_Load);
+            this.Click += new System.EventHandler(this.GameDisplay_Click);
             this.ResumeLayout(false);
 
         }

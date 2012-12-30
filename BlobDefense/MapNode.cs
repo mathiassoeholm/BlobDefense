@@ -45,6 +45,8 @@ namespace BlobDefense
 
         public bool IsClosed { get; set; }
 
+        public bool IsBlocked { get; set; }
+
         public Point Position { get; set; }
 
         public float GScore { get; set; }
