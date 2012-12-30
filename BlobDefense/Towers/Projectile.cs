@@ -13,6 +13,8 @@ namespace BlobDefense.Towers
         public Projectile(Enemy enemy)
         {
             this.enemyTarget = enemy;
+
+            this.DepthLevel = 5;
         }
 
         protected override void OnTargetHit()

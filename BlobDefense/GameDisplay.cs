@@ -1,17 +1,11 @@
 ﻿namespace BlobDefense
 {
     using System;
-    using System.Collections.Generic;
     using System.Drawing;
-    using System.Threading;
-    using System.Windows.Forms;
     using System.Linq;
+    using System.Windows.Forms;
+
     using Extensions;
-
-    using AStar;
-
-    using BlobDefense.Towers;
-    using BlobDefense.WaveSpawner;
 
     /// <summary>
     /// The windows form which is responsible of displaying the game.
@@ -20,19 +14,11 @@
     {
         private static GameDisplay instance;
 
-        private readonly MouseCursor mouseCursor;
-
         private readonly GameObject goalGraphic;
-
-        private BufferedGraphicsContext context;
-
-        private BufferedGraphics buffer;
 
         private int currentFps;
 
         private DateTime lastFpsUpdate;
-
-        private Thread gameThread;
 
         public GameDisplay()
         {
@@ -45,11 +31,13 @@
             // Initialize the input manager
             InputManager.Instance.Initialize();
 
-            // Render mouse on top of everything else
-            this.mouseCursor = new MouseCursor { DepthLevel = int.MaxValue };
+            // Craete and render mouse on top of everything else
+            new MouseCursor { DepthLevel = int.MaxValue };
 
+            // Load the tile map
             TileEngine.Instance.LoadMapFromXml();
 
+            // Create a path for the enemies
             GameLogic.Instance.TryCreateNewPath();
 
             // Set up goal graphic
@@ -58,27 +46,14 @@
             this.goalGraphic.DepthLevel = 1;
             this.goalGraphic.Position = new PointF(GameLogic.Instance.GoalNode.Position.X, this.goalGraphic.SpriteSheetSource.Height / 2);
             
-            // Temp stuff start -------
-
-
+            // Set size of the form
             this.Width = (TileEngine.TilesX * TileEngine.TilesOnSpriteSize) + 50;
             this.Height = (TileEngine.TilesY * TileEngine.TilesOnSpriteSize) + 50;
-
-            // Temp stuff end -------
 
             Time.SetDeltaTime();
 
             this.DoubleBuffered = true;
             this.ResizeRedraw = true;
-        }
-
-        private void GameDisplay_Load(object sender, EventArgs e)
-        {
-            //// Create a thread object, passing in the MainLoop method
-            //gameThread = new Thread(this.MainLoop);
-            
-            //// Start the render thread
-            //gameThread.Start();
         }
 
         public static new Point MousePosition
@@ -91,19 +66,16 @@
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            RenderScene(e.Graphics);
+            this.RenderGame(e.Graphics);
             this.Invalidate();
         }
 
-        private void RenderScene(Graphics graphics)
+        private void RenderGame(Graphics graphics)
         {
             // Set the frame delta time
             Time.SetDeltaTime();
 
-            // Clear the screen with the forms back color
-            //this.buffer.Graphics.Clear(this.BackColor);
-
-            // Buffer the map tiles
+            // Draw the map tiles
             TileEngine.Instance.RenderTiles(graphics);
 
             // Draw the enemies path
@@ -115,31 +87,9 @@
             // Write fps
             this.WriteFps(graphics);
 
-            this.SetMouseCursorPosition();
-
-            //// DrawNeighbors();
+            //// DrawNeighbors(graphics);
         }
 
-        private void MainLoop()
-        {
-            while (true)
-            {
-                
-            }
-        }
-
-        private void SetMouseCursorPosition()
-        {
-            if (this.InvokeRequired)
-            {
-                Action d = this.SetMouseCursorPosition;
-                this.Invoke(d);
-            }
-            else
-            {
-                this.mouseCursor.SetPosition(new Point(Cursor.Position.X - this.Location.X, Cursor.Position.Y - this.Location.Y));
-            }
-        }
 
         private void WriteFps(Graphics graphics)
         {
@@ -151,17 +101,16 @@
                 this.lastFpsUpdate = DateTime.Now;
             }
 
-
             graphics.DrawString("FPS: " + this.currentFps.ToString(), new Font("Arial", 12), new SolidBrush(Color.Green), 0, 0);
         }
 
-        private void DrawNeighbors()
+        private void DrawNeighbors(Graphics graphics)
         {
             foreach (MapNode mapNode in TileEngine.Instance.NodeMap)
             {
                 foreach (MapNode neighbor in mapNode.Neighbors)
                 {
-                    buffer.Graphics.DrawLine(new Pen(Color.Blue, 1), mapNode.Position, neighbor.Position);
+                    graphics.DrawLine(new Pen(Color.Blue, 1), mapNode.Position, neighbor.Position);
                 }
             }
         }

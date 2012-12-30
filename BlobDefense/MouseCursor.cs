@@ -9,14 +9,14 @@ namespace BlobDefense
 {
     using System.Drawing;
 
-    internal class MouseCursor : GameObject
+    internal class MouseCursor : GameObject, IUpdateBehaviour
     {
         public MouseCursor()
         {
             this.SpriteSheetSource = new Rectangle(128, 84, 16, 16);
         }
 
-        public void SetPosition(Point position)
+        public void Update()
         {
             this.Position = GameDisplay.MousePosition;
         }
