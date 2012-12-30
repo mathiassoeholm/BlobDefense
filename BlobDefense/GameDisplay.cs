@@ -37,6 +37,8 @@
 
         private DateTime lastFpsUpdate;
 
+        private Thread gameThread;
+
         public GameDisplay()
         {
             this.InitializeComponent();
@@ -76,8 +78,15 @@
             Time.SetDeltaTime();
 
             // Create a thread object, passing in the MainLoop method
-            var gameThread = new Thread(this.MainLoop);
+            //var gameThread = new Thread(this.MainLoop);
 
+            
+        }
+
+        private void GameDisplay_Load(object sender, EventArgs e)
+        {
+            gameThread = new Thread(this.MainLoop);
+            
             // Start the render thread
             gameThread.Start();
         }
@@ -181,5 +190,7 @@
                     TileEngine.Instance.NodeMap[4, TileEngine.TilesY - 5],
                 };
         }
+
+        
     }
 }
