@@ -76,15 +76,11 @@
             // Temp stuff end -------
 
             Time.SetDeltaTime();
-
-            // Create a thread object, passing in the MainLoop method
-            //var gameThread = new Thread(this.MainLoop);
-
-            
         }
 
         private void GameDisplay_Load(object sender, EventArgs e)
         {
+            // Create a thread object, passing in the MainLoop method
             gameThread = new Thread(this.MainLoop);
             
             // Start the render thread
