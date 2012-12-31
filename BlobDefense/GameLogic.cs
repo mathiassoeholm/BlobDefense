@@ -85,7 +85,7 @@ namespace BlobDefense
                 // Don't render tiles, they are handled elsewhere
                 if (!(gameObject is Tile))
                 {
-                    gameObject.Render(graphicsContext, centerPivot: true);
+                    gameObject.Render(graphicsContext, !(gameObject is MouseCursor));
                 }
             }
 

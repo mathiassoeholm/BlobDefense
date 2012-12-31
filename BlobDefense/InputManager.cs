@@ -20,6 +20,29 @@ namespace BlobDefense
         { 
         }
 
+        /// <summary>
+        /// Gets the node that the mouse is hovering over if any.
+        /// </summary>
+        public MapNode HovederedMouseNode
+        {
+            get
+            {
+                Point coordinates = new Point(GameDisplay.MousePosition.X / TileEngine.TilesOnSpriteSize, GameDisplay.MousePosition.Y / TileEngine.TilesOnSpriteSize);
+
+                if (coordinates.X < TileEngine.Instance.NodeMap.GetLength(0)
+                    && coordinates.Y < TileEngine.Instance.NodeMap.GetLength(1)
+                    && coordinates.X >= 0
+                    && coordinates.Y >= 0)
+                {
+                    // Return the hovered node
+                    return TileEngine.Instance.NodeMap[coordinates.X, coordinates.Y];
+                }
+
+                // Mouse is outside the map, return null
+                return null;
+            }
+        }
+
         public void Initialize()
         {
             EventManager.Instance.OnMouseClick += this.ProcesClick;
@@ -27,25 +50,31 @@ namespace BlobDefense
 
         private void ProcesClick(Point position)
         {
-            Point coordinates = new Point(position.X / 32, position.Y / 32);
+            MapNode clickedNode = this.HovederedMouseNode;
+
+            // Return if node is null
+            if (clickedNode == null)
+            {
+                return;
+            }
 
             // Check if the node is not blocked
-            if (!TileEngine.Instance.NodeMap[coordinates.X, coordinates.Y].IsBlocked)
+            if (!clickedNode.IsBlocked)
             {
                 // Block the node
-                TileEngine.Instance.NodeMap[coordinates.X, coordinates.Y].IsBlocked = true;
+                clickedNode.IsBlocked = true;
                 
                 // Try to create a new path
                 if (GameLogic.Instance.TryCreateNewPath())
                 {
                     // If succeeded place tower
                     StandardTower testTower = new StandardTower();
-                    testTower.Position = TileEngine.Instance.NodeMap[coordinates.X, coordinates.Y].Position;
+                    testTower.Position = clickedNode.Position;
                 }
                 else
                 {
                     // Unblock the node
-                    TileEngine.Instance.NodeMap[coordinates.X, coordinates.Y].IsBlocked = false;
+                    clickedNode.IsBlocked = false;
                 }
             }
         }

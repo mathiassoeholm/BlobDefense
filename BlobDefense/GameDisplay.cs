@@ -78,6 +78,8 @@
             // Draw the map tiles
             TileEngine.Instance.RenderTiles(graphics);
 
+            this.DrawSelectedTile(graphics);
+
             // Draw the enemies path
             graphics.DrawLines(new Pen(Color.Red, 5), GameLogic.EnemyPath.Select(mapNode => mapNode.Position).ToArray());
 
@@ -90,6 +92,25 @@
             //// DrawNeighbors(graphics);
         }
 
+        private void DrawSelectedTile(Graphics graphics)
+        {
+            MapNode hoveredNode = InputManager.Instance.HovederedMouseNode;
+
+            // Return if node is null
+            if (hoveredNode == null)
+            {
+                return;
+            }
+
+            // Draw selection
+            graphics.DrawRectangle(
+                new Pen(Color.Red),
+                new Rectangle(
+                    hoveredNode.X - (TileEngine.TilesOnSpriteSize / 2),
+                    hoveredNode.Y - (TileEngine.TilesOnSpriteSize / 2),
+                    TileEngine.TilesOnSpriteSize,
+                    TileEngine.TilesOnSpriteSize));
+        }
 
         private void WriteFps(Graphics graphics)
         {
