@@ -78,7 +78,7 @@ public static class Astar<TNode> where TNode : class, IPathNode<TNode>, ICompara
 
     private static float Euclidean(TNode nodeA, TNode goal)
     {
-        return (float)Math.Sqrt(Math.Pow(nodeA.X - goal.X, 2) + Math.Pow(nodeA.Y - goal.Y, 2));
+        return (float)(Math.Abs(nodeA.X-goal.X) + Math.Abs(nodeA.Y-goal.Y));
     }
 
     private static List<TNode> BuildPath(TNode goal)
