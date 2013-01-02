@@ -43,7 +43,7 @@
             // Set up goal graphic
             this.goalGraphic = new GameObject();
             this.goalGraphic.SpriteSheetSource = new RectangleF(128, 0, 72, 83);
-            this.goalGraphic.DepthLevel = 1;
+            this.goalGraphic.DepthLevel = 10;
             this.goalGraphic.Position = new PointF(GameLogic.Instance.GoalNode.Position.X, this.goalGraphic.SpriteSheetSource.Height / 2);
             
             // Set size of the form
@@ -81,7 +81,7 @@
             this.DrawSelectedTile(graphics);
 
             // Draw the enemies path
-            graphics.DrawLines(new Pen(Color.Red, 5), GameLogic.EnemyPath.Select(mapNode => mapNode.Position).ToArray());
+            // graphics.DrawLines(new Pen(Color.Red, 5), GameLogic.EnemyPath.Select(mapNode => mapNode.Position).ToArray());
 
             // Run logic
             GameLogic.Instance.RunLogic(graphics);

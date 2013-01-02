@@ -86,6 +86,11 @@ namespace BlobDefense
                 if (!(gameObject is Tile))
                 {
                     gameObject.Render(graphicsContext, !(gameObject is MouseCursor));
+
+                    if (gameObject is Enemy)
+                    {
+                        (gameObject as Enemy).DrawHealthBar(graphicsContext);
+                    }
                 }
             }
 

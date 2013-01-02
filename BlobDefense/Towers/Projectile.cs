@@ -41,6 +41,10 @@ namespace BlobDefense.Towers
                         this.Position.Y - this.enemyTarget.Position.Y, this.Position.X - this.enemyTarget.Position.X)
                     * 57.324f; // 180 / Pi
             }
+            else
+            {
+                this.Destroy();
+            }
 
             this.Move();
         }
