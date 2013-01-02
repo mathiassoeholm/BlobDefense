@@ -12,6 +12,11 @@ namespace BlobDefense.Towers
     {
         public StandardTower()
         {
+            // Assign tower properties
+            this.ShootCooldown = 0.8f;
+            this.ShootRange = 200;
+            this.AttackDamage = 10;
+            
             this.SpriteSheetSource = new Rectangle(0, 178, 25, 29);
             
             this.IdleAnimation = new Animation(
@@ -22,14 +27,11 @@ namespace BlobDefense.Towers
                 tileDirection: TileDirection.Right);
 
             this.CurrentAnimation = this.IdleAnimation;
-
-            this.ShootCooldown = 0.4f;
-            this.ShootRange = 200;
         }
         
         protected override void ShootTarget()
         {
-            var projectile = new StandardProjectile(this.EnemyTarget, this.Position);
+            var projectile = new StandardProjectile(this.EnemyTarget, this.Position, this.AttackDamage);
             
             base.ShootTarget();
         }

@@ -12,15 +12,16 @@ namespace BlobDefense
     {
         private const int HealthBarWidth = 25;
         private const int HealthBarHeight = 3;
-        
-        private int targetNode;
-
-        private readonly float currentHealth;
-
-        protected float StartHealth { get; set; }
 
         private static Brush healthBarRedPen;
+
         private static Brush healthBarGreenPen;
+
+        private int targetNode;
+
+        private float currentHealth;
+
+        private float startHealth;
 
         protected Enemy()
         {
@@ -35,6 +36,19 @@ namespace BlobDefense
             this.currentHealth = 25;
         }
 
+        protected float StartHealth
+        {
+            get
+            {
+                return this.startHealth;
+            }
+            set
+            {
+                this.startHealth = value;
+                this.currentHealth = value;
+            }
+        }
+
         public Animation CurrentAnimation { get; protected set; }
 
         protected Animation WalkRightAnimation { get; set; }
@@ -44,6 +58,20 @@ namespace BlobDefense
         protected Animation WalkUpAnimation { get; set; }
 
         protected Animation WalkDownAnimation { get; set; }
+
+        public void TakeDamage(float amount)
+        {
+            // Check if we are dead
+            if (this.currentHealth - amount <= 0)
+            {
+                this.currentHealth = 0;
+
+                this.Die();
+            }
+
+            // Subtract from health
+            this.currentHealth -= amount;
+        }
 
         public void RunAnimation()
         {
@@ -69,7 +97,7 @@ namespace BlobDefense
         public void DrawHealthBar(Graphics graphics)
         {
             // Calculate width for green part of healthbar
-            int greenWidth = (int)((this.currentHealth / this.StartHealth) * HealthBarWidth);
+            int greenWidth = (int)((this.currentHealth / this.startHealth) * HealthBarWidth);
             
             Point healthBarPos = new Point((int)(this.Position.X - (HealthBarWidth * 0.5f)), (int)(this.Position.Y - HealthBarHeight - (this.SpriteSheetSource.Height * 0.5f)));
 
@@ -83,6 +111,12 @@ namespace BlobDefense
         public void Update()
         {
             this.Move();
+        }
+
+        private void Die()
+        {
+            // Destroy the enemy
+            this.Destroy();
         }
 
         private void ReachGoal()

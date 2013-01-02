@@ -9,20 +9,20 @@ namespace BlobDefense.Towers
     internal class Projectile : MovingGameObject, IUpdateBehaviour
     {
         private readonly Enemy enemyTarget;
+        private readonly float attackDamage;
         
-        public Projectile(Enemy enemy)
+        public Projectile(Enemy enemy, float attackDamage)
         {
             this.enemyTarget = enemy;
+            this.attackDamage = attackDamage;
 
             this.DepthLevel = 5;
         }
 
         protected override void OnTargetHit()
         {
-            // TODO: Implement give enemy damage
-            
-            // Destroy enemy (TEMP)
-            //this.enemyTarget.Destroy();
+            // Give damage to enemy
+            this.enemyTarget.TakeDamage(this.attackDamage);
 
             // Destroy this projectile
             this.Destroy();
@@ -30,7 +30,6 @@ namespace BlobDefense.Towers
 
         public void Update()
         {
-
             if (GameObject.AllGameObjects.Contains(this.enemyTarget))
             {
                 this.CurrentTarget = this.enemyTarget.Position;

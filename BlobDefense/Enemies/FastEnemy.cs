@@ -15,6 +15,7 @@ namespace BlobDefense
             // Assign properties for this enemy
             this.SpriteSheetSource = new Rectangle(0, 131, 15, 23);
             this.MoveSpeed = 40;
+            this.StartHealth = 50;
 
             this.WalkRightAnimation = new Animation(
                 fps: 6,

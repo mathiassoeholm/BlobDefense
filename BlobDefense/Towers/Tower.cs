@@ -21,6 +21,8 @@ namespace BlobDefense.Towers
 
         protected float ShootRange { get; set; }
 
+        protected float AttackDamage { get; set; }
+
         protected Projectile Projectile { get; set; }
 
         public void Update()
