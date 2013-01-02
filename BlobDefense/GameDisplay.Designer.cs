@@ -1,6 +1,6 @@
 ﻿namespace BlobDefense
 {
-    partial class GameDisplay
+    sealed partial class GameDisplay
     {
         /// <summary>
         /// Required designer variable.

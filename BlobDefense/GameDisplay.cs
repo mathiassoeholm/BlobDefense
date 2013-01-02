@@ -10,7 +10,7 @@
     /// <summary>
     /// The windows form which is responsible of displaying the game.
     /// </summary>
-    public partial class GameDisplay : Form
+    public sealed partial class GameDisplay : Form
     {
         private static GameDisplay instance;
 
