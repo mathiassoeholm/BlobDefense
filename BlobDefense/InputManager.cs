@@ -6,13 +6,18 @@ using System.Threading.Tasks;
 
 namespace BlobDefense
 {
+    using System.Diagnostics;
     using System.Drawing;
     using System.Windows.Forms;
 
+    using BlobDefense.Gui;
     using BlobDefense.Towers;
 
     internal class InputManager : Singleton<InputManager>
     {
+        private GuiButton hoveredButton;
+        private GuiButton pressedButton;
+        
         /// <summary>
         /// Prevents a default instance of the <see cref="InputManager"/> class from being created.
         /// </summary>
@@ -46,6 +51,60 @@ namespace BlobDefense
         public void Initialize()
         {
             EventManager.Instance.OnMouseClick += this.ProcesClick;
+            EventManager.Instance.OnMouseUp += this.OnMouseUp;
+            EventManager.Instance.OnMouseDown += this.OnMouseDown;
+        }
+
+        /// <summary>
+        /// Called once per frame.
+        /// </summary>
+        /// <param name="position">
+        /// The current mouse position.
+        /// </param>
+        public void Update(Point position)
+        {
+            bool didHoverOnAButton = false;
+            
+            foreach (GuiButton button in GuiButton.AllButtons)
+            {
+                if (button.PositionAndSize.Contains(position))
+                {
+                    didHoverOnAButton = true;
+                    this.hoveredButton = button;
+
+                    if (button.State == GuiButton.ButtonState.Standard)
+                    {
+                        button.State = GuiButton.ButtonState.Hovered;
+                    }
+
+                    break;
+                }
+            }
+
+            if (!didHoverOnAButton && this.hoveredButton != null)
+            {
+                this.hoveredButton.State = GuiButton.ButtonState.Standard;
+                this.hoveredButton = null;
+                Debug.WriteLine("Deselected");
+            }
+        }
+
+        private void OnMouseUp(Point position)
+        {
+            if (this.hoveredButton != null)
+            {
+                this.hoveredButton.State = GuiButton.ButtonState.Standard;
+                Debug.WriteLine("OnMouseUp");
+            }
+        }
+
+        private void OnMouseDown(Point position)
+        {
+            if (this.hoveredButton != null)
+            {
+                this.hoveredButton.State = GuiButton.ButtonState.Pressed;
+                Debug.WriteLine("OnMouseDown");
+            }
         }
 
         private void ProcesClick(Point position)

@@ -38,6 +38,8 @@
             this.Name = "GameDisplay";
             this.Text = "GameDisplay";
             this.Click += new System.EventHandler(this.GameDisplay_Click);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GameDisplay_MouseDown);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.GameDisplay_MouseUp);
             this.ResumeLayout(false);
 
         }

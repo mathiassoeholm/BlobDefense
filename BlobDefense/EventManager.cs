@@ -16,10 +16,20 @@ namespace BlobDefense
         private EventManager()
         { 
         }
-        
+
         /// <summary>
         /// Gets or sets the on mouse click delegate, with the mouse position.
         /// </summary>
         public Action<Point> OnMouseClick { get; set; }
+
+        /// <summary>
+        /// Gets or sets the on mouse up delegate, with the mouse position.
+        /// </summary>
+        public Action<Point> OnMouseUp { get; set; }
+
+        /// <summary>
+        /// Gets or sets the on mouse down delegate, with the mouse position.
+        /// </summary>
+        public Action<Point> OnMouseDown { get; set; }
     }
 }

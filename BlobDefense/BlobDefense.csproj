@@ -47,6 +47,7 @@
     <Compile Include="Animation.cs" />
     <Compile Include="Enumerations.cs" />
     <Compile Include="EventManager.cs" />
+    <Compile Include="Gui\GuiButton.cs" />
     <Compile Include="InputManager.cs" />
     <Compile Include="Towers\Projectile.cs" />
     <Compile Include="Towers\StandardProjectile.cs" />
@@ -107,8 +108,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\DemonicSplash.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <Content Include="Images\NewWaveBtn.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\NewWaveBtn_Hovered.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\NewWaveBtn_Pressed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\SpriteSheet.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

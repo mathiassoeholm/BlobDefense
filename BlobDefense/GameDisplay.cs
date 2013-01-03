@@ -5,6 +5,8 @@
     using System.Linq;
     using System.Windows.Forms;
 
+    using BlobDefense.Gui;
+
     using Extensions;
 
     /// <summary>
@@ -20,6 +22,8 @@
 
         private DateTime lastFpsUpdate;
 
+        private GuiButton nextWaveBtn;
+
         public GameDisplay()
         {
             this.InitializeComponent();
@@ -27,6 +31,20 @@
             Cursor.Hide();
 
             instance = this;
+
+            Image nextWaveBtnStandard = Image.FromFile(@"Images/NewWaveBtn.png");
+            Image nextWaveBtnHovered = Image.FromFile(@"Images/NewWaveBtn_Hovered.png");
+            Image nextWaveBtnPressed = Image.FromFile(@"Images/NewWaveBtn_Pressed.png");
+
+            // Set up next wave button
+            this.nextWaveBtn = new GuiButton(
+                string.Empty,
+                new Font("Arial", 14),
+                Color.White,
+                new Rectangle(TileEngine.TilesX * TileEngine.TilesOnSpriteSize, 0, nextWaveBtnStandard.Width, nextWaveBtnStandard.Height),
+                nextWaveBtnStandard,
+                nextWaveBtnHovered,
+                nextWaveBtnPressed);
 
             // Initialize the input manager
             InputManager.Instance.Initialize();
@@ -47,7 +65,7 @@
             this.goalGraphic.Position = new PointF(GameLogic.Instance.GoalNode.Position.X, this.goalGraphic.SpriteSheetSource.Height / 2);
             
             // Set size of the form
-            this.Width = (TileEngine.TilesX * TileEngine.TilesOnSpriteSize) + 50;
+            this.Width = (TileEngine.TilesX * TileEngine.TilesOnSpriteSize) + 200;
             this.Height = (TileEngine.TilesY * TileEngine.TilesOnSpriteSize) + 50;
 
             Time.SetDeltaTime();
@@ -75,13 +93,18 @@
             // Set the frame delta time
             Time.SetDeltaTime();
 
+            InputManager.Instance.Update(MousePosition);
+
             // Draw the map tiles
             TileEngine.Instance.RenderTiles(graphics);
 
             this.DrawSelectedTile(graphics);
 
             // Draw the enemies path
-            // graphics.DrawLines(new Pen(Color.Red, 5), GameLogic.EnemyPath.Select(mapNode => mapNode.Position).ToArray());
+            graphics.DrawLines(new Pen(Color.Red, 5), GameLogic.EnemyPath.Select(mapNode => mapNode.Position).ToArray());
+
+            // Draw gui buttons
+            GuiButton.DrawAllButtons(graphics);
 
             // Run logic
             GameLogic.Instance.RunLogic(graphics);
@@ -139,6 +162,16 @@
         private void GameDisplay_Click(object sender, EventArgs e)
         {
             EventManager.Instance.OnMouseClick.SafeInvoke(MousePosition);
+        }
+
+        private void GameDisplay_MouseUp(object sender, MouseEventArgs e)
+        {
+            EventManager.Instance.OnMouseUp.SafeInvoke(MousePosition);
+        }
+
+        private void GameDisplay_MouseDown(object sender, MouseEventArgs e)
+        {
+            EventManager.Instance.OnMouseDown.SafeInvoke(MousePosition);
         }
     }
 }
