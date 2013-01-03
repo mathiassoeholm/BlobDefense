@@ -11,6 +11,8 @@ namespace BlobDefense.Towers
     {
         private DateTime lastShotFired;
 
+        public int Kills { get; set; }
+
         public Animation CurrentAnimation { get; protected set; }
 
         protected Animation IdleAnimation { get; set; }
@@ -28,7 +30,7 @@ namespace BlobDefense.Towers
         public void Update()
         {
             // Check if another shot is ready
-            if (DateTime.Now.Subtract(this.lastShotFired).TotalSeconds > this.ShootCooldown)
+            if (DateTime.Now.Subtract(this.lastShotFired).TotalSeconds > this.ShootCooldown / Time.TimeScale)
             {
                 // Check if we do have a EnemyTarget
                 if (AllGameObjects.Contains(this.EnemyTarget) && this.Position.DistanceTo(this.EnemyTarget.Position) <= this.ShootRange)

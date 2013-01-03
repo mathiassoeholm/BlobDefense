@@ -82,12 +82,9 @@ namespace BlobDefense
                 {
                     gameObject.Render(graphicsContext, !(gameObject is MouseCursor));
 
-                    if (Keyboard.IsKeyToggled(Keys.Alt))
+                    if (gameObject is Enemy)
                     {
-                        if (gameObject is Enemy)
-                        {
-                            (gameObject as Enemy).DrawHealthBar(graphicsContext);
-                        }
+                        (gameObject as Enemy).DrawHealthBar(graphicsContext);
                     }
                 }
             }

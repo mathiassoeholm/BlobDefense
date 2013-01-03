@@ -18,6 +18,8 @@ namespace BlobDefense.WaveSpawner
 
         private int currentWave;
 
+        private int millisBetweenEachEnemy = MillisBetweenEachEnemy;
+
         /// <summary>
         /// Prevents a default instance of the <see cref="WaveManager"/> class from being created.
         /// </summary>
@@ -46,7 +48,17 @@ namespace BlobDefense.WaveSpawner
                 return;
             }
 
-            this.enemySpawnTimer = new Timer(this.SpawnEnemy, null, 0, MillisBetweenEachEnemy);
+            this.enemySpawnTimer = new Timer(this.SpawnEnemy, null, 0, this.millisBetweenEachEnemy);
+        }
+
+        public void ScaleSpawnInterval(int timeScale)
+        {
+            this.millisBetweenEachEnemy = MillisBetweenEachEnemy / timeScale;
+
+            if (this.enemySpawnTimer != null)
+            {
+                this.enemySpawnTimer.Change(0, MillisBetweenEachEnemy / timeScale);
+            }
         }
 
         private void StopWave()

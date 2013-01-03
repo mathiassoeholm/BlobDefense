@@ -10,8 +10,8 @@ namespace BlobDefense.Towers
 
     internal class StandardProjectile : Projectile
     {
-        public StandardProjectile(Enemy enemy, PointF spawnPosition, float attackDamage)
-            : base(enemy, attackDamage)
+        public StandardProjectile(Enemy enemy, PointF spawnPosition, float attackDamage, Tower towerSource)
+            : base(enemy, attackDamage, towerSource)
         {
             this.SpriteSheetSource = new RectangleF(100, 179, 14, 7);
             this.Position = spawnPosition;

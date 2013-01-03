@@ -23,6 +23,8 @@ namespace BlobDefense
 
         private float startHealth;
 
+        private bool isDead;
+
         protected Enemy()
         {
             healthBarRedPen = healthBarRedPen ?? new SolidBrush(Color.Red);
@@ -59,18 +61,38 @@ namespace BlobDefense
 
         protected Animation WalkDownAnimation { get; set; }
 
-        public void TakeDamage(float amount)
+        /// <summary>
+        /// Makes the enemy lose damage, and kills it if it reaches zero.
+        /// </summary>
+        /// <param name="amount">
+        /// The amount of damage dealt to the enemy.
+        /// </param>
+        /// <returns>
+        /// A value indicating whether the enemy was killed by the attack.
+        /// </returns>
+        public bool TakeDamage(float amount)
         {
+            if (this.isDead)
+            {
+                return false;
+            }
+            
             // Check if we are dead
             if (this.currentHealth - amount <= 0)
             {
                 this.currentHealth = 0;
 
                 this.Die();
+
+                this.isDead = true;
+
+                return true;
             }
 
             // Subtract from health
             this.currentHealth -= amount;
+
+            return false;
         }
 
         public void RunAnimation()

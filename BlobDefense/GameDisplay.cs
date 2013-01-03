@@ -15,7 +15,10 @@
     /// </summary>
     public sealed partial class GameDisplay : Form
     {
-        private const int NextWaveBtnOffset = 10;
+        private const int GuiLeftOffset = 10;
+        private const int SpeedBtnTopOffset = 53;
+        private const int SpaceBetweenSpeedButtons = 65;
+        private const int RightPanelWidth = 205;
         
         private static GameDisplay instance;
 
@@ -25,8 +28,6 @@
 
         private DateTime lastFpsUpdate;
 
-        private GuiButton nextWaveBtn;
-
         public GameDisplay()
         {
             this.InitializeComponent();
@@ -35,17 +36,43 @@
 
             instance = this;
 
+            // Load button images
             Image nextWaveBtnStandard = Image.FromFile(@"Images/NewWaveBtn.png");
-            Image nextWaveBtnHovered = Image.FromFile(@"Images/NewWaveBtn_Hovered.png");
-            Image nextWaveBtnPressed = Image.FromFile(@"Images/NewWaveBtn_Pressed.png");
+            Image speed100BtnStandard = Image.FromFile(@"Images/Speed100Btn.png");
+            Image speed200BtnStandard = Image.FromFile(@"Images/Speed200Btn.png");
+            Image speed400BtnStandard = Image.FromFile(@"Images/Speed400Btn.png");
 
             // Set up next wave button
-            this.nextWaveBtn = new GuiButton(
-                new Rectangle((TileEngine.TilesX * TileEngine.TilesOnSpriteSize) + NextWaveBtnOffset, NextWaveBtnOffset, nextWaveBtnStandard.Width, nextWaveBtnStandard.Height),
+            new GuiButton(
+                new Rectangle((TileEngine.TilesX * TileEngine.TilesOnSpriteSize) + GuiLeftOffset, GuiLeftOffset, nextWaveBtnStandard.Width, nextWaveBtnStandard.Height),
                 nextWaveBtnStandard,
-                nextWaveBtnHovered,
-                nextWaveBtnPressed,
+                Image.FromFile(@"Images/NewWaveBtn_Hovered.png"),
+                Image.FromFile(@"Images/NewWaveBtn_Pressed.png"),
                 WaveManager.Instance.StartWave);
+
+            // Set up speed 100% button
+            new GuiButton(
+                new Rectangle((TileEngine.TilesX * TileEngine.TilesOnSpriteSize) + GuiLeftOffset, SpeedBtnTopOffset, speed100BtnStandard.Width, speed100BtnStandard.Height),
+                speed100BtnStandard,
+                Image.FromFile(@"Images/Speed100Btn_Hovered.png"),
+                Image.FromFile(@"Images/Speed100Btn_Pressed.png"),
+                () => Time.TimeScale = 1);
+
+            // Set up speed 200% button
+            new GuiButton(
+                new Rectangle((TileEngine.TilesX * TileEngine.TilesOnSpriteSize) + GuiLeftOffset + SpaceBetweenSpeedButtons, SpeedBtnTopOffset, speed200BtnStandard.Width, speed200BtnStandard.Height),
+                speed200BtnStandard,
+                Image.FromFile(@"Images/Speed200Btn_Hovered.png"),
+                Image.FromFile(@"Images/Speed200Btn_Pressed.png"),
+                () => Time.TimeScale = 5);
+
+            // Set up speed 400% button
+            new GuiButton(
+                new Rectangle((TileEngine.TilesX * TileEngine.TilesOnSpriteSize) + GuiLeftOffset + (SpaceBetweenSpeedButtons * 2), SpeedBtnTopOffset, speed400BtnStandard.Width, speed400BtnStandard.Height),
+                speed400BtnStandard,
+                Image.FromFile(@"Images/Speed400Btn_Hovered.png"),
+                Image.FromFile(@"Images/Speed400Btn_Pressed.png"),
+                () => Time.TimeScale = 10);
 
             // Initialize the input manager
             InputManager.Instance.Initialize();
@@ -66,12 +93,14 @@
             this.goalGraphic.Position = new PointF(GameLogic.Instance.GoalNode.Position.X, this.goalGraphic.SpriteSheetSource.Height / 2);
             
             // Set size of the form
-            this.ClientSize = new Size((TileEngine.TilesX * TileEngine.TilesOnSpriteSize) + 200, (TileEngine.TilesY * TileEngine.TilesOnSpriteSize));
+            this.ClientSize = new Size((TileEngine.TilesX * TileEngine.TilesOnSpriteSize) + RightPanelWidth, (TileEngine.TilesY * TileEngine.TilesOnSpriteSize));
 
             Time.SetDeltaTime();
 
             this.DoubleBuffered = true;
             this.ResizeRedraw = true;
+
+            Time.TimeScale = 4;
         }
 
         public static new Point MousePosition

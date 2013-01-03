@@ -68,21 +68,22 @@ namespace BlobDefense
             {
                 if (button.PositionAndSize.Contains(position))
                 {
-                    didHoverOnAButton = true;
                     this.hoveredButton = button;
+                    didHoverOnAButton = true;
 
                     if (button.State == GuiButton.ButtonState.Standard)
                     {
                         button.State = GuiButton.ButtonState.Hovered;
                     }
-
-                    break;
+                }
+                else
+                {
+                    button.State = GuiButton.ButtonState.Standard;
                 }
             }
 
-            if (!didHoverOnAButton && this.hoveredButton != null)
+            if(!didHoverOnAButton)
             {
-                this.hoveredButton.State = GuiButton.ButtonState.Standard;
                 this.hoveredButton = null;
             }
         }

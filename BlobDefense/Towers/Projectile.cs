@@ -10,11 +10,13 @@ namespace BlobDefense.Towers
     {
         private readonly Enemy enemyTarget;
         private readonly float attackDamage;
-        
-        public Projectile(Enemy enemy, float attackDamage)
+        private readonly Tower towerSource;
+
+        public Projectile(Enemy enemy, float attackDamage, Tower towerSource)
         {
             this.enemyTarget = enemy;
             this.attackDamage = attackDamage;
+            this.towerSource = towerSource;
 
             this.DepthLevel = 5;
         }
@@ -22,7 +24,11 @@ namespace BlobDefense.Towers
         protected override void OnTargetHit()
         {
             // Give damage to enemy
-            this.enemyTarget.TakeDamage(this.attackDamage);
+            if (this.enemyTarget.TakeDamage(this.attackDamage))
+            {
+                // Plus one kill to the tower
+                this.towerSource.Kills++;
+            }
 
             // Destroy this projectile
             this.Destroy();

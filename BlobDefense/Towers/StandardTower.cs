@@ -31,7 +31,7 @@ namespace BlobDefense.Towers
         
         protected override void ShootTarget()
         {
-            var projectile = new StandardProjectile(this.EnemyTarget, this.Position, this.AttackDamage);
+            var projectile = new StandardProjectile(this.EnemyTarget, this.Position, this.AttackDamage, this);
             
             base.ShootTarget();
         }
