@@ -8,18 +8,22 @@ namespace BlobDefense.Gui
 {
     using System.Drawing;
 
+    using Extensions;
+
     internal class GuiButton
     {
-        public GuiButton(string text, Font textFont, Color textColor, Rectangle positionAndSize, Image standardImage, Image hoverImage = null, Image pressedImage = null)
+        private Action clickAction;
+        
+        public GuiButton(Rectangle positionAndSize, Image standardImage, Image hoverImage = null, Image pressedImage = null, Action clickAction = null, string text = "", Font textFont = null)
         {
             // Initialize a new list if it is null
             AllButtons = AllButtons ?? new List<GuiButton>();
             
             this.Text = text;
             this.TextFont = textFont;
-            this.TextColor = textColor;
             this.StandardImage = standardImage;
             this.PositionAndSize = positionAndSize;
+            this.clickAction = clickAction;
 
             this.HoverImage = hoverImage ?? standardImage;
             this.PressedImage = pressedImage ?? standardImage;
@@ -86,6 +90,11 @@ namespace BlobDefense.Gui
             {
                 button.Draw(graphics);
             }
+        }
+
+        public void Click()
+        {
+            this.clickAction.SafeInvoke();
         }
 
         private void Draw(Graphics graphics)

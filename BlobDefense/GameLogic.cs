@@ -63,11 +63,6 @@ namespace BlobDefense
 
         public void RunLogic(Graphics graphicsContext)
         {
-            if (Keyboard.IsKeyDown(Keys.W))
-            {
-                WaveManager.Instance.StartWave();
-            }
-
             foreach (GameObject gameObject in GameObject.AllGameObjects)
             {
                 // Update behaviours
@@ -87,9 +82,12 @@ namespace BlobDefense
                 {
                     gameObject.Render(graphicsContext, !(gameObject is MouseCursor));
 
-                    if (gameObject is Enemy)
+                    if (Keyboard.IsKeyToggled(Keys.Alt))
                     {
-                        (gameObject as Enemy).DrawHealthBar(graphicsContext);
+                        if (gameObject is Enemy)
+                        {
+                            (gameObject as Enemy).DrawHealthBar(graphicsContext);
+                        }
                     }
                 }
             }

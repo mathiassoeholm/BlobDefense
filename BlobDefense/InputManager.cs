@@ -16,7 +16,6 @@ namespace BlobDefense
     internal class InputManager : Singleton<InputManager>
     {
         private GuiButton hoveredButton;
-        private GuiButton pressedButton;
         
         /// <summary>
         /// Prevents a default instance of the <see cref="InputManager"/> class from being created.
@@ -85,7 +84,6 @@ namespace BlobDefense
             {
                 this.hoveredButton.State = GuiButton.ButtonState.Standard;
                 this.hoveredButton = null;
-                Debug.WriteLine("Deselected");
             }
         }
 
@@ -94,7 +92,7 @@ namespace BlobDefense
             if (this.hoveredButton != null)
             {
                 this.hoveredButton.State = GuiButton.ButtonState.Standard;
-                Debug.WriteLine("OnMouseUp");
+                this.hoveredButton.Click();
             }
         }
 
@@ -103,7 +101,6 @@ namespace BlobDefense
             if (this.hoveredButton != null)
             {
                 this.hoveredButton.State = GuiButton.ButtonState.Pressed;
-                Debug.WriteLine("OnMouseDown");
             }
         }
 

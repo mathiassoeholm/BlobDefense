@@ -34,6 +34,7 @@ namespace BlobDefense.WaveSpawner
                     new Wave<StandardEnemy, FastEnemy, PikachuEnemy>(10, 10, 10),
                     new Wave<FastEnemy>(15),
                     new Wave<StandardEnemy, FastEnemy, PikachuEnemy>(12, 12, 12),
+                    new Wave<PikachuEnemy, FastEnemy>(3, 5),
                 };
         }
 

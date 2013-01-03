@@ -6,6 +6,7 @@
     using System.Windows.Forms;
 
     using BlobDefense.Gui;
+    using BlobDefense.WaveSpawner;
 
     using Extensions;
 
@@ -14,6 +15,8 @@
     /// </summary>
     public sealed partial class GameDisplay : Form
     {
+        private const int NextWaveBtnOffset = 10;
+        
         private static GameDisplay instance;
 
         private readonly GameObject goalGraphic;
@@ -38,13 +41,11 @@
 
             // Set up next wave button
             this.nextWaveBtn = new GuiButton(
-                string.Empty,
-                new Font("Arial", 14),
-                Color.White,
-                new Rectangle(TileEngine.TilesX * TileEngine.TilesOnSpriteSize, 0, nextWaveBtnStandard.Width, nextWaveBtnStandard.Height),
+                new Rectangle((TileEngine.TilesX * TileEngine.TilesOnSpriteSize) + NextWaveBtnOffset, NextWaveBtnOffset, nextWaveBtnStandard.Width, nextWaveBtnStandard.Height),
                 nextWaveBtnStandard,
                 nextWaveBtnHovered,
-                nextWaveBtnPressed);
+                nextWaveBtnPressed,
+                WaveManager.Instance.StartWave);
 
             // Initialize the input manager
             InputManager.Instance.Initialize();
@@ -65,8 +66,7 @@
             this.goalGraphic.Position = new PointF(GameLogic.Instance.GoalNode.Position.X, this.goalGraphic.SpriteSheetSource.Height / 2);
             
             // Set size of the form
-            this.Width = (TileEngine.TilesX * TileEngine.TilesOnSpriteSize) + 200;
-            this.Height = (TileEngine.TilesY * TileEngine.TilesOnSpriteSize) + 50;
+            this.ClientSize = new Size((TileEngine.TilesX * TileEngine.TilesOnSpriteSize) + 200, (TileEngine.TilesY * TileEngine.TilesOnSpriteSize));
 
             Time.SetDeltaTime();
 
