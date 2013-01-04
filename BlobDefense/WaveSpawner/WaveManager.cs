@@ -16,7 +16,7 @@ namespace BlobDefense.WaveSpawner
 
         private Timer enemySpawnTimer;
 
-        private int currentWave;
+        private int currentWave = -1;
 
         private int millisBetweenEachEnemy = MillisBetweenEachEnemy;
 
@@ -40,6 +40,14 @@ namespace BlobDefense.WaveSpawner
                 };
         }
 
+        public int CurrentWave
+        {
+            get
+            {
+                return this.currentWave + 1;
+            }
+        }
+
         public void StartWave()
         {
             // Return if a wave is already active
@@ -47,6 +55,8 @@ namespace BlobDefense.WaveSpawner
             {
                 return;
             }
+
+            this.currentWave++;
 
             this.enemySpawnTimer = new Timer(this.SpawnEnemy, null, 0, this.millisBetweenEachEnemy);
         }
@@ -65,7 +75,7 @@ namespace BlobDefense.WaveSpawner
         {
             this.enemySpawnTimer.Dispose();
             this.enemySpawnTimer = null;
-            this.currentWave++;
+            
         }
 
         private void SpawnEnemy(object state)

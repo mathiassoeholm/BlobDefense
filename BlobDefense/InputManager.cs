@@ -12,11 +12,12 @@ namespace BlobDefense
 
     using BlobDefense.Gui;
     using BlobDefense.Towers;
+    using Extensions;
 
     internal class InputManager : Singleton<InputManager>
     {
         private GuiButton hoveredButton;
-        
+
         /// <summary>
         /// Prevents a default instance of the <see cref="InputManager"/> class from being created.
         /// </summary>
@@ -112,6 +113,9 @@ namespace BlobDefense
             // Return if node is null
             if (clickedNode == null)
             {
+                // No tower was selected, deselect any towers
+                EventManager.Instance.DeselectedTower.SafeInvoke();
+                
                 return;
             }
 
@@ -134,6 +138,21 @@ namespace BlobDefense
                     clickedNode.IsBlocked = false;
                 }
             }
+            else
+            {
+                // Select tower on that pos, if any
+                foreach (Tower tower in GameObject.AllGameObjects.OfType<Tower>())
+                {
+                    if (tower.Position == clickedNode.Position)
+                    {
+                        EventManager.Instance.TowerWasSelected.SafeInvoke(tower);
+                        return;
+                    }
+                }
+            }
+
+            // No tower was selected, deselect any towers
+            EventManager.Instance.DeselectedTower.SafeInvoke();
         }
     }
 }

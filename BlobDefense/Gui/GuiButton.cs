@@ -24,6 +24,7 @@ namespace BlobDefense.Gui
             this.StandardImage = standardImage;
             this.PositionAndSize = positionAndSize;
             this.clickAction = clickAction;
+            this.TextColor = Color.Black;
 
             this.HoverImage = hoverImage ?? standardImage;
             this.PressedImage = pressedImage ?? standardImage;
@@ -84,20 +85,12 @@ namespace BlobDefense.Gui
         /// </summary>
         public Image PressedImage { get; private set; }
 
-        public static void DrawAllButtons(Graphics graphics)
-        {
-            foreach (GuiButton button in AllButtons)
-            {
-                button.Draw(graphics);
-            }
-        }
-
         public void Click()
         {
             this.clickAction.SafeInvoke();
         }
 
-        private void Draw(Graphics graphics)
+        public void Draw(Graphics graphics)
         {
             // Draw button image
             switch (this.State)
