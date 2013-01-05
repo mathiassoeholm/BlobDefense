@@ -14,8 +14,10 @@ namespace BlobDefense.Towers
         {
             // Assign tower properties
             this.ShootCooldown = 0.8f;
-            this.ShootRange = 200;
+            this.ShootRange = 70;
             this.AttackDamage = 10;
+            this.BuildPrice = 25;
+            this.UpgradePrice = 15;
             
             this.SpriteSheetSource = new Rectangle(0, 178, 25, 29);
             
@@ -28,10 +30,22 @@ namespace BlobDefense.Towers
 
             this.CurrentAnimation = this.IdleAnimation;
         }
+
+        public override void Upgrade()
+        {
+            base.Upgrade();
+
+            // Increment properties
+            this.AttackDamage *= 1.2f;
+            this.ShootRange *= 1.2f;
+            this.ShootCooldown *= 0.9f;
+            this.UpgradePrice *= 2;
+        }
         
         protected override void ShootTarget()
         {
-            var projectile = new StandardProjectile(this.EnemyTarget, this.Position, this.AttackDamage, this);
+            // Create a new projectile
+            new StandardProjectile(this.EnemyTarget, this.Position, this.AttackDamage, this);
             
             base.ShootTarget();
         }

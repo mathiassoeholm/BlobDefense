@@ -13,17 +13,23 @@ namespace BlobDefense.Towers
 
         public int Kills { get; set; }
 
+        public int Level { get; private set; }
+
+        public int UpgradePrice { get; protected set; }
+
+        public int BuildPrice { get; protected set; }
+
         public Animation CurrentAnimation { get; protected set; }
 
         protected Animation IdleAnimation { get; set; }
 
         protected Enemy EnemyTarget { get; set; }
 
-        protected float ShootCooldown { get; set; }
+        public float ShootCooldown { get; set; }
 
-        protected float ShootRange { get; set; }
+        public float ShootRange { get; set; }
 
-        protected float AttackDamage { get; set; }
+        public float AttackDamage { get; set; }
 
         protected Projectile Projectile { get; set; }
 
@@ -60,6 +66,30 @@ namespace BlobDefense.Towers
                     }
                 }
             }
+        }
+
+        public override void Destroy()
+        {
+            // Free the node
+            TileEngine.Instance.NodeMap[
+                (int)this.Position.X / TileEngine.TilesOnSpriteSize, (int)this.Position.Y / TileEngine.TilesOnSpriteSize]
+                .IsBlocked = false;
+
+            // Recreate path
+            GameLogic.Instance.TryCreateNewPath();
+            
+            // Deselect tower
+            EventManager.Instance.DeselectedTower.SafeInvoke();
+            
+            base.Destroy();
+        }
+
+        public virtual void Upgrade()
+        {
+            this.Level++;
+
+            // Reselect the tower
+            EventManager.Instance.TowerWasSelected.SafeInvoke(this);
         }
 
         protected virtual void ShootTarget()

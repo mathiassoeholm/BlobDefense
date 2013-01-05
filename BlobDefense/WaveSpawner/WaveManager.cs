@@ -27,7 +27,7 @@ namespace BlobDefense.WaveSpawner
         {            
             this.waves = new List<IEnemyWave>()
                 {
-                    new Wave<StandardEnemy>(10),
+                    new Wave<FastEnemy>(1000),
                     new Wave<StandardEnemy, PikachuEnemy>(10, 5),
                     new Wave<StandardEnemy, PikachuEnemy>(5, 10),
                     new Wave<FastEnemy>(10),
@@ -75,7 +75,6 @@ namespace BlobDefense.WaveSpawner
         {
             this.enemySpawnTimer.Dispose();
             this.enemySpawnTimer = null;
-            
         }
 
         private void SpawnEnemy(object state)

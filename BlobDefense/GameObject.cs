@@ -122,7 +122,7 @@
         /// <summary>
         /// Adds the game object to the destroy queue.
         /// </summary>
-        public void Destroy()
+        public virtual void Destroy()
         {
             GameObjectsToDestroy.Enqueue(this);
         }

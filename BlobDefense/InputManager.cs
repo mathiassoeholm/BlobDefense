@@ -113,9 +113,13 @@ namespace BlobDefense
             // Return if node is null
             if (clickedNode == null)
             {
-                // No tower was selected, deselect any towers
-                EventManager.Instance.DeselectedTower.SafeInvoke();
                 
+                if (this.hoveredButton == null)
+                {
+                    // No tower was selected, deselect any towers
+                    EventManager.Instance.DeselectedTower.SafeInvoke();
+                }
+
                 return;
             }
 
@@ -151,8 +155,11 @@ namespace BlobDefense
                 }
             }
 
-            // No tower was selected, deselect any towers
-            EventManager.Instance.DeselectedTower.SafeInvoke();
+            if (this.hoveredButton == null)
+            {
+                // No tower was selected, deselect any towers
+                EventManager.Instance.DeselectedTower.SafeInvoke();
+            }
         }
     }
 }
