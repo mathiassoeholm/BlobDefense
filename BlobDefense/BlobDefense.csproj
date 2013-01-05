@@ -47,6 +47,7 @@
     <Compile Include="Animation.cs" />
     <Compile Include="Enumerations.cs" />
     <Compile Include="EventManager.cs" />
+    <Compile Include="GameManager.cs" />
     <Compile Include="Gui\GuiButton.cs" />
     <Compile Include="Gui\GuiManager.cs" />
     <Compile Include="InputManager.cs" />

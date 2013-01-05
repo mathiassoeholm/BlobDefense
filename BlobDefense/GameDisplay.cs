@@ -36,6 +36,9 @@
             // Initialize the input manager
             InputManager.Instance.Initialize();
 
+            // Initialize the game manager
+            GameManager.Instance.InitializeManager();
+
             // Craete and render mouse on top of everything else
             this.mouseCursor = new MouseCursor { DepthLevel = int.MaxValue };
 

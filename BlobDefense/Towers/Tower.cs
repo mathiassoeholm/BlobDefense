@@ -86,10 +86,7 @@ namespace BlobDefense.Towers
 
         public virtual void Upgrade()
         {
-            this.Level++;
-
-            // Reselect the tower
-            EventManager.Instance.TowerWasSelected.SafeInvoke(this);
+            this.Level++;        
         }
 
         protected virtual void ShootTarget()

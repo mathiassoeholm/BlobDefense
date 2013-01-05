@@ -146,7 +146,7 @@
             // Rotate the graphics if a rotation is specified.
             if (this.Rotation != 0)
             {
-                using (Matrix m = new Matrix())
+                using (var m = new Matrix())
                 {
                     m.RotateAt(Rotation, Position);
                     context.Transform = m;

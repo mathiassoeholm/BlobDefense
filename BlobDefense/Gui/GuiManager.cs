@@ -169,7 +169,7 @@ namespace BlobDefense.Gui
                 standardImage: upgradeBtnStandard,
                 hoverImage: Image.FromFile(@"Images/UpgradeBtn_Hovered.png"),
                 pressedImage: Image.FromFile(@"Images/UpgradeBtn_Pressed.png"),
-                clickAction: () => this.selectedTower.Upgrade());
+                clickAction: UpgradeSelectedTower);
 
             // Set up destroy button
             this.destroyBtn = new GuiButton(
@@ -178,6 +178,14 @@ namespace BlobDefense.Gui
                 hoverImage: Image.FromFile(@"Images/DestroyBtn_Hovered.png"),
                 pressedImage: Image.FromFile(@"Images/DestroyBtn_Pressed.png"),
                 clickAction: () => this.selectedTower.Destroy());
+        }
+
+        private void UpgradeSelectedTower()
+        {
+            if (GameManager.Instance.TryBuy(this.selectedTower.UpgradePrice))
+            {
+                this.selectedTower.Upgrade();
+            }
         }
     }
 }
