@@ -8,7 +8,7 @@ namespace BlobDefense.Towers
 {
     internal class Projectile : MovingGameObject, IUpdateBehaviour
     {
-        private readonly Enemy enemyTarget;
+        protected readonly Enemy enemyTarget;
         private readonly float attackDamage;
         private readonly Tower towerSource;
 

@@ -13,7 +13,7 @@ namespace BlobDefense.Towers
         public StandardProjectile(Enemy enemy, PointF spawnPosition, float attackDamage, Tower towerSource)
             : base(enemy, attackDamage, towerSource)
         {
-            this.SpriteSheetSource = new RectangleF(100, 179, 14, 7);
+            this.SpriteSheetSource = new Rectangle(100, 179, 14, 7);
             this.Position = spawnPosition;
             this.MoveSpeed = 200;
         }

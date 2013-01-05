@@ -13,11 +13,11 @@ namespace BlobDefense.Towers
         public StandardTower()
         {
             // Assign tower properties
-            this.ShootCooldown = 0.8f;
-            this.ShootRange = 70;
-            this.AttackDamage = 10;
-            this.BuildPrice = 25;
-            this.UpgradePrice = 15;
+            this.ShootCooldown = GameSettings.StandardTower_CoolDown;
+            this.ShootRange = GameSettings.StandardTower_ShootRange;
+            this.AttackDamage = GameSettings.StandardTower_AttackDamage;
+            this.BuildPrice = GameSettings.StandardTower_BuildPrice;
+            this.UpgradePrice = GameSettings.StandardTower_UpgradePrice;
             
             this.SpriteSheetSource = new Rectangle(0, 178, 25, 29);
             
@@ -36,10 +36,10 @@ namespace BlobDefense.Towers
             base.Upgrade();
 
             // Increment properties
-            this.AttackDamage *= 1.2f;
-            this.ShootRange *= 1.2f;
-            this.ShootCooldown *= 0.9f;
-            this.UpgradePrice *= 2;
+            this.AttackDamage *= GameSettings.StandardTower_AttackDamage_Upgrade;
+            this.ShootRange *= GameSettings.StandardTower_ShootRange_Upgrade;
+            this.ShootCooldown *= GameSettings.StandardTower_ShootCoolDown_Upgrade;
+            this.UpgradePrice *= GameSettings.StandardTower_UpgradePrice_Upgrade;
         }
         
         protected override void ShootTarget()

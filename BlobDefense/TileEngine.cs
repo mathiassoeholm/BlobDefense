@@ -43,7 +43,7 @@ namespace BlobDefense
                 {
                     // Create new tile object
                     var tile = new Tile();
-                    tile.SpriteSheetSource = new RectangleF(x * TilesOnSpriteSize, y * TilesOnSpriteSize, TilesOnSpriteSize, TilesOnSpriteSize);
+                    tile.SpriteSheetSource = new Rectangle(x * TilesOnSpriteSize, y * TilesOnSpriteSize, TilesOnSpriteSize, TilesOnSpriteSize);
 
                     // Add the new tile type
                     this.AddTileType(tile);
