@@ -25,6 +25,10 @@ namespace BlobDefense
 
         private bool isDead;
 
+        private float defaultMoveSpeed;
+
+        private DateTime endOfSlow;
+
         protected Enemy()
         {
             healthBarRedPen = healthBarRedPen ?? new SolidBrush(Color.Red);
@@ -60,6 +64,8 @@ namespace BlobDefense
         protected Animation WalkUpAnimation { get; set; }
 
         protected Animation WalkDownAnimation { get; set; }
+
+        protected int Bounty { get; set; }
 
         /// <summary>
         /// Makes the enemy lose damage, and kills it if it reaches zero.
@@ -116,6 +122,12 @@ namespace BlobDefense
             this.AssignCurrentAnimation();
         }
 
+        public void Slow(float amount, float duration)
+        {
+            this.MoveSpeed = this.defaultMoveSpeed * amount;
+            this.endOfSlow = DateTime.Now.Add(TimeSpan.FromSeconds(duration));
+        }
+
         public void DrawHealthBar(Graphics graphics)
         {
             // Calculate width for green part of healthbar
@@ -132,11 +144,25 @@ namespace BlobDefense
 
         public void Update()
         {
+            // Set the default move speed, if not set yet.
+            if (this.defaultMoveSpeed == 0)
+            {
+                this.defaultMoveSpeed = this.MoveSpeed;
+            }
+            
+            if (DateTime.Now.CompareTo(this.endOfSlow) == 1)
+            {
+                this.MoveSpeed = this.defaultMoveSpeed;
+            }
+            
             this.Move();
         }
 
         private void Die()
         {
+            // Give player the bounty
+            GameManager.Instance.GiveCurrency(this.Bounty);
+            
             // Destroy the enemy
             this.Destroy();
         }

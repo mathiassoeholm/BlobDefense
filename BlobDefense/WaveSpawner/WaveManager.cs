@@ -8,6 +8,8 @@ namespace BlobDefense.WaveSpawner
 {
     using System.Threading;
 
+    using Extensions;
+
     internal class WaveManager : Singleton<WaveManager>
     {
         private const int MillisBetweenEachEnemy = 1000;
@@ -57,6 +59,8 @@ namespace BlobDefense.WaveSpawner
             }
 
             this.currentWave++;
+
+            EventManager.Instance.WaveStarted.SafeInvoke();
 
             this.enemySpawnTimer = new Timer(this.SpawnEnemy, null, 0, this.millisBetweenEachEnemy);
         }

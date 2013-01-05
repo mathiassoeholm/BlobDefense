@@ -11,14 +11,18 @@ namespace BlobDefense.Gui
     using BlobDefense.Towers;
     using BlobDefense.WaveSpawner;
 
+    using Extensions;
+
     internal class GuiManager : Singleton<GuiManager>
     {
         public const int RightPanelWidth = 205;
         private const int GuiLeftOffset = 10;
         private const int SpeedBtnTopOffset = 53;
         private const int SpaceBetweenSpeedButtons = 65;
-        private const int TowerOptionsTopOffset = 290;
-        private const int UpgradeButtonTopOffset = 395;
+        private const int TowerOptionsTopOffset = 200;
+        private const int UpgradeButtonTopOffset = 315;
+        private const int TowerButtonsTopOffset = 150;
+        private const int TowerButtonsSpacing = 15;
 
         private GuiButton nextWaveBtn;
         private GuiButton speed100Btn;
@@ -26,18 +30,33 @@ namespace BlobDefense.Gui
         private GuiButton speed400Btn;
         private GuiButton upgradeBtn;
         private GuiButton destroyBtn;
-
+        private GuiButton towerOneBtn;
+        private GuiButton towerTwoBtn;
 
         private Tower selectedTower;
+
+        /// <summary>
+        /// Gets or set the id for the tower to build.
+        /// When clicking on a tower icon, this gets set to the appropriate value.
+        /// -1 Means no tower.
+        /// </summary>
+        public int SelectedTowerToBuild { get; private set; }
 
         /// <summary>
         /// Prevents a default instance of the <see cref="GuiManager"/> class from being created.
         /// </summary>
         private GuiManager()
         {
+            // Select no tower as a start
+            this.SelectedTowerToBuild = -1;
+            
             this.SetUpInGameGui();
             EventManager.Instance.TowerWasSelected += this.OnTowerSelected;
             EventManager.Instance.DeselectedTower += () => this.selectedTower = null;
+
+            // Stop building a tower, if a tower was selected or a wave started
+            EventManager.Instance.TowerWasSelected += (notUsing) => this.SelectedTowerToBuild = -1;
+            EventManager.Instance.WaveStarted += () => this.SelectedTowerToBuild = -1;
         }
 
         public void DrawInGameGui(Graphics graphics)
@@ -47,6 +66,11 @@ namespace BlobDefense.Gui
             this.speed100Btn.Draw(graphics);
             this.speed200Btn.Draw(graphics);
             this.speed400Btn.Draw(graphics);
+            this.towerOneBtn.Draw(graphics);
+            this.towerTwoBtn.Draw(graphics);
+
+            // Draw a selction rectangle around the selected type of tower
+            this.DrawTowerButtonSelection(graphics);
             
             if (this.selectedTower != null)
             {
@@ -114,6 +138,12 @@ namespace BlobDefense.Gui
             
             // Draw wave number
             graphics.DrawString("Wave " + WaveManager.Instance.CurrentWave.ToString(), new Font("Arial", 16), new SolidBrush(Color.White), this.nextWaveBtn.PositionAndSize.X + this.nextWaveBtn.PositionAndSize.Width + 10, nextWaveBtn.PositionAndSize.Y);
+
+            // Draw currency amount
+            graphics.DrawString("$" + GameManager.Instance.Currency.ToString(),
+                    new Font("Arial", 16), new SolidBrush(Color.White),
+                    this.nextWaveBtn.PositionAndSize.X,
+                    this.speed100Btn.PositionAndSize.Y + this.speed100Btn.PositionAndSize.Height + 5);
         }
 
         private void OnTowerSelected(Tower selectedTower)
@@ -130,6 +160,8 @@ namespace BlobDefense.Gui
             Image speed400BtnStandard = Image.FromFile(@"Images/Speed400Btn.png");
             Image upgradeBtnStandard  = Image.FromFile(@"Images/UpgradeBtn.png");
             Image destroyBtnStandard  = Image.FromFile(@"Images/DestroyBtn.png");
+            Image towerOneBtnStandard = Image.FromFile(@"Images/TowerOneBtn.png");
+            Image towerTwoBtnStandard = Image.FromFile(@"Images/TowerTwoBtn.png");
 
             // Set up next wave button
             this.nextWaveBtn = new GuiButton(
@@ -178,6 +210,117 @@ namespace BlobDefense.Gui
                 hoverImage: Image.FromFile(@"Images/DestroyBtn_Hovered.png"),
                 pressedImage: Image.FromFile(@"Images/DestroyBtn_Pressed.png"),
                 clickAction: () => this.selectedTower.Destroy());
+
+            // Set up tower one button
+            this.towerOneBtn = new GuiButton(
+                positionAndSize: new Rectangle((TileEngine.TilesX * TileEngine.TilesOnSpriteSize) + GuiLeftOffset, TowerButtonsTopOffset, towerOneBtnStandard.Width, towerOneBtnStandard.Height),
+                standardImage: towerOneBtnStandard,
+                hoverImage: Image.FromFile(@"Images/TowerOneBtn_Hovered.png"),
+                pressedImage: Image.FromFile(@"Images/TowerOneBtn_Pressed.png"),
+                clickAction: () => this.SelectTowerToBuild(0));
+
+            // Set up tower twp button
+            this.towerTwoBtn = new GuiButton(
+                positionAndSize: new Rectangle((TileEngine.TilesX * TileEngine.TilesOnSpriteSize) + GuiLeftOffset + this.towerOneBtn.PositionAndSize.Width + TowerButtonsSpacing, TowerButtonsTopOffset, towerTwoBtnStandard.Width, towerTwoBtnStandard.Height),
+                standardImage: towerTwoBtnStandard,
+                hoverImage: Image.FromFile(@"Images/TowerTwoBtn_Hovered.png"),
+                pressedImage: Image.FromFile(@"Images/TowerTwoBtn_Pressed.png"),
+                clickAction: () => this.SelectTowerToBuild(1));
+        }
+
+        private void DrawTowerButtonSelection(Graphics graphics)
+        {
+            // Return if no tower is selected
+            if (this.SelectedTowerToBuild == -1)
+            {
+                return;
+            }
+
+            Pen pen = new Pen(Color.Yellow, 4);
+
+
+
+            int yPos = TowerOptionsTopOffset;
+
+            switch (this.SelectedTowerToBuild)
+            {
+                case 0:
+                    graphics.DrawRectangle(pen, this.towerOneBtn.PositionAndSize);
+
+                    // Write name
+                    graphics.DrawString("Flame Tower  $" + GameSettings.StandardTower_BuildPrice.ToString(),
+                        new Font("Arial", 16), new SolidBrush(Color.White),
+                        this.nextWaveBtn.PositionAndSize.X,
+                        yPos);
+
+                    // Write damage
+                    graphics.DrawString("Damage " + GameSettings.StandardTower_AttackDamage.ToString(),
+                        new Font("Arial", 16), new SolidBrush(Color.White),
+                        this.nextWaveBtn.PositionAndSize.X,
+                        (yPos += 20));
+
+                    // Write range
+                    graphics.DrawString("Range " + GameSettings.StandardTower_ShootRange.ToString(),
+                        new Font("Arial", 16), new SolidBrush(Color.White),
+                        this.nextWaveBtn.PositionAndSize.X,
+                        (yPos += 20));
+
+                    // Write cooldown
+                    graphics.DrawString("Cooldown " + GameSettings.StandardTower_CoolDown.ToString() + " s",
+                        new Font("Arial", 16), new SolidBrush(Color.White),
+                        this.nextWaveBtn.PositionAndSize.X,
+                        (yPos += 20));
+
+                    break;
+                case 1:
+                    graphics.DrawRectangle(pen, this.towerTwoBtn.PositionAndSize);
+
+                    // Write name
+                    graphics.DrawString("Frost Tower  $" + GameSettings.FrostTower_BuildPrice.ToString(),
+                        new Font("Arial", 16), new SolidBrush(Color.White),
+                        this.nextWaveBtn.PositionAndSize.X,
+                        yPos);
+
+                    // Write damage
+                    graphics.DrawString("Damage " + GameSettings.FrostTower_AttackDamage.ToString(),
+                        new Font("Arial", 16), new SolidBrush(Color.White),
+                        this.nextWaveBtn.PositionAndSize.X,
+                        (yPos += 20));
+
+                    // Write range
+                    graphics.DrawString("Range " + GameSettings.FrostTower_ShootRange.ToString(),
+                        new Font("Arial", 16), new SolidBrush(Color.White),
+                        this.nextWaveBtn.PositionAndSize.X,
+                        (yPos += 20));
+
+                    // Write cooldown
+                    graphics.DrawString("Cooldown " + GameSettings.FrostTower_CoolDown.ToString() + " s",
+                        new Font("Arial", 16), new SolidBrush(Color.White),
+                        this.nextWaveBtn.PositionAndSize.X,
+                        (yPos += 20));
+                    break;
+            }
+        }
+
+        private void SelectTowerToBuild(int towerToBuild)
+        {
+            // Return if there is any enemies, we can't build under a wave
+            if (GameObject.AllGameObjects.Any(g => g is Enemy))
+            {
+                return;
+            }
+
+            // Deselect a selected tower
+            EventManager.Instance.DeselectedTower.SafeInvoke();
+            
+            if (this.SelectedTowerToBuild == towerToBuild)
+            {
+                // Deselect if we hit the button twice in a row
+                this.SelectedTowerToBuild = -1;
+                return;
+            }
+
+            this.SelectedTowerToBuild = towerToBuild;
         }
 
         private void UpgradeSelectedTower()

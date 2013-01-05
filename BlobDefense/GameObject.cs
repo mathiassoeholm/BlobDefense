@@ -23,13 +23,13 @@
             GameObjectsToDestroy = GameObjectsToDestroy ?? new Queue<GameObject>();
 
             // Initialize a new queue if it is null
-            NewGameObjects = NewGameObjects ?? new Queue<GameObject>();
+            NewGameObjects = NewGameObjects ?? new List<GameObject>();
 
             // Load image if not set yet
             SpriteSheet = SpriteSheet ?? Image.FromFile(@"Images\SpriteSheet.png");
 
             // This game object will be added to the game after the current fram
-            NewGameObjects.Enqueue(this);
+            NewGameObjects.Add(this);
         }
 
         /// <summary>
@@ -53,9 +53,9 @@
         public static Queue<GameObject> GameObjectsToDestroy { get; private set; }
 
         /// <summary>
-        /// Gets a queue containing game objects which will be added to the game.
+        /// Gets a list containing game objects which will be added to the game.
         /// </summary>
-        public static Queue<GameObject> NewGameObjects { get; private set; }
+        public static List<GameObject> NewGameObjects { get; private set; }
 
         /// <summary>
         /// Gets or sets the position of the game object in pixel coordinates.
@@ -65,7 +65,7 @@
         /// <summary>
         /// Gets or sets the source rectangle used on the sprite sheet.
         /// </summary>
-        public RectangleF SpriteSheetSource { get; set; }
+        public Rectangle SpriteSheetSource { get; set; }
 
         /// <summary>
         /// Gets or sets the rotation of this game object.
@@ -112,7 +112,9 @@
             while (NewGameObjects.Count > 0)
             {
                 // Add this game object to the game objects list
-                AllGameObjects.Add(NewGameObjects.Dequeue());
+                AllGameObjects.Add(NewGameObjects[0]);
+
+                NewGameObjects.RemoveAt(0);
             }
 
             // Resort the game objects by depth
@@ -124,6 +126,7 @@
         /// </summary>
         public virtual void Destroy()
         {
+            NewGameObjects.Remove(this);
             GameObjectsToDestroy.Enqueue(this);
         }
 

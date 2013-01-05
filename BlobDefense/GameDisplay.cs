@@ -50,7 +50,7 @@
 
             // Set up goal graphic
             this.goalGraphic = new GameObject();
-            this.goalGraphic.SpriteSheetSource = new RectangleF(128, 0, 72, 83);
+            this.goalGraphic.SpriteSheetSource = new Rectangle(128, 0, 72, 83);
             this.goalGraphic.DepthLevel = 10;
             this.goalGraphic.Position = new PointF(GameLogic.Instance.GoalNode.Position.X, this.goalGraphic.SpriteSheetSource.Height / 2);
             
@@ -85,10 +85,13 @@
             // Draw the map tiles
             TileEngine.Instance.RenderTiles(graphics);
 
-            this.DrawSelectedTile(graphics);
+            // Draw build grid, if a tower is selected.
+            if (GuiManager.Instance.SelectedTowerToBuild != -1)
+            {
+               this.DrawBuildGrid(graphics); 
+            }
 
-            // Draw the enemies path
-            graphics.DrawLines(new Pen(Color.Red, 5), GameLogic.EnemyPath.Select(mapNode => mapNode.Position).ToArray());
+            this.DrawSelectedTile(graphics);
 
             // Run logic
             GameLogic.Instance.RunLogic(graphics);
@@ -103,8 +106,6 @@
 
             // Render mouse cursor
             this.mouseCursor.Render(graphics);
-
-            //// DrawNeighbors(graphics);
         }
 
         private void DrawSelectedTile(Graphics graphics)
@@ -149,6 +150,41 @@
                     graphics.DrawLine(new Pen(Color.Blue, 1), mapNode.Position, neighbor.Position);
                 }
             }
+        }
+
+        private void DrawBuildGrid(Graphics graphics)
+        {
+            Pen gridPen = new Pen(Color.FromArgb(125, 0, 0, 0), 2);
+            
+            for (int y = 0; y <= TileEngine.TilesX; y++)
+            {
+                for (int x = 0; x <= TileEngine.TilesY; x++)
+                {
+                    if (x != 0)
+                    {
+                        // Draw line to the left
+                        graphics.DrawLine(
+                            gridPen,
+                            new Point(x * TileEngine.TilesOnSpriteSize, y * TileEngine.TilesOnSpriteSize),
+                            new Point((x - 1) * TileEngine.TilesOnSpriteSize, y * TileEngine.TilesOnSpriteSize));
+                    }
+                    if (y != 0)
+                    {
+                        // Draw line to up
+                        graphics.DrawLine(
+                            gridPen,
+                            new Point(x * TileEngine.TilesOnSpriteSize, y * TileEngine.TilesOnSpriteSize),
+                            new Point(x * TileEngine.TilesOnSpriteSize, (y - 1) * TileEngine.TilesOnSpriteSize));
+                    }
+                    
+                }
+            }
+        }
+
+        private void DrawEnemyPath(Graphics graphics)
+        {
+            // Draw the enemies path
+            graphics.DrawLines(new Pen(Color.Red, 5), GameLogic.EnemyPath.Select(mapNode => mapNode.Position).ToArray());
         }
 
         private void GameDisplay_Click(object sender, EventArgs e)

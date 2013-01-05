@@ -113,7 +113,6 @@ namespace BlobDefense
             // Return if node is null
             if (clickedNode == null)
             {
-                
                 if (this.hoveredButton == null)
                 {
                     // No tower was selected, deselect any towers
@@ -126,20 +125,15 @@ namespace BlobDefense
             // Check if the node is not blocked
             if (!clickedNode.IsBlocked)
             {
-                // Block the node
-                clickedNode.IsBlocked = true;
-                
-                // Try to create a new path
-                if (GameLogic.Instance.TryCreateNewPath())
+                // Build the selected tower
+                switch (GuiManager.Instance.SelectedTowerToBuild)
                 {
-                    // If succeeded place tower
-                    StandardTower testTower = new StandardTower();
-                    testTower.Position = clickedNode.Position;
-                }
-                else
-                {
-                    // Unblock the node
-                    clickedNode.IsBlocked = false;
+                    case 0:
+                        this.PlaceTower<StandardTower>(clickedNode);
+                        break;
+                    case 1:
+                        this.PlaceTower<FrostTower>(clickedNode);
+                        break;
                 }
             }
             else
@@ -159,6 +153,31 @@ namespace BlobDefense
             {
                 // No tower was selected, deselect any towers
                 EventManager.Instance.DeselectedTower.SafeInvoke();
+            }
+        }
+
+        private void PlaceTower<T>(MapNode clickedNode) where T : Tower, new()
+        {
+            // Return if there is any enemies, we can't build under a wave
+            if (GameObject.AllGameObjects.Any(g => g is Enemy))
+            {
+                return;
+            }
+            
+            // Instantiate the tower
+            T tower = new T { Position = clickedNode.Position };
+
+            // Block the node
+            clickedNode.IsBlocked = true;
+
+            // Check if we cannot build the tower
+            if (GameManager.Instance.Currency < tower.BuildPrice || !GameLogic.Instance.TryCreateNewPath() || !GameManager.Instance.TryBuy(tower.BuildPrice))
+            {
+                // Unblock the node
+                clickedNode.IsBlocked = false;
+
+                // Destroy the tower
+                tower.Destroy();
             }
         }
     }

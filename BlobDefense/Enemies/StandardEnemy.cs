@@ -16,6 +16,7 @@ namespace BlobDefense
             this.SpriteSheetSource = new Rectangle(0, 53, 16, 22);
             this.MoveSpeed = 25f;
             this.StartHealth = 50;
+            this.Bounty = 5;
 
             this.WalkRightAnimation = new Animation(
                 fps: 6,
