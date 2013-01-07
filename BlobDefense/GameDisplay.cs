@@ -25,11 +25,11 @@
 
         private GameObject mouseCursor;
 
+        private bool gameIsStarted;
+
         public GameDisplay()
         {
             this.InitializeComponent();
-
-            Cursor.Hide();
 
             instance = this;
 
@@ -73,6 +73,11 @@
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            if (!GameManager.Instance.IsPlaying)
+            {
+                return;
+            }
+            
             this.RenderGame(e.Graphics);
             this.Invalidate();
         }
@@ -200,6 +205,24 @@
         private void GameDisplay_MouseDown(object sender, MouseEventArgs e)
         {
             EventManager.Instance.OnMouseDown.SafeInvoke(MousePosition);
+        }
+
+        private void PlayBtn_Click(object sender, EventArgs e)
+        {
+            // Hide the cursor
+            Cursor.Hide();
+
+            // Hide main menu controls
+            this.PlayBtn.Visible = false;
+            this.NameTxt.Visible = false;
+            
+            // Start a new game
+            GameManager.Instance.StartNewGame();
+        }
+
+        private void NameTxt_TextChanged(object sender, EventArgs e)
+        {
+            GameSettings.PlayerName = this.NameTxt.Text;
         }
     }
 }

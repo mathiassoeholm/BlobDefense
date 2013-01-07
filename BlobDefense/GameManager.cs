@@ -8,7 +8,7 @@ namespace BlobDefense
 {
     internal class GameManager : Singleton<GameManager>
     {
-        private const int InitialCurrencyAmount = 100;
+        private const int InitialCurrencyAmount = 10000;
         
         /// <summary>
         /// Prevents a default instance of the <see cref="GameManager"/> class from being created.
@@ -16,7 +16,24 @@ namespace BlobDefense
         private GameManager()
         {
             this.Currency = InitialCurrencyAmount;
+            this.Lives = GameSettings.StartLives;
+            EventManager.Instance.EnemyReachedGoal += this.LoseLife;
         }
+
+        /// <summary>
+        /// Gets the amount of currency that player has.
+        /// </summary>
+        public int Currency { get; private set; }
+
+        /// <summary>
+        /// Gets the amount of lives that player has left.
+        /// </summary>
+        public int Lives { get; private set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the game is playing or not.
+        /// </summary>
+        public bool IsPlaying { get; set; }
 
         /// <summary>
         /// This method is called to create the instance.
@@ -24,11 +41,6 @@ namespace BlobDefense
         public void InitializeManager()
         {
         }
-
-        /// <summary>
-        /// Gets the amount of currency that player has.
-        /// </summary>
-        public int Currency { get; private set; }
 
         /// <summary>
         /// Subtracts the price from the players currency, if the player has enough.
@@ -59,6 +71,26 @@ namespace BlobDefense
         public void GiveCurrency(int amount)
         {
             this.Currency += amount;
+        }
+
+        public void StartNewGame()
+        {
+            this.IsPlaying = true;
+        }
+
+        private void LoseLife()
+        {
+            this.Lives = Math.Max(0, this.Lives - 1);
+
+            if (this.Lives == 0)
+            {
+                this.EndGame();
+            }
+        }
+
+        private void EndGame()
+        {
+            
         }
     }
 }

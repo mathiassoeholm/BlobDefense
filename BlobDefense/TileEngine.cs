@@ -114,9 +114,9 @@ namespace BlobDefense
         public void SaveMapToXml()
         {
             // If the file does not exist, create one
-            if (!Directory.Exists(@"C:\BlobDefense"))
+            if (!Directory.Exists(@"BlobDefense"))
             {
-                Directory.CreateDirectory(@"C:\BlobDefense");
+                Directory.CreateDirectory(@"\BlobDefense");
             }
             
             // Set node positions 
@@ -140,7 +140,7 @@ namespace BlobDefense
 
             var serializer = new XmlSerializer(typeof(MapNode[]));
 
-            using (TextWriter textWriter = new StreamWriter(@"C:\BlobDefense\TileMap.xml"))
+            using (TextWriter textWriter = new StreamWriter(@"TileMap.xml"))
             {
                 serializer.Serialize(textWriter, map);
             }
@@ -149,7 +149,7 @@ namespace BlobDefense
         public void LoadMapFromXml()
         {
             // If the file does not exist, generate a random map and save it
-            if (!File.Exists(@"C:\BlobDefense\TileMap.xml"))
+            if (!File.Exists(@"TileMap.xml"))
             {
                 this.GenerateRandomMap();
                 this.SaveMapToXml();
@@ -159,7 +159,7 @@ namespace BlobDefense
 
             var deserializer = new XmlSerializer(typeof(MapNode[]));
 
-            using (TextReader textReader = new StreamReader(@"C:\BlobDefense\TileMap.xml"))
+            using (TextReader textReader = new StreamReader(@"TileMap.xml"))
             {
                 map = (MapNode[])deserializer.Deserialize(textReader);
             }

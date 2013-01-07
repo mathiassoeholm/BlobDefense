@@ -8,15 +8,20 @@ namespace BlobDefense
 {
     using System.Drawing;
 
-    class FastEnemy : Enemy
+    internal class FastEnemy : Enemy
     {
-        public FastEnemy()
+        public FastEnemy() : this(1)
+        {
+            
+        }
+        
+        public FastEnemy(float difficulityFactor) 
         {
             // Assign properties for this enemy
             this.SpriteSheetSource = new Rectangle(0, 131, 15, 23);
-            this.MoveSpeed = 40;
-            this.StartHealth = float.MaxValue;
-            this.Bounty = 10;
+            this.MoveSpeed = 65;
+            this.StartHealth = 50 * difficulityFactor;
+            this.Bounty = (int)(10 * difficulityFactor);
 
             this.WalkRightAnimation = new Animation(
                 fps: 6,

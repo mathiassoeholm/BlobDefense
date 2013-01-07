@@ -123,7 +123,7 @@ namespace BlobDefense
             }
 
             // Check if the node is not blocked
-            if (!clickedNode.IsBlocked)
+            if (!clickedNode.IsBlocked && clickedNode != GameLogic.Instance.StartNode)
             {
                 // Build the selected tower
                 switch (GuiManager.Instance.SelectedTowerToBuild)

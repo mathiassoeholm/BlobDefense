@@ -11,12 +11,18 @@ namespace BlobDefense
     class StandardEnemy : Enemy
     {
         public StandardEnemy()
+            : this(1)
+        {
+            
+        }
+        
+        public StandardEnemy(float difficulityFactor = 1)
         {
             // Assign properties for this enemy
             this.SpriteSheetSource = new Rectangle(0, 53, 16, 22);
             this.MoveSpeed = 25f;
-            this.StartHealth = 50;
-            this.Bounty = 5;
+            this.StartHealth = 50 * difficulityFactor;
+            this.Bounty = (int)(5 * difficulityFactor);
 
             this.WalkRightAnimation = new Animation(
                 fps: 6,

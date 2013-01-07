@@ -75,7 +75,7 @@ namespace BlobDefense
         public void RunAnimation()
         {
             // Check if it is time to change frame
-            if (DateTime.Now.Subtract(this.lastFrameChange).TotalSeconds >= this.frameDeltaTime)
+            if (DateTime.Now.Subtract(this.lastFrameChange).TotalSeconds >= this.frameDeltaTime / Time.TimeScale)
             {
                 // Go to next frame
                 this.currentFrame++;

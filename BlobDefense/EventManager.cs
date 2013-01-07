@@ -25,6 +25,11 @@ namespace BlobDefense
         public Action WaveStarted { get; set; }
 
         /// <summary>
+        /// Gets or sets the enemy reached goal delegate.
+        /// </summary>
+        public Action EnemyReachedGoal { get; set; } 
+
+        /// <summary>
         /// Gets or sets the on mouse click delegate, with the mouse position.
         /// </summary>
         public Action<Point> OnMouseClick { get; set; }

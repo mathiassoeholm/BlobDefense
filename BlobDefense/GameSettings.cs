@@ -3,6 +3,11 @@
     public static class GameSettings
     {
 
+        public const int StartLives = 20;
+
+        // Mutable settings
+        public static string PlayerName;
+
         #region Tower Settings
 
         // STANDARD TOWER - Initial values

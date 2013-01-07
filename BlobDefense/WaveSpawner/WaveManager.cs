@@ -12,6 +12,7 @@ namespace BlobDefense.WaveSpawner
 
     internal class WaveManager : Singleton<WaveManager>
     {
+        private const float EnemyDifficulityIncrease = 1.2f;
         private const int MillisBetweenEachEnemy = 1000;
 
         private readonly List<IEnemyWave> waves;
@@ -19,6 +20,12 @@ namespace BlobDefense.WaveSpawner
         private Timer enemySpawnTimer;
 
         private int currentWave = -1;
+
+        private float enemyDifficulity = 1;
+
+        // Used for random waves
+        private int enemiesToSpawn = 10;
+        private int enemiesSpawned;
 
         private int millisBetweenEachEnemy = MillisBetweenEachEnemy;
 
@@ -59,6 +66,11 @@ namespace BlobDefense.WaveSpawner
             }
 
             this.currentWave++;
+            this.enemiesToSpawn++;
+            this.enemiesSpawned = 0;
+
+            // Make harder
+            this.enemyDifficulity += EnemyDifficulityIncrease;
 
             EventManager.Instance.WaveStarted.SafeInvoke();
 
@@ -83,10 +95,39 @@ namespace BlobDefense.WaveSpawner
 
         private void SpawnEnemy(object state)
         {
-            // Spawn an enemy, but check if it is the last one
-            if (this.waves[this.currentWave].SpawnEnemy() == null)
+            // Check if this is the last custom wave
+            if (this.currentWave >= this.waves.Count)
             {
-                this.StopWave();
+                Random random = new Random();
+                int randomNumber = random.Next(0, 100);
+
+                this.enemiesSpawned++;
+
+                if (randomNumber < 10)
+                {
+                    new FastEnemy(this.enemyDifficulity);
+                }
+                else if(randomNumber < 50)
+                {
+                    new PikachuEnemy(this.enemyDifficulity);
+                }
+                else
+                {
+                    new StandardEnemy(this.enemyDifficulity);
+                }
+                
+                if (this.enemiesSpawned >= this.enemiesToSpawn)
+                {
+                    this.StopWave();
+                }
+            }
+            else
+            {
+                // Stop the wave if there are no enemies left
+                if (this.waves[this.currentWave].SpawnEnemy() == null)
+                {
+                    this.StopWave();
+                }
             }
         }
     }

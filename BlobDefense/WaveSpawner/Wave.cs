@@ -90,7 +90,6 @@
                 this.amountOfEnemyThree--;
                 return new T3();
             }
-
             // End of wave return null
             return null;
         }

@@ -32,8 +32,6 @@ namespace MapMaker
         {
             InitializeComponent();
 
-            TileEngine.Instance.LoadMapFromXml();
-
             this.selectionOverlay = new Bitmap(@"Images/SelectionOverlay.png");
             this.closedOverlay = new Bitmap(@"Images/ClosedOverlay.png");
 

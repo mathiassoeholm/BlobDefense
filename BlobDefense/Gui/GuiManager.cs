@@ -15,7 +15,7 @@ namespace BlobDefense.Gui
 
     internal class GuiManager : Singleton<GuiManager>
     {
-        public const int RightPanelWidth = 205;
+        public const int RightPanelWidth = 215;
         private const int GuiLeftOffset = 10;
         private const int SpeedBtnTopOffset = 53;
         private const int SpaceBetweenSpeedButtons = 65;
@@ -68,6 +68,23 @@ namespace BlobDefense.Gui
             this.speed400Btn.Draw(graphics);
             this.towerOneBtn.Draw(graphics);
             this.towerTwoBtn.Draw(graphics);
+
+            Pen selectedSpeedPen = new Pen(Color.Yellow, 4);
+
+            // Draw a rectangle around selected speed
+            switch ((int)Time.TimeScale)
+            {
+                case 1:
+                    graphics.DrawRectangle(selectedSpeedPen, this.speed100Btn.PositionAndSize);
+                    break;
+                case 2:
+                    graphics.DrawRectangle(selectedSpeedPen, this.speed200Btn.PositionAndSize);
+                    break;
+                case 5:
+                    graphics.DrawRectangle(selectedSpeedPen, this.speed400Btn.PositionAndSize);
+                    break;
+            }
+            
 
             // Draw a selction rectangle around the selected type of tower
             this.DrawTowerButtonSelection(graphics);
@@ -137,13 +154,19 @@ namespace BlobDefense.Gui
             }
             
             // Draw wave number
-            graphics.DrawString("Wave " + WaveManager.Instance.CurrentWave.ToString(), new Font("Arial", 16), new SolidBrush(Color.White), this.nextWaveBtn.PositionAndSize.X + this.nextWaveBtn.PositionAndSize.Width + 10, nextWaveBtn.PositionAndSize.Y);
+            graphics.DrawString("Wave " + WaveManager.Instance.CurrentWave.ToString(), new Font("Arial", 16), new SolidBrush(Color.White), this.nextWaveBtn.PositionAndSize.X + this.nextWaveBtn.PositionAndSize.Width + 5, nextWaveBtn.PositionAndSize.Y);
 
             // Draw currency amount
             graphics.DrawString("$" + GameManager.Instance.Currency.ToString(),
                     new Font("Arial", 16), new SolidBrush(Color.White),
                     this.nextWaveBtn.PositionAndSize.X,
                     this.speed100Btn.PositionAndSize.Y + this.speed100Btn.PositionAndSize.Height + 5);
+
+            // Draw amount of lives
+            graphics.DrawString("lives " + GameManager.Instance.Lives.ToString(),
+                    new Font("Arial", 16), new SolidBrush(Color.White),
+                    this.nextWaveBtn.PositionAndSize.X,
+                    this.speed100Btn.PositionAndSize.Y + this.speed100Btn.PositionAndSize.Height + 25);
         }
 
         private void OnTowerSelected(Tower selectedTower)
@@ -185,7 +208,7 @@ namespace BlobDefense.Gui
                 standardImage: speed200BtnStandard,
                 hoverImage: Image.FromFile(@"Images/Speed200Btn_Hovered.png"),
                 pressedImage: Image.FromFile(@"Images/Speed200Btn_Pressed.png"),
-                clickAction: () => Time.TimeScale = 5);
+                clickAction: () => Time.TimeScale = 2.5f);
 
             // Set up speed 400% button
             this.speed400Btn = new GuiButton(
@@ -193,7 +216,7 @@ namespace BlobDefense.Gui
                 standardImage: speed400BtnStandard,
                 hoverImage: Image.FromFile(@"Images/Speed400Btn_Hovered.png"),
                 pressedImage: Image.FromFile(@"Images/Speed400Btn_Pressed.png"),
-                clickAction: () => Time.TimeScale = 10);
+                clickAction: () => Time.TimeScale = 5);
 
             // Set up upgrade button
             this.upgradeBtn = new GuiButton(
@@ -209,7 +232,7 @@ namespace BlobDefense.Gui
                 standardImage: destroyBtnStandard,
                 hoverImage: Image.FromFile(@"Images/DestroyBtn_Hovered.png"),
                 pressedImage: Image.FromFile(@"Images/DestroyBtn_Pressed.png"),
-                clickAction: () => this.selectedTower.Destroy());
+                clickAction: this.DestroySelectedTower);
 
             // Set up tower one button
             this.towerOneBtn = new GuiButton(
@@ -238,9 +261,10 @@ namespace BlobDefense.Gui
 
             Pen pen = new Pen(Color.Yellow, 4);
 
-
-
             int yPos = TowerOptionsTopOffset;
+
+            // Get hovered node
+            MapNode hoveredNode = InputManager.Instance.HovederedMouseNode;
 
             switch (this.SelectedTowerToBuild)
             {
@@ -264,6 +288,17 @@ namespace BlobDefense.Gui
                         new Font("Arial", 16), new SolidBrush(Color.White),
                         this.nextWaveBtn.PositionAndSize.X,
                         (yPos += 20));
+
+                    // Draw circle indicating the towers radius
+                    if (hoveredNode != null)
+                    {
+                        graphics.FillEllipse(new SolidBrush(Color.FromArgb(125,0,0,0)),
+                            new RectangleF(
+                            hoveredNode.Position.X - GameSettings.StandardTower_ShootRange,
+                            hoveredNode.Position.Y - GameSettings.StandardTower_ShootRange,
+                            GameSettings.StandardTower_ShootRange * 2,
+                            GameSettings.StandardTower_ShootRange * 2));
+                    }
 
                     // Write cooldown
                     graphics.DrawString("Cooldown " + GameSettings.StandardTower_CoolDown.ToString() + " s",
@@ -293,12 +328,31 @@ namespace BlobDefense.Gui
                         this.nextWaveBtn.PositionAndSize.X,
                         (yPos += 20));
 
+                    // Draw circle indicating the towers radius
+                    if (hoveredNode != null)
+                    {
+                        graphics.FillEllipse(new SolidBrush(Color.FromArgb(125, 0, 0, 0)),
+                            new RectangleF(
+                            hoveredNode.Position.X - GameSettings.FrostTower_ShootRange,
+                            hoveredNode.Position.Y - GameSettings.FrostTower_ShootRange,
+                            GameSettings.FrostTower_ShootRange * 2,
+                            GameSettings.FrostTower_ShootRange * 2));
+                    }
+
                     // Write cooldown
                     graphics.DrawString("Cooldown " + GameSettings.FrostTower_CoolDown.ToString() + " s",
                         new Font("Arial", 16), new SolidBrush(Color.White),
                         this.nextWaveBtn.PositionAndSize.X,
                         (yPos += 20));
                     break;
+            }
+        }
+
+        private void DestroySelectedTower()
+        {
+            if(this.selectedTower != null)
+            {
+                this.selectedTower.Destroy();
             }
         }
 

@@ -8,6 +8,8 @@ namespace BlobDefense
 {
     using System.Drawing;
 
+    using Extensions;
+
     internal abstract class Enemy : MovingGameObject, IUpdateBehaviour, IAnimated
     {
         private const int HealthBarWidth = 25;
@@ -37,9 +39,6 @@ namespace BlobDefense
             this.targetNode = 1;
             this.Position = GameLogic.EnemyPath[0].Position;
             this.CurrentTarget = GameLogic.EnemyPath[this.targetNode].Position;
-
-            this.StartHealth = 100;
-            this.currentHealth = 25;
         }
 
         protected float StartHealth
@@ -106,6 +105,11 @@ namespace BlobDefense
             this.CurrentAnimation.RunAnimation();
         }
 
+        public void SetDifficulity(float amount)
+        {
+            this.currentHealth *= amount;
+        }
+
         // Call move each update
         protected override void OnTargetHit()
         {
@@ -169,6 +173,9 @@ namespace BlobDefense
 
         private void ReachGoal()
         {
+            // Incoke reached goal event
+            EventManager.Instance.EnemyReachedGoal.SafeInvoke();
+            
             // Destroy the enemy
             this.Destroy();
         }
