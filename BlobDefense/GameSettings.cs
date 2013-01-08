@@ -21,7 +21,7 @@
 
         // STANDARD TOWER - Upgrade values
         public const float StandardTower_AttackDamage_Upgrade = 1.2f;
-        public const float StandardTower_ShootRange_Upgrade = 1.2f;
+        public const float StandardTower_ShootRange_Upgrade = 1.05f;
         public const float StandardTower_ShootCoolDown_Upgrade = 0.9f;
         public const int StandardTower_UpgradePrice_Upgrade = 2;
 
@@ -36,7 +36,7 @@
 
         // FROST TOWER - Upgrade values
         public const float FrostTower_AttackDamage_Upgrade = 1.2f;
-        public const float FrostTower_ShootRange_Upgrade = 1.2f;
+        public const float FrostTower_ShootRange_Upgrade = 1.05f;
         public const float FrostTower_ShootCoolDown_Upgrade = 0.9f;
         public const float FrostTower_SlowDuration_Upgrade = 1.5f;
         public const int FrostTower_UpgradePrice_Upgrade = 2;
@@ -50,7 +50,7 @@
 
         // AGILITY TOWER - Upgrade values
         public const float AgilityTower_AttackDamage_Upgrade = 1.2f;
-        public const float AgilityTower_ShootRange_Upgrade = 1.1f;
+        public const float AgilityTower_ShootRange_Upgrade = 1.05f;
         public const float AgilityTower_ShootCoolDown_Upgrade = 0.9f;
         public const int AgilityTower_UpgradePrice_Upgrade = 2;
 
@@ -63,7 +63,7 @@
 
         // SNIPER TOWER - Upgrade values
         public const float SniperTower_AttackDamage_Upgrade = 1.2f;
-        public const float SniperTower_ShootRange_Upgrade = 1.1f;
+        public const float SniperTower_ShootRange_Upgrade = 1.05f;
         public const float SniperTower_ShootCoolDown_Upgrade = 0.9f;
         public const int SniperTower_UpgradePrice_Upgrade = 2;
 

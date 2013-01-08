@@ -44,7 +44,7 @@ namespace BlobDefense.Towers
             base.Upgrade();
 
             // Increment properties
-            this.AttackDamage *= GameSettings.FrostTower_AttackDamage;
+            this.AttackDamage *= GameSettings.FrostTower_AttackDamage_Upgrade;
             this.ShootRange *= GameSettings.FrostTower_ShootRange_Upgrade;
             this.ShootCooldown *= GameSettings.FrostTower_ShootCoolDown_Upgrade;
             this.UpgradePrice *= GameSettings.FrostTower_UpgradePrice_Upgrade;

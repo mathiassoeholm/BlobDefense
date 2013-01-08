@@ -179,8 +179,10 @@ namespace BlobDefense
             // Incoke reached goal event
             EventManager.Instance.EnemyReachedGoal.SafeInvoke();
             
-            // Destroy the enemy
-            this.Destroy();
+            // Go back to start
+            this.Position = GameLogic.Instance.StartNode.Position;
+            this.targetNode = 1;
+            this.CurrentTarget = GameLogic.EnemyPath[this.targetNode].Position;
         }
 
         /// <summary>

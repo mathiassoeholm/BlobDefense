@@ -14,7 +14,7 @@ namespace BlobDefense.WaveSpawner
 
     internal class WaveManager : Singleton<WaveManager>
     {
-        private const float EnemyDifficulityIncrease = 1.05f;
+        private const float EnemyDifficulityIncrease = 1.1f;
         private const int MillisBetweenEachEnemy = 1000;
 
         private readonly List<IEnemyWave> waves;
@@ -23,7 +23,7 @@ namespace BlobDefense.WaveSpawner
 
         private int currentWave = -1;
 
-        private float enemyDifficulity = 1;
+        public float EnemyDifficulity { get; private set; }
 
         // Used for random waves
         private int enemiesToSpawn = 10;
@@ -72,7 +72,7 @@ namespace BlobDefense.WaveSpawner
             this.enemiesSpawned = 0;
 
             // Make harder
-            this.enemyDifficulity += EnemyDifficulityIncrease;
+            this.EnemyDifficulity += EnemyDifficulityIncrease;
 
             EventManager.Instance.WaveStarted.SafeInvoke();
 
@@ -105,17 +105,21 @@ namespace BlobDefense.WaveSpawner
 
                 this.enemiesSpawned++;
 
-                if (randomNumber < 10)
+                if (randomNumber < 5)
                 {
-                    new FastEnemy(this.enemyDifficulity);
+                    new Boss(this.EnemyDifficulity);
                 }
-                else if(randomNumber < 50)
+                else if (randomNumber < 30)
                 {
-                    new PikachuEnemy(this.enemyDifficulity);
+                    new FastEnemy();
+                }
+                else if(randomNumber < 65)
+                {
+                    new PikachuEnemy();
                 }
                 else
                 {
-                    new StandardEnemy(this.enemyDifficulity);
+                    new StandardEnemy();
                 }
                 
                 if (this.enemiesSpawned >= this.enemiesToSpawn)

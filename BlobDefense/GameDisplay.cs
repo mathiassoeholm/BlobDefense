@@ -182,6 +182,8 @@
                     
                 }
             }
+
+            this.DrawEnemyPath(graphics);
         }
 
         private void DrawEnemyPath(Graphics graphics)

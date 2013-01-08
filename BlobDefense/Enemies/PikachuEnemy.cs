@@ -8,21 +8,17 @@ namespace BlobDefense
 {
     using System.Drawing;
 
+    using BlobDefense.WaveSpawner;
+
     class PikachuEnemy : Enemy
     {
-        public PikachuEnemy()
-            : this(1)
-        {
-            
-        }
-        
-        public PikachuEnemy(float difficulityFactor = 1) : base(healthBarWidth: 35)
+        public PikachuEnemy() : base(healthBarWidth: 35)
         {
             // Assign properties for this enemy
             this.SpriteSheetSource = new Rectangle(70, 103, 24, 23);
-            this.MoveSpeed = 25f;
-            this.StartHealth = 100 * difficulityFactor;
-            this.Bounty = (int)(10 * difficulityFactor);
+            this.MoveSpeed = 18f;
+            this.StartHealth = 80 * WaveManager.Instance.EnemyDifficulity;
+            this.Bounty = (int)(10 * WaveManager.Instance.EnemyDifficulity);
 
             this.WalkRightAnimation = new Animation(
                 fps: 6,
