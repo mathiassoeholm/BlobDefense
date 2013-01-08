@@ -21,7 +21,7 @@ namespace BlobDefense
 
         public Action<Tower> TowerShot { get; set; }
 
-        public Action EnemyDied { get; set; }
+        public Action<Enemy> EnemyDied { get; set; }
 
         public Action PlacedATower { get; set; }
 

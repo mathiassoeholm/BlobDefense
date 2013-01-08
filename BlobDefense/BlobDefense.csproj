@@ -35,7 +35,7 @@
   <ItemGroup>
     <Reference Include="irrKlang.NET4, Version=1.0.4534.25937, Culture=neutral, PublicKeyToken=a854741bd80517c7, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Audio\irrKlang.NET4.dll</HintPath>
+      <HintPath>.\irrKlang.NET4.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -141,12 +141,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Audio\DeathSound3.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Audio\ikpMP3.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Audio\irrKlang.NET4.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Audio\PewShoot.wav">

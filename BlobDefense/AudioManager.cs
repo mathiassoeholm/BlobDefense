@@ -11,6 +11,7 @@ namespace BlobDefense
 {
     using System;
 
+    using BlobDefense.Enemies;
     using BlobDefense.Towers;
 
     using IrrKlang;
@@ -21,6 +22,11 @@ namespace BlobDefense
     internal class AudioManager : Singleton<AudioManager>
     {
         #region Sounds
+        /// <summary>
+        /// The sound played when a boss dies.
+        /// </summary>
+        public const string BossDeathSound = @"Audio/BossDeath.wav";
+        
         /// <summary>
         /// The sound played when a enemy dies.
         /// </summary>
@@ -88,7 +94,7 @@ namespace BlobDefense
         private AudioManager()
         {
             // Subscribe to some events with the play sound method
-            EventManager.Instance.EnemyDied += () => this.PlayRandomSoundOnce(DeathSound, DeathSound2, DeathSound3);
+            EventManager.Instance.EnemyDied += this.PlayEnemyDeathSound;
             EventManager.Instance.TowerShot += this.PlayTowerShotSound;
             EventManager.Instance.PlacedATower += () => this.PlaySoundOnce(PlaceTowerSound);
         }
@@ -117,7 +123,18 @@ namespace BlobDefense
            {
                this.PlayRandomSoundOnce(SniperShootSound);
            }
-            
+        }
+
+        private void PlayEnemyDeathSound(Enemy enemy)
+        {
+            if (enemy is Boss)
+            {
+                this.PlaySoundOnce(BossDeathSound);
+            }
+            else
+            {
+                this.PlayRandomSoundOnce(DeathSound, DeathSound2, DeathSound3);
+            }
         }
 
         /// <summary>

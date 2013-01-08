@@ -170,7 +170,7 @@ namespace BlobDefense
         private void Die()
         {
             // Invoke event
-            EventManager.Instance.EnemyDied.SafeInvoke();
+            EventManager.Instance.EnemyDied.SafeInvoke(this);
             
             // Give player the bounty
             GameManager.Instance.GiveCurrency(this.Bounty);
