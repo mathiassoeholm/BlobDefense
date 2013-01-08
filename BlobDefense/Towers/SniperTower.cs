@@ -12,11 +12,11 @@ namespace BlobDefense.Towers
         public SniperTower()
         {
             // Assign tower properties
-            this.ShootCooldown = GameSettings.AgilityTower_CoolDown;
-            this.ShootRange = GameSettings.AgilityTower_ShootRange;
-            this.AttackDamage = GameSettings.AgilityTower_AttackDamage;
-            this.BuildPrice = GameSettings.AgilityTower_BuildPrice;
-            this.UpgradePrice = GameSettings.AgilityTower_UpgradePrice;
+            this.ShootCooldown = 3;
+            this.ShootRange = 200;
+            this.AttackDamage = GameSettings.SniperTower_AttackDamage;
+            this.BuildPrice = GameSettings.SniperTower_BuildPrice;
+            this.UpgradePrice = GameSettings.SniperTower_UpgradePrice;
             
             this.SpriteSheetSource = new Rectangle(144, 100, 20, 31);
             
@@ -35,16 +35,16 @@ namespace BlobDefense.Towers
             base.Upgrade();
 
             // Increment properties
-            this.AttackDamage *= GameSettings.AgilityTower_AttackDamage_Upgrade;
-            this.ShootRange *= GameSettings.AgilityTower_ShootRange_Upgrade;
-            this.ShootCooldown *= GameSettings.AgilityTower_ShootCoolDown_Upgrade;
-            this.UpgradePrice *= GameSettings.AgilityTower_UpgradePrice_Upgrade;
+            this.AttackDamage *= GameSettings.SniperTower_AttackDamage_Upgrade;
+            this.ShootRange *= GameSettings.SniperTower_ShootRange_Upgrade;
+            this.ShootCooldown *= GameSettings.SniperTower_ShootCoolDown_Upgrade;
+            this.UpgradePrice *= GameSettings.SniperTower_UpgradePrice_Upgrade;
         }
         
         protected override void ShootTarget()
         {
             // Create a new projectile
-            new AgilityProjectile(this.EnemyTarget, this.Position, this.AttackDamage, this);
+            new SniperProjectile(this.EnemyTarget, this.Position, this.AttackDamage, this);
             
             base.ShootTarget();
         }

@@ -19,13 +19,11 @@
 
         private readonly GameObject goalGraphic;
 
+        private readonly GameObject mouseCursor;
+
         private int currentFps;
 
         private DateTime lastFpsUpdate;
-
-        private GameObject mouseCursor;
-
-        private bool gameIsStarted;
 
         public GameDisplay()
         {

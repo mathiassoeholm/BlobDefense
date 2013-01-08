@@ -8,14 +8,12 @@ namespace BlobDefense
 {
     internal class GameManager : Singleton<GameManager>
     {
-        private const int InitialCurrencyAmount = 10000;
-        
         /// <summary>
         /// Prevents a default instance of the <see cref="GameManager"/> class from being created.
         /// </summary>
         private GameManager()
         {
-            this.Currency = InitialCurrencyAmount;
+            this.Currency = GameSettings.InitialCurrencyAmount;
             this.Lives = GameSettings.StartLives;
             EventManager.Instance.EnemyReachedGoal += this.LoseLife;
         }

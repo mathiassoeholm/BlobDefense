@@ -16,7 +16,7 @@ namespace BlobDefense
             
         }
         
-        public PikachuEnemy(float difficulityFactor = 1)
+        public PikachuEnemy(float difficulityFactor = 1) : base(healthBarWidth: 35)
         {
             // Assign properties for this enemy
             this.SpriteSheetSource = new Rectangle(70, 103, 24, 23);

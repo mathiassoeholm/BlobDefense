@@ -32,6 +32,7 @@ namespace BlobDefense.Gui
         private GuiButton destroyBtn;
         private GuiButton towerOneBtn;
         private GuiButton towerTwoBtn;
+        private GuiButton towerThreeBtn;
 
         private Tower selectedTower;
 
@@ -68,6 +69,7 @@ namespace BlobDefense.Gui
             this.speed400Btn.Draw(graphics);
             this.towerOneBtn.Draw(graphics);
             this.towerTwoBtn.Draw(graphics);
+            this.towerThreeBtn.Draw(graphics);
 
             Pen selectedSpeedPen = new Pen(Color.Yellow, 4);
 
@@ -185,6 +187,7 @@ namespace BlobDefense.Gui
             Image destroyBtnStandard  = Image.FromFile(@"Images/DestroyBtn.png");
             Image towerOneBtnStandard = Image.FromFile(@"Images/TowerOneBtn.png");
             Image towerTwoBtnStandard = Image.FromFile(@"Images/TowerTwoBtn.png");
+            Image towerThreeBtnStandard = Image.FromFile(@"Images/TowerThreeBtn.png");
 
             // Set up next wave button
             this.nextWaveBtn = new GuiButton(
@@ -249,6 +252,14 @@ namespace BlobDefense.Gui
                 hoverImage: Image.FromFile(@"Images/TowerTwoBtn_Hovered.png"),
                 pressedImage: Image.FromFile(@"Images/TowerTwoBtn_Pressed.png"),
                 clickAction: () => this.SelectTowerToBuild(1));
+
+            // Set up tower three button
+            this.towerThreeBtn = new GuiButton(
+                positionAndSize: new Rectangle((TileEngine.TilesX * TileEngine.TilesOnSpriteSize) + GuiLeftOffset + (this.towerOneBtn.PositionAndSize.Width + TowerButtonsSpacing) * 2, TowerButtonsTopOffset, towerThreeBtnStandard.Width, towerThreeBtnStandard.Height),
+                standardImage: towerThreeBtnStandard,
+                hoverImage: Image.FromFile(@"Images/TowerThreeBtn_Hovered.png"),
+                pressedImage: Image.FromFile(@"Images/TowerThreeBtn_Pressed.png"),
+                clickAction: () => this.SelectTowerToBuild(2));
         }
 
         private void DrawTowerButtonSelection(Graphics graphics)
@@ -266,86 +277,85 @@ namespace BlobDefense.Gui
             // Get hovered node
             MapNode hoveredNode = InputManager.Instance.HovederedMouseNode;
 
+            string nameAndPriceTxt;
+            string damageTxt;
+            string rangeTxt;
+            string cooldownTxt;
+            float range;
+            Rectangle selectionRectangle;
+
             switch (this.SelectedTowerToBuild)
             {
                 case 0:
-                    graphics.DrawRectangle(pen, this.towerOneBtn.PositionAndSize);
-
-                    // Write name
-                    graphics.DrawString("Flame Tower  $" + GameSettings.StandardTower_BuildPrice.ToString(),
-                        new Font("Arial", 16), new SolidBrush(Color.White),
-                        this.nextWaveBtn.PositionAndSize.X,
-                        yPos);
-
-                    // Write damage
-                    graphics.DrawString("Damage " + GameSettings.StandardTower_AttackDamage.ToString(),
-                        new Font("Arial", 16), new SolidBrush(Color.White),
-                        this.nextWaveBtn.PositionAndSize.X,
-                        (yPos += 20));
-
-                    // Write range
-                    graphics.DrawString("Range " + GameSettings.StandardTower_ShootRange.ToString(),
-                        new Font("Arial", 16), new SolidBrush(Color.White),
-                        this.nextWaveBtn.PositionAndSize.X,
-                        (yPos += 20));
-
-                    // Draw circle indicating the towers radius
-                    if (hoveredNode != null)
-                    {
-                        graphics.FillEllipse(new SolidBrush(Color.FromArgb(125,0,0,0)),
-                            new RectangleF(
-                            hoveredNode.Position.X - GameSettings.StandardTower_ShootRange,
-                            hoveredNode.Position.Y - GameSettings.StandardTower_ShootRange,
-                            GameSettings.StandardTower_ShootRange * 2,
-                            GameSettings.StandardTower_ShootRange * 2));
-                    }
-
-                    // Write cooldown
-                    graphics.DrawString("Cooldown " + GameSettings.StandardTower_CoolDown.ToString() + " s",
-                        new Font("Arial", 16), new SolidBrush(Color.White),
-                        this.nextWaveBtn.PositionAndSize.X,
-                        (yPos += 20));
-
+                    nameAndPriceTxt = "Flame Tower  $" + GameSettings.StandardTower_BuildPrice.ToString();
+                    damageTxt = "Damage " + GameSettings.StandardTower_AttackDamage.ToString();
+                    rangeTxt = "Range " + GameSettings.StandardTower_ShootRange.ToString();
+                    cooldownTxt = "Cooldown " + GameSettings.StandardTower_CoolDown.ToString() + " s";
+                    range = GameSettings.StandardTower_ShootRange;
+                    selectionRectangle = this.towerOneBtn.PositionAndSize;
                     break;
                 case 1:
-                    graphics.DrawRectangle(pen, this.towerTwoBtn.PositionAndSize);
-
-                    // Write name
-                    graphics.DrawString("Frost Tower  $" + GameSettings.FrostTower_BuildPrice.ToString(),
-                        new Font("Arial", 16), new SolidBrush(Color.White),
-                        this.nextWaveBtn.PositionAndSize.X,
-                        yPos);
-
-                    // Write damage
-                    graphics.DrawString("Damage " + GameSettings.FrostTower_AttackDamage.ToString(),
-                        new Font("Arial", 16), new SolidBrush(Color.White),
-                        this.nextWaveBtn.PositionAndSize.X,
-                        (yPos += 20));
-
-                    // Write range
-                    graphics.DrawString("Range " + GameSettings.FrostTower_ShootRange.ToString(),
-                        new Font("Arial", 16), new SolidBrush(Color.White),
-                        this.nextWaveBtn.PositionAndSize.X,
-                        (yPos += 20));
-
-                    // Draw circle indicating the towers radius
-                    if (hoveredNode != null)
-                    {
-                        graphics.FillEllipse(new SolidBrush(Color.FromArgb(125, 0, 0, 0)),
-                            new RectangleF(
-                            hoveredNode.Position.X - GameSettings.FrostTower_ShootRange,
-                            hoveredNode.Position.Y - GameSettings.FrostTower_ShootRange,
-                            GameSettings.FrostTower_ShootRange * 2,
-                            GameSettings.FrostTower_ShootRange * 2));
-                    }
-
-                    // Write cooldown
-                    graphics.DrawString("Cooldown " + GameSettings.FrostTower_CoolDown.ToString() + " s",
-                        new Font("Arial", 16), new SolidBrush(Color.White),
-                        this.nextWaveBtn.PositionAndSize.X,
-                        (yPos += 20));
+                    nameAndPriceTxt = "Frost Tower  $" + GameSettings.FrostTower_BuildPrice.ToString();
+                    damageTxt = "Damage " + GameSettings.FrostTower_AttackDamage.ToString();
+                    rangeTxt = "Range " + GameSettings.FrostTower_ShootRange.ToString();
+                    cooldownTxt = "Cooldown " + GameSettings.FrostTower_CoolDown.ToString() + " s";
+                    range = GameSettings.FrostTower_ShootRange;
+                    selectionRectangle = this.towerTwoBtn.PositionAndSize;
+                    break;
+                case 2:
+                    nameAndPriceTxt = "Sniper Tower  $" + GameSettings.SniperTower_BuildPrice.ToString();
+                    damageTxt = "Damage " + GameSettings.SniperTower_AttackDamage.ToString();
+                    rangeTxt = "Range " + GameSettings.SniperTower_ShootRange.ToString();
+                    cooldownTxt = "Cooldown " + GameSettings.SniperTower_CoolDown.ToString() + " s";
+                    range = GameSettings.SniperTower_ShootRange;
+                    selectionRectangle = this.towerThreeBtn.PositionAndSize;
+                    break;
+                default:
+                    nameAndPriceTxt = "Flame Tower  $" + GameSettings.StandardTower_BuildPrice.ToString();
+                    damageTxt = "Damage " + GameSettings.StandardTower_AttackDamage.ToString();
+                    rangeTxt = "Range " + GameSettings.StandardTower_ShootRange.ToString();
+                    cooldownTxt = "Cooldown " + GameSettings.StandardTower_CoolDown.ToString() + " s";
+                    range = GameSettings.StandardTower_ShootRange;
+                    selectionRectangle = this.towerOneBtn.PositionAndSize;
                     break;
             }
+
+            graphics.DrawRectangle(pen, selectionRectangle);
+
+            // Write name
+            graphics.DrawString(nameAndPriceTxt,
+                new Font("Arial", 16), new SolidBrush(Color.White),
+                this.nextWaveBtn.PositionAndSize.X,
+                yPos);
+
+            // Write damage
+            graphics.DrawString(damageTxt,
+                new Font("Arial", 16), new SolidBrush(Color.White),
+                this.nextWaveBtn.PositionAndSize.X,
+                (yPos += 20));
+
+            // Write range
+            graphics.DrawString(rangeTxt,
+                new Font("Arial", 16), new SolidBrush(Color.White),
+                this.nextWaveBtn.PositionAndSize.X,
+                (yPos += 20));
+
+            // Draw circle indicating the towers radius
+            if (hoveredNode != null)
+            {
+                graphics.FillEllipse(new SolidBrush(Color.FromArgb(125, 0, 0, 0)),
+                    new RectangleF(
+                    hoveredNode.Position.X - range,
+                    hoveredNode.Position.Y - range,
+                    range * 2,
+                    range * 2));
+            }
+
+            // Write cooldown
+            graphics.DrawString(cooldownTxt,
+                new Font("Arial", 16), new SolidBrush(Color.White),
+                this.nextWaveBtn.PositionAndSize.X,
+                (yPos += 20));
         }
 
         private void DestroySelectedTower()

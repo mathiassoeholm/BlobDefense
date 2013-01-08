@@ -5,6 +5,8 @@
 
         public const int StartLives = 20;
 
+        public const int InitialCurrencyAmount = 100;
+
         // Mutable settings
         public static string PlayerName;
 
@@ -52,7 +54,19 @@
         public const float AgilityTower_ShootCoolDown_Upgrade = 0.9f;
         public const int AgilityTower_UpgradePrice_Upgrade = 2;
 
-        #endregion
+        // SNIPER TOWER - Initial values
+        public const float SniperTower_CoolDown = 3f;
+        public const float SniperTower_ShootRange = 150;
+        public const float SniperTower_AttackDamage = 40;
+        public const int SniperTower_BuildPrice = 45;
+        public const int SniperTower_UpgradePrice = 25;
 
+        // SNIPER TOWER - Upgrade values
+        public const float SniperTower_AttackDamage_Upgrade = 1.2f;
+        public const float SniperTower_ShootRange_Upgrade = 1.1f;
+        public const float SniperTower_ShootCoolDown_Upgrade = 0.9f;
+        public const int SniperTower_UpgradePrice_Upgrade = 2;
+
+        #endregion
     }
 }

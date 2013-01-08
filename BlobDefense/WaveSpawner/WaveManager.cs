@@ -14,7 +14,7 @@ namespace BlobDefense.WaveSpawner
 
     internal class WaveManager : Singleton<WaveManager>
     {
-        private const float EnemyDifficulityIncrease = 1.2f;
+        private const float EnemyDifficulityIncrease = 1.05f;
         private const int MillisBetweenEachEnemy = 1000;
 
         private readonly List<IEnemyWave> waves;
@@ -38,17 +38,16 @@ namespace BlobDefense.WaveSpawner
         {            
             this.waves = new List<IEnemyWave>()
                 {
-                    new Wave<Boss>(1),
                     new Wave<StandardEnemy>(10),
                     new Wave<StandardEnemy, PikachuEnemy>(10, 5),
-                    new Wave<StandardEnemy, PikachuEnemy>(5, 10),
-                    new Wave<FastEnemy>(10),
-                    new Wave<StandardEnemy, FastEnemy>(10, 10),
-                    new Wave<StandardEnemy>(30),
-                    new Wave<StandardEnemy, FastEnemy, PikachuEnemy>(10, 10, 10),
+                    new Wave<StandardEnemy, PikachuEnemy>(10, 10),
                     new Wave<FastEnemy>(15),
-                    new Wave<StandardEnemy, FastEnemy, PikachuEnemy>(12, 12, 12),
-                    new Wave<PikachuEnemy, FastEnemy>(3, 5),
+                    new Wave<StandardEnemy, FastEnemy>(10, 15),
+                    new Wave<StandardEnemy>(40),
+                    new Wave<StandardEnemy, FastEnemy, PikachuEnemy>(10, 20, 10),
+                    new Wave<FastEnemy>(15),
+                    new Wave<FastEnemy, PikachuEnemy>(25, 25),
+                    new Wave<Boss>(1),
                 };
         }
 

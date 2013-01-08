@@ -129,10 +129,13 @@ namespace BlobDefense
                 switch (GuiManager.Instance.SelectedTowerToBuild)
                 {
                     case 0:
-                        this.PlaceTower<SniperTower>(clickedNode);
+                        this.PlaceTower<StandardTower>(clickedNode);
                         break;
                     case 1:
                         this.PlaceTower<FrostTower>(clickedNode);
+                        break;
+                    case 2:
+                        this.PlaceTower<SniperTower>(clickedNode);
                         break;
                 }
             }
