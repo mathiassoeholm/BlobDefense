@@ -6,6 +6,7 @@
     using System.Windows.Forms;
 
     using BlobDefense.Gui;
+    using BlobDefense.HighScore;
     using BlobDefense.WaveSpawner;
 
     using Extensions;
@@ -74,12 +75,18 @@
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            if (!GameManager.Instance.IsPlaying)
+            switch (GameManager.Instance.CurrentGameState)
             {
-                return;
+                case GameState.MainMenu:
+                    return;
+                case GameState.Playing:
+                    this.RenderGame(e.Graphics);
+                    break;
+                case GameState.GameOver:
+                    ScoreManager.Instance.DrawLeaderBoards(e.Graphics);
+                    break;
             }
-            
-            this.RenderGame(e.Graphics);
+
             this.Invalidate();
         }
 
@@ -226,6 +233,12 @@
         private void NameTxt_TextChanged(object sender, EventArgs e)
         {
             GameSettings.PlayerName = this.NameTxt.Text;
+        }
+
+        private void GameDisplay_Load(object sender, EventArgs e)
+        {
+            // Fill in the name text field
+            this.NameTxt.Text = GameSettings.PlayerName;
         }
     }
 }

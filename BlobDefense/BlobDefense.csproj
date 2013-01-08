@@ -58,6 +58,8 @@
     <Compile Include="GameSettings.cs" />
     <Compile Include="Gui\GuiButton.cs" />
     <Compile Include="Gui\GuiManager.cs" />
+    <Compile Include="HighScore\HighScore.cs" />
+    <Compile Include="HighScore\ScoreManager.cs" />
     <Compile Include="InputManager.cs" />
     <Compile Include="Towers\AgilityTower.cs" />
     <Compile Include="Towers\AgilityProjectile.cs" />
@@ -258,6 +260,7 @@
       <Name>AStar</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

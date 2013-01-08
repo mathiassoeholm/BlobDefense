@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace BlobDefense
 {
+    using BlobDefense.HighScore;
+    using BlobDefense.WaveSpawner;
+
     internal class GameManager : Singleton<GameManager>
     {
         /// <summary>
@@ -28,10 +31,11 @@ namespace BlobDefense
         /// </summary>
         public int Lives { get; private set; }
 
+
         /// <summary>
-        /// Gets or sets a value indicating whether the game is playing or not.
+        /// Gets or sets the current game state.
         /// </summary>
-        public bool IsPlaying { get; set; }
+        public GameState CurrentGameState { get; set; }
 
         /// <summary>
         /// This method is called to create the instance.
@@ -73,7 +77,7 @@ namespace BlobDefense
 
         public void StartNewGame()
         {
-            this.IsPlaying = true;
+            this.CurrentGameState = GameState.Playing;
         }
 
         private void LoseLife()
@@ -88,7 +92,13 @@ namespace BlobDefense
 
         private void EndGame()
         {
-            
+            // Save score
+            ScoreManager.Instance.AddScore(WaveManager.Instance.CurrentWave);
+
+            // Sort score
+            ScoreManager.Instance.SortScores();
+
+            this.CurrentGameState = GameState.GameOver;
         }
     }
 }

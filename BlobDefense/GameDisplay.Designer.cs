@@ -61,6 +61,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "GameDisplay";
             this.Text = "Blob Defense";
+            this.Load += new System.EventHandler(this.GameDisplay_Load);
             this.Click += new System.EventHandler(this.GameDisplay_Click);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GameDisplay_MouseDown);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.GameDisplay_MouseUp);

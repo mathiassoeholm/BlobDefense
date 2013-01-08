@@ -8,7 +8,7 @@
         public const int InitialCurrencyAmount = 100;
 
         // Mutable settings
-        public static string PlayerName;
+        public static string PlayerName = "Player Name";
 
         #region Tower Settings
 

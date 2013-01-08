@@ -61,6 +61,15 @@ namespace BlobDefense.Gui
             EventManager.Instance.WaveStarted += () => this.SelectedTowerToBuild = -1;
         }
 
+        public void WriteText(Graphics graphics, string text, int posX, int posY, int size, Color color)
+        {
+            graphics.DrawString(
+                text,
+                new Font("Arial", size), new SolidBrush(color),
+                posX,
+                posY);
+        }
+
         public void DrawInGameGui(Graphics graphics)
         {
             // Draw buttons
@@ -400,6 +409,7 @@ namespace BlobDefense.Gui
 
         private void UpgradeSelectedTower()
         {
+            // TODO Fix crash here
             if (GameManager.Instance.TryBuy(this.selectedTower.UpgradePrice))
             {
                 this.selectedTower.Upgrade();
