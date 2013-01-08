@@ -33,6 +33,7 @@ namespace BlobDefense.Gui
         private GuiButton towerOneBtn;
         private GuiButton towerTwoBtn;
         private GuiButton towerThreeBtn;
+        private GuiButton towerFourBtn;
 
         private Tower selectedTower;
 
@@ -70,6 +71,7 @@ namespace BlobDefense.Gui
             this.towerOneBtn.Draw(graphics);
             this.towerTwoBtn.Draw(graphics);
             this.towerThreeBtn.Draw(graphics);
+            this.towerFourBtn.Draw(graphics);
 
             Pen selectedSpeedPen = new Pen(Color.Yellow, 4);
 
@@ -188,6 +190,7 @@ namespace BlobDefense.Gui
             Image towerOneBtnStandard = Image.FromFile(@"Images/TowerOneBtn.png");
             Image towerTwoBtnStandard = Image.FromFile(@"Images/TowerTwoBtn.png");
             Image towerThreeBtnStandard = Image.FromFile(@"Images/TowerThreeBtn.png");
+            Image towerFourBtnStandard = Image.FromFile(@"Images/TowerFourBtn.png");
 
             // Set up next wave button
             this.nextWaveBtn = new GuiButton(
@@ -260,6 +263,14 @@ namespace BlobDefense.Gui
                 hoverImage: Image.FromFile(@"Images/TowerThreeBtn_Hovered.png"),
                 pressedImage: Image.FromFile(@"Images/TowerThreeBtn_Pressed.png"),
                 clickAction: () => this.SelectTowerToBuild(2));
+
+            // Set up tower four button
+            this.towerFourBtn = new GuiButton(
+                positionAndSize: new Rectangle((TileEngine.TilesX * TileEngine.TilesOnSpriteSize) + GuiLeftOffset + (this.towerOneBtn.PositionAndSize.Width + TowerButtonsSpacing) * 3, TowerButtonsTopOffset, towerFourBtnStandard.Width, towerFourBtnStandard.Height),
+                standardImage: towerFourBtnStandard,
+                hoverImage: Image.FromFile(@"Images/TowerFourBtn_Hovered.png"),
+                pressedImage: Image.FromFile(@"Images/TowerFourBtn_Pressed.png"),
+                clickAction: () => this.SelectTowerToBuild(3));
         }
 
         private void DrawTowerButtonSelection(Graphics graphics)
@@ -311,12 +322,12 @@ namespace BlobDefense.Gui
                     selectionRectangle = this.towerThreeBtn.PositionAndSize;
                     break;
                 default:
-                    nameAndPriceTxt = "Flame Tower  $" + GameSettings.StandardTower_BuildPrice.ToString();
-                    damageTxt = "Damage " + GameSettings.StandardTower_AttackDamage.ToString();
-                    rangeTxt = "Range " + GameSettings.StandardTower_ShootRange.ToString();
-                    cooldownTxt = "Cooldown " + GameSettings.StandardTower_CoolDown.ToString() + " s";
-                    range = GameSettings.StandardTower_ShootRange;
-                    selectionRectangle = this.towerOneBtn.PositionAndSize;
+                    nameAndPriceTxt = "Agility Tower  $" + GameSettings.AgilityTower_BuildPrice.ToString();
+                    damageTxt = "Damage " + GameSettings.AgilityTower_AttackDamage.ToString();
+                    rangeTxt = "Range " + GameSettings.AgilityTower_ShootRange.ToString();
+                    cooldownTxt = "Cooldown " + GameSettings.AgilityTower_CoolDown.ToString() + " s";
+                    range = GameSettings.AgilityTower_ShootRange;
+                    selectionRectangle = this.towerFourBtn.PositionAndSize;
                     break;
             }
 

@@ -137,6 +137,9 @@ namespace BlobDefense
                     case 2:
                         this.PlaceTower<SniperTower>(clickedNode);
                         break;
+                    case 3:
+                        this.PlaceTower<AgilityTower>(clickedNode);
+                        break;
                 }
             }
             else

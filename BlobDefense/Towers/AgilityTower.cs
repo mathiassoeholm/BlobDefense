@@ -19,7 +19,7 @@ namespace BlobDefense.Towers
             this.BuildPrice = GameSettings.AgilityTower_BuildPrice;
             this.UpgradePrice = GameSettings.AgilityTower_UpgradePrice;
             
-            this.SpriteSheetSource = new Rectangle(115, 126, 29, 27);
+            this.SpriteSheetSource = new Rectangle(115, 126, 28, 27);
             
             this.IdleAnimation = new Animation(
                 fps: 6,
