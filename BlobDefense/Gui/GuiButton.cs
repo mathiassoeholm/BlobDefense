@@ -25,6 +25,7 @@ namespace BlobDefense.Gui
             this.PositionAndSize = positionAndSize;
             this.clickAction = clickAction;
             this.TextColor = Color.Black;
+            this.IsVisible = true;
 
             this.HoverImage = hoverImage ?? standardImage;
             this.PressedImage = pressedImage ?? standardImage;
@@ -44,6 +45,11 @@ namespace BlobDefense.Gui
         /// Gets a list of all the buttons created.
         /// </summary>
         public static List<GuiButton> AllButtons { get; private set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the button is visible or not.
+        /// </summary>
+        public bool IsVisible { get; set; }
 
         /// <summary>
         /// Gets or sets the text displayed on the button.
@@ -87,11 +93,23 @@ namespace BlobDefense.Gui
 
         public void Click()
         {
+            // Return if the button is not visible
+            if (!this.IsVisible)
+            {
+                return;
+            }
+            
             this.clickAction.SafeInvoke();
         }
 
         public void Draw(Graphics graphics)
         {
+            // Return if the button is not visible
+            if (!this.IsVisible)
+            {
+                return;
+            }
+            
             // Draw button image
             switch (this.State)
             {

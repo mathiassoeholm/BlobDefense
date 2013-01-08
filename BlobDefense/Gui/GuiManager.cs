@@ -53,8 +53,13 @@ namespace BlobDefense.Gui
             this.SelectedTowerToBuild = -1;
             
             this.SetUpInGameGui();
+
+            // Hide destroy and upgrade buttons
+            this.destroyBtn.IsVisible = false;
+            this.upgradeBtn.IsVisible = false;
+
             EventManager.Instance.TowerWasSelected += this.OnTowerSelected;
-            EventManager.Instance.DeselectedTower += () => this.selectedTower = null;
+            EventManager.Instance.DeselectedTower += this.OnTowerDeselected;
 
             // Stop building a tower, if a tower was selected or a wave started
             EventManager.Instance.TowerWasSelected += (notUsing) => this.SelectedTowerToBuild = -1;
@@ -82,6 +87,12 @@ namespace BlobDefense.Gui
             this.towerThreeBtn.Draw(graphics);
             this.towerFourBtn.Draw(graphics);
 
+            // Draw upgrade button
+            this.upgradeBtn.Draw(graphics);
+
+            // Draw destroy button
+            this.destroyBtn.Draw(graphics);
+
             Pen selectedSpeedPen = new Pen(Color.Yellow, 4);
 
             // Draw a rectangle around selected speed
@@ -104,12 +115,6 @@ namespace BlobDefense.Gui
             
             if (this.selectedTower != null)
             {
-                // Draw upgrade button
-                this.upgradeBtn.Draw(graphics);
-
-                // Draw destroy button
-                this.destroyBtn.Draw(graphics);
-                
                 // Draw selection rectangle around selected tower
                 graphics.DrawRectangle(
                     new Pen(Color.Yellow),
@@ -185,6 +190,19 @@ namespace BlobDefense.Gui
         private void OnTowerSelected(Tower selectedTower)
         {
             this.selectedTower = selectedTower;
+
+            // Enable buttons
+            this.upgradeBtn.IsVisible = true;
+            this.destroyBtn.IsVisible = true;
+        }
+
+        private void OnTowerDeselected()
+        {
+            this.selectedTower = null;
+
+            // Enable buttons
+            this.upgradeBtn.IsVisible = false;
+            this.destroyBtn.IsVisible = false;
         }
 
         private void SetUpInGameGui()
