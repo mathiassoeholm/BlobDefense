@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animation.cs" />
+    <Compile Include="Enemies\Boss.cs" />
     <Compile Include="Enumerations.cs" />
     <Compile Include="EventManager.cs" />
     <Compile Include="GameManager.cs" />
@@ -53,9 +54,12 @@
     <Compile Include="Gui\GuiButton.cs" />
     <Compile Include="Gui\GuiManager.cs" />
     <Compile Include="InputManager.cs" />
+    <Compile Include="Towers\AgilityTower.cs" />
+    <Compile Include="Towers\AgilityProjectile.cs" />
     <Compile Include="Towers\FrostProjectile.cs" />
     <Compile Include="Towers\FrostTower.cs" />
     <Compile Include="Towers\Projectile.cs" />
+    <Compile Include="Towers\SniperTower.cs" />
     <Compile Include="Towers\StandardProjectile.cs" />
     <Compile Include="Towers\StandardTower.cs" />
     <Compile Include="Towers\Tower.cs" />

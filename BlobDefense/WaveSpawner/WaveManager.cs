@@ -8,6 +8,8 @@ namespace BlobDefense.WaveSpawner
 {
     using System.Threading;
 
+    using BlobDefense.Enemies;
+
     using Extensions;
 
     internal class WaveManager : Singleton<WaveManager>
@@ -36,6 +38,7 @@ namespace BlobDefense.WaveSpawner
         {            
             this.waves = new List<IEnemyWave>()
                 {
+                    new Wave<Boss>(1),
                     new Wave<StandardEnemy>(10),
                     new Wave<StandardEnemy, PikachuEnemy>(10, 5),
                     new Wave<StandardEnemy, PikachuEnemy>(5, 10),

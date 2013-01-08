@@ -39,6 +39,19 @@
         public const float FrostTower_SlowDuration_Upgrade = 1.5f;
         public const int FrostTower_UpgradePrice_Upgrade = 2;
 
+        // AGILITY TOWER - Initial values
+        public const float AgilityTower_CoolDown = 0.2f;
+        public const float AgilityTower_ShootRange = 90;
+        public const float AgilityTower_AttackDamage = 2;
+        public const int AgilityTower_BuildPrice = 40;
+        public const int AgilityTower_UpgradePrice = 20;
+
+        // AGILITY TOWER - Upgrade values
+        public const float AgilityTower_AttackDamage_Upgrade = 1.2f;
+        public const float AgilityTower_ShootRange_Upgrade = 1.1f;
+        public const float AgilityTower_ShootCoolDown_Upgrade = 0.9f;
+        public const int AgilityTower_UpgradePrice_Upgrade = 2;
+
         #endregion
 
     }

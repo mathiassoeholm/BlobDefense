@@ -15,6 +15,7 @@ namespace BlobDefense.Towers
         public Projectile(Enemy enemy, float attackDamage, Tower towerSource)
         {
             this.enemyTarget = enemy;
+            this.CurrentTarget = this.enemyTarget.Position;
             this.attackDamage = attackDamage;
             this.towerSource = towerSource;
 
@@ -46,10 +47,10 @@ namespace BlobDefense.Towers
                         this.Position.Y - this.enemyTarget.Position.Y, this.Position.X - this.enemyTarget.Position.X)
                     * 57.324f; // 180 / Pi
             }
-            else
-            {
-                this.Destroy();
-            }
+            //else
+            //{
+            //    this.Destroy();
+            //}
 
             this.Move();
         }
