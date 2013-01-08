@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 
 namespace BlobDefense
 {
+    using System.Diagnostics;
+
     using BlobDefense.HighScore;
+    using BlobDefense.Towers;
     using BlobDefense.WaveSpawner;
+
+    using Extensions;
 
     internal class GameManager : Singleton<GameManager>
     {
@@ -19,6 +24,7 @@ namespace BlobDefense
             this.Currency = GameSettings.InitialCurrencyAmount;
             this.Lives = GameSettings.StartLives;
             EventManager.Instance.EnemyReachedGoal += this.LoseLife;
+            EventManager.Instance.EnemyDied += (enemy) => this.TotalKills++;
         }
 
         /// <summary>
@@ -30,6 +36,11 @@ namespace BlobDefense
         /// Gets the amount of lives that player has left.
         /// </summary>
         public int Lives { get; private set; }
+
+        /// <summary>
+        /// Gets the amount of enemies killed.
+        /// </summary>
+        public int TotalKills { get; private set; }
 
 
         /// <summary>
@@ -78,10 +89,36 @@ namespace BlobDefense
         public void StartNewGame()
         {
             this.CurrentGameState = GameState.Playing;
+
+            this.Lives = GameSettings.StartLives;
+            this.Currency = GameSettings.InitialCurrencyAmount;
+            this.TotalKills = 0;
+            WaveManager.Instance.InitializeWaveManager();
+
+            // Load the tile map
+            TileEngine.Instance.LoadMapFromXml();
+
+            // Initialize the game manager
+            GameLogic.Instance.InitializeGameManager();
+
+            // Create a path for the enemies
+            GameLogic.Instance.TryCreateNewPath();
+        }
+
+        public void GoToMainMenu()
+        {
+            this.CurrentGameState = GameState.MainMenu;
+
+            EventManager.Instance.OpenedMainMenu.SafeInvoke();
         }
 
         private void LoseLife()
         {
+            if (this.CurrentGameState != GameState.Playing)
+            {
+                return;
+            }
+            
             this.Lives = Math.Max(0, this.Lives - 1);
 
             if (this.Lives == 0)
@@ -92,6 +129,15 @@ namespace BlobDefense
 
         private void EndGame()
         {
+            // Stop the wave
+            WaveManager.Instance.StopWave();
+
+            // Add any potential new game objects
+            GameObject.AddAllNewGameObjects();
+
+            // Remove all game objects
+            GameObject.AllGameObjects.RemoveAll(go => !go.NeverDestroy);
+            
             // Save score
             ScoreManager.Instance.AddScore(WaveManager.Instance.CurrentWave);
 

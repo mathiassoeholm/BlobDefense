@@ -20,8 +20,6 @@
 
         private readonly GameObject goalGraphic;
 
-        private readonly GameObject mouseCursor;
-
         private int currentFps;
 
         private DateTime lastFpsUpdate;
@@ -32,6 +30,10 @@
 
             instance = this;
 
+            // Subscribe to open menu event
+            EventManager.Instance.OpenedMainMenu += () => this.PlayBtn.Visible = true;
+            EventManager.Instance.OpenedMainMenu += () => this.NameTxt.Visible = true;
+
             // Initialize sound engine
             AudioManager.Instance.InitializeSoundEngine();
 
@@ -41,21 +43,6 @@
             // Initialize the game manager
             GameManager.Instance.InitializeManager();
 
-            // Craete and render mouse on top of everything else
-            this.mouseCursor = new MouseCursor { DepthLevel = int.MaxValue };
-
-            // Load the tile map
-            TileEngine.Instance.LoadMapFromXml();
-
-            // Create a path for the enemies
-            GameLogic.Instance.TryCreateNewPath();
-
-            // Set up goal graphic
-            this.goalGraphic = new GameObject();
-            this.goalGraphic.SpriteSheetSource = new Rectangle(128, 0, 72, 83);
-            this.goalGraphic.DepthLevel = 10;
-            this.goalGraphic.Position = new PointF(GameLogic.Instance.GoalNode.Position.X, this.goalGraphic.SpriteSheetSource.Height / 2);
-            
             // Set size of the form
             this.ClientSize = new Size((TileEngine.TilesX * TileEngine.TilesOnSpriteSize) + GuiManager.RightPanelWidth, (TileEngine.TilesY * TileEngine.TilesOnSpriteSize));
 
@@ -63,6 +50,22 @@
 
             this.DoubleBuffered = true;
             this.ResizeRedraw = true;
+        }
+
+        public static int FormWidth
+        {
+            get
+            {
+                return instance.Width;
+            }
+        }
+
+        public static int FormHeight
+        {
+            get
+            {
+                return instance.Height;
+            }
         }
 
         public static new Point MousePosition
@@ -81,9 +84,11 @@
                     return;
                 case GameState.Playing:
                     this.RenderGame(e.Graphics);
+                    GuiManager.Instance.DrawInGameGui(e.Graphics);
                     break;
                 case GameState.GameOver:
-                    ScoreManager.Instance.DrawLeaderBoards(e.Graphics);
+                    GuiManager.Instance.DrawGameOverScreen(e.Graphics);    
+                //ScoreManager.Instance.DrawLeaderBoards(e.Graphics);
                     break;
             }
 
@@ -109,16 +114,10 @@
             // Run logic
             GameLogic.Instance.RunLogic(graphics);
 
-            // Draw gui
-            GuiManager.Instance.DrawInGameGui(graphics);
-
             InputManager.Instance.Update(MousePosition);
 
             // Write fps
             this.WriteFps(graphics);
-
-            // Render mouse cursor
-            this.mouseCursor.Render(graphics);
         }
 
         private void DrawSelectedTile(Graphics graphics)
@@ -220,7 +219,7 @@
         private void PlayBtn_Click(object sender, EventArgs e)
         {
             // Hide the cursor
-            Cursor.Hide();
+            //Cursor.Hide();
 
             // Hide main menu controls
             this.PlayBtn.Visible = false;

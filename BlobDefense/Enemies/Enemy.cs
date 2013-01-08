@@ -181,6 +181,8 @@ namespace BlobDefense
 
         private void ReachGoal()
         {
+            
+
             // Incoke reached goal event
             EventManager.Instance.EnemyReachedGoal.SafeInvoke();
             

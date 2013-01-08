@@ -63,6 +63,11 @@
         public PointF Position { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether this game object can be destroyed or not.
+        /// </summary>
+        public bool NeverDestroy { get; set; }
+
+        /// <summary>
         /// Gets or sets the source rectangle used on the sprite sheet.
         /// </summary>
         public Rectangle SpriteSheetSource { get; set; }
@@ -89,7 +94,7 @@
         /// </summary>
         public static void EmptyDestroyQueue()
         {
-            int amount = GameObjectsToDestroy.Count;
+            int amount = GameObjectsToDestroy == null ? 0 : GameObjectsToDestroy.Count;
 
             if (amount == 0)
             {
@@ -126,6 +131,11 @@
         /// </summary>
         public virtual void Destroy()
         {
+            if (this.NeverDestroy)
+            {
+                return;
+            }
+            
             NewGameObjects.Remove(this);
             GameObjectsToDestroy.Enqueue(this);
         }

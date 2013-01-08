@@ -8,6 +8,7 @@ namespace BlobDefense.Gui
 {
     using System.Drawing;
 
+    using BlobDefense.HighScore;
     using BlobDefense.Towers;
     using BlobDefense.WaveSpawner;
 
@@ -66,14 +67,42 @@ namespace BlobDefense.Gui
             EventManager.Instance.WaveStarted += () => this.SelectedTowerToBuild = -1;
         }
 
-        public void WriteText(Graphics graphics, string text, int posX, int posY, int size, Color color)
+        public void WriteText(Graphics graphics, string text, int posX, int posY, int size, Color color, bool centerText = false)
         {
-            graphics.DrawString(
+ 
+            if(centerText)
+            {
+                StringFormat stringFormat = new StringFormat();
+                stringFormat.Alignment = StringAlignment.Center;
+
+                graphics.DrawString(
+                text,
+                new Font("Arial", size), new SolidBrush(color),
+                posX,
+                posY,
+                stringFormat);
+            }
+            else
+            {
+                graphics.DrawString(
                 text,
                 new Font("Arial", size), new SolidBrush(color),
                 posX,
                 posY);
+            }
         }
+
+        public void DrawGameOverScreen(Graphics graphics)
+        {
+            this.WriteText(graphics, "Game Over", (int)(GameDisplay.FormWidth * 0.5f), 0, 28, Color.Gold, true);
+            this.WriteText(graphics, "Total kills: " + GameManager.Instance.TotalKills, (int)(GameDisplay.FormWidth * 0.5f), 35, 16, Color.White, true);
+            this.WriteText(graphics, "Last wave: " + WaveManager.Instance.CurrentWave, (int)(GameDisplay.FormWidth * 0.5f), 54, 16, Color.White, true);
+
+            // Draw leader boards
+            ScoreManager.Instance.DrawLeaderBoards(graphics, 85);
+
+        }
+
 
         public void DrawInGameGui(Graphics graphics)
         {

@@ -18,12 +18,6 @@ namespace BlobDefense
         /// </summary>
         private GameLogic()
         {
-            // Connect nodes for the AStar
-            Astar<MapNode>.ConnectNodes(TileEngine.Instance.NodeMap);
-
-            // Assign start and goal nodes
-            this.StartNode = TileEngine.Instance.NodeMap[0, TileEngine.TilesY - 1];
-            this.GoalNode = TileEngine.Instance.NodeMap[TileEngine.TilesX - 2, 0];
         }
 
         public static List<MapNode> EnemyPath { get; set; } 
@@ -61,6 +55,22 @@ namespace BlobDefense
             return true;
         }
 
+        public void InitializeGameManager()
+        {
+            // Connect nodes for the AStar
+            Astar<MapNode>.ConnectNodes(TileEngine.Instance.NodeMap);
+
+            // Assign start and goal nodes
+            this.StartNode = TileEngine.Instance.NodeMap[0, TileEngine.TilesY - 1];
+            this.GoalNode = TileEngine.Instance.NodeMap[TileEngine.TilesX - 2, 0];
+
+            // Set up goal graphic
+            GameObject goalGraphic = new GameObject();
+            goalGraphic.SpriteSheetSource = new Rectangle(128, 0, 72, 83);
+            goalGraphic.DepthLevel = 10;
+            goalGraphic.Position = new PointF(GoalNode.Position.X, goalGraphic.SpriteSheetSource.Height / 2);
+        }
+
         public void RunLogic(Graphics graphicsContext)
         {
             foreach (GameObject gameObject in GameObject.AllGameObjects)
@@ -86,6 +96,11 @@ namespace BlobDefense
                     {
                         (gameObject as Enemy).DrawHealthBar(graphicsContext);
                     }
+                }
+
+                if (GameManager.Instance.CurrentGameState != GameState.Playing)
+                {
+                    break;
                 }
             }
 

@@ -19,6 +19,8 @@ namespace BlobDefense
         { 
         }
 
+        public Action OpenedMainMenu { get; set; }
+
         public Action<Tower> TowerShot { get; set; }
 
         public Action<Enemy> EnemyDied { get; set; }

@@ -3,7 +3,7 @@
     public static class GameSettings
     {
 
-        public const int StartLives = 20;
+        public const int StartLives = 1;
 
         public const int InitialCurrencyAmount = 100;
 

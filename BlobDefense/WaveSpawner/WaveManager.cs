@@ -14,10 +14,10 @@ namespace BlobDefense.WaveSpawner
 
     internal class WaveManager : Singleton<WaveManager>
     {
-        private const float EnemyDifficulityIncrease = 1.1f;
+        private const float EnemyDifficulityIncrease = 1.05f;
         private const int MillisBetweenEachEnemy = 1000;
 
-        private readonly List<IEnemyWave> waves;
+        private List<IEnemyWave> waves;
 
         private Timer enemySpawnTimer;
 
@@ -35,7 +35,15 @@ namespace BlobDefense.WaveSpawner
         /// Prevents a default instance of the <see cref="WaveManager"/> class from being created.
         /// </summary>
         private WaveManager()
-        {            
+        {
+        }
+
+        public void InitializeWaveManager()
+        {
+            this.currentWave = -1;
+            this.EnemyDifficulity = 1;
+            this.enemiesSpawned = 0;
+
             this.waves = new List<IEnemyWave>()
                 {
                     new Wave<StandardEnemy>(10),
@@ -72,7 +80,7 @@ namespace BlobDefense.WaveSpawner
             this.enemiesSpawned = 0;
 
             // Make harder
-            this.EnemyDifficulity += EnemyDifficulityIncrease;
+            this.EnemyDifficulity *= EnemyDifficulityIncrease;
 
             EventManager.Instance.WaveStarted.SafeInvoke();
 
@@ -89,10 +97,13 @@ namespace BlobDefense.WaveSpawner
             }
         }
 
-        private void StopWave()
+        public void StopWave()
         {
-            this.enemySpawnTimer.Dispose();
-            this.enemySpawnTimer = null;
+            if (enemySpawnTimer != null)
+            {
+                this.enemySpawnTimer.Dispose();
+                this.enemySpawnTimer = null;
+            }
         }
 
         private void SpawnEnemy(object state)
