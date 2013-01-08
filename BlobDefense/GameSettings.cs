@@ -45,6 +45,7 @@
         public const float AgilityTower_CoolDown = 0.2f;
         public const float AgilityTower_ShootRange = 90;
         public const float AgilityTower_AttackDamage = 2;
+
         public const int AgilityTower_BuildPrice = 40;
         public const int AgilityTower_UpgradePrice = 20;
 

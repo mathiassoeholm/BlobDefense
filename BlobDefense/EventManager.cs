@@ -19,6 +19,12 @@ namespace BlobDefense
         { 
         }
 
+        public Action<Tower> TowerShot { get; set; }
+
+        public Action EnemyDied { get; set; }
+
+        public Action PlacedATower { get; set; }
+
         /// <summary>
         /// Gets or sets the wave started delegate.
         /// </summary>

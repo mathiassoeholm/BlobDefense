@@ -31,6 +31,9 @@
 
             instance = this;
 
+            // Initialize sound engine
+            AudioManager.Instance.InitializeSoundEngine();
+
             // Initialize the input manager
             InputManager.Instance.Initialize();
 

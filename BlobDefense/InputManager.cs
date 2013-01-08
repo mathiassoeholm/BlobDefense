@@ -185,6 +185,11 @@ namespace BlobDefense
                 // Destroy the tower
                 tower.Destroy();
             }
+            else
+            {
+                // Invoke placed a tower
+                EventManager.Instance.PlacedATower.SafeInvoke();
+            }
         }
     }
 }

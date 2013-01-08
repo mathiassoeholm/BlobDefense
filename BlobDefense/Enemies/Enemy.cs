@@ -100,6 +100,8 @@ namespace BlobDefense
             // Subtract from health
             this.currentHealth -= amount;
 
+            
+
             return false;
         }
 
@@ -167,6 +169,9 @@ namespace BlobDefense
 
         private void Die()
         {
+            // Invoke event
+            EventManager.Instance.EnemyDied.SafeInvoke();
+            
             // Give player the bounty
             GameManager.Instance.GiveCurrency(this.Bounty);
             

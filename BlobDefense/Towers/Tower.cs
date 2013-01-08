@@ -91,6 +91,9 @@ namespace BlobDefense.Towers
 
         protected virtual void ShootTarget()
         {
+            // Invoke shoot event
+            EventManager.Instance.TowerShot.SafeInvoke(this);
+            
             // Set time for last shot, used to check cooldown
             this.lastShotFired = DateTime.Now;
         }
