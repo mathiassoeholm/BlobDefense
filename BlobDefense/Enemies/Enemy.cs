@@ -217,7 +217,7 @@ namespace BlobDefense.Enemies
         public void Update()
         {
             // Set the default move speed, if not set yet.
-            if (this.defaultMoveSpeed == 0)
+            if (this.defaultMoveSpeed <= 0)
             {
                 this.defaultMoveSpeed = this.MoveSpeed;
             }
@@ -252,34 +252,6 @@ namespace BlobDefense.Enemies
             this.AssignCurrentAnimation();
         }
 
-        private void Die()
-        {
-            // Set the is dead bool flag
-            this.isDead = true;
-            
-            // Invoke event
-            EventManager.Instance.EnemyDied.SafeInvoke(this);
-            
-            // Give player the bounty
-            GameManager.Instance.GiveCurrency(this.Bounty);
-            
-            // Destroy the enemy
-            this.Destroy();
-        }
-
-        private void ReachGoal()
-        {
-            
-
-            // Incoke reached goal event
-            EventManager.Instance.EnemyReachedGoal.SafeInvoke();
-            
-            // Go back to start
-            this.Position = GameLogic.Instance.StartNode.Position;
-            this.targetNode = 1;
-            this.CurrentTarget = GameLogic.EnemyPath[this.targetNode].Position;
-        }
-
         /// <summary>
         /// Assigns the current animation based on relative position to the EnemyTarget.
         /// </summary>
@@ -287,20 +259,56 @@ namespace BlobDefense.Enemies
         {
             if (this.CurrentTarget.X > this.Position.X)
             {
+                // The enemy is walking right
                 this.CurrentAnimation = this.WalkRightAnimation;
             }
             else if (this.CurrentTarget.X < this.Position.X)
             {
+                // The enemy is walking left
                 this.CurrentAnimation = this.WalkLeftAnimation;
             }
             else if (this.CurrentTarget.Y > this.Position.Y)
             {
+                // The enemy is walking down
                 this.CurrentAnimation = this.WalkDownAnimation;
             }
             else
             {
+                // The enemy is walking up
                 this.CurrentAnimation = this.WalkUpAnimation;
             }
+        }
+
+        /// <summary>
+        /// The die method, called once when killed.
+        /// </summary>
+        private void Die()
+        {
+            // Set the is dead bool flag
+            this.isDead = true;
+            
+            // Invoke death event
+            EventManager.Instance.EnemyDied.SafeInvoke(this);
+
+            // Give the player bounty
+            GameManager.Instance.GiveCurrency(this.Bounty);
+            
+            // Destroy this enemy
+            this.Destroy();
+        }
+
+        /// <summary>
+        /// Called when the enemy reaches the last node of the path.
+        /// </summary>
+        private void ReachGoal()
+        {
+            // Incoke reached goal event
+            EventManager.Instance.EnemyReachedGoal.SafeInvoke();
+            
+            // Go back to start
+            this.Position = GameLogic.Instance.StartNode.Position;
+            this.targetNode = 1;
+            this.CurrentTarget = GameLogic.EnemyPath[this.targetNode].Position;
         }
     }
 }

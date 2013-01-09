@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="GuiManager.cs" company="Backdoor Fun">
+//   © 2013
+// </copyright>
+// <summary>
+//   Defines the graphical user interface.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace BlobDefense.Gui
 {
     using System.Drawing;
+    using System.Linq;
 
     using BlobDefense.Enemies;
     using BlobDefense.HighScore;
@@ -15,36 +19,105 @@ namespace BlobDefense.Gui
 
     using Extensions;
 
+    /// <summary>
+    /// Defines the graphical user interface.
+    /// </summary>
     internal class GuiManager : Singleton<GuiManager>
     {
+        /// <summary>
+        /// The pixel width of the GUI panel, positioned to the right.
+        /// </summary>
         public const int RightPanelWidth = 215;
-        private const int GuiLeftOffset = 10;
-        private const int SpeedBtnTopOffset = 53;
-        private const int SpaceBetweenSpeedButtons = 65;
-        private const int TowerOptionsTopOffset = 200;
-        private const int UpgradeButtonTopOffset = 315;
-        private const int TowerButtonsTopOffset = 150;
-        private const int TowerButtonsSpacing = 15;
-
-        private GuiButton nextWaveBtn;
-        private GuiButton speed100Btn;
-        private GuiButton speed200Btn;
-        private GuiButton speed400Btn;
-        private GuiButton upgradeBtn;
-        private GuiButton destroyBtn;
-        private GuiButton towerOneBtn;
-        private GuiButton towerTwoBtn;
-        private GuiButton towerThreeBtn;
-        private GuiButton towerFourBtn;
-
-        private Tower selectedTower;
 
         /// <summary>
-        /// Gets or set the id for the tower to build.
-        /// When clicking on a tower icon, this gets set to the appropriate value.
-        /// -1 Means no tower.
+        /// The universal offset from the left side of the panel.
         /// </summary>
-        public int SelectedTowerToBuild { get; private set; }
+        private const int GuiLeftOffset = 10;
+
+        /// <summary>
+        /// The offset from the top for all speed buttons.
+        /// </summary>
+        private const int SpeedBtnTopOffset = 53;
+
+        /// <summary>
+        /// The space between speed buttons.
+        /// </summary>
+        private const int SpaceBetweenSpeedButtons = 65;
+
+        /// <summary>
+        /// The tower options top offset.
+        /// </summary>
+        private const int TowerOptionsTopOffset = 200;
+
+        /// <summary>
+        /// The upgrade button top offset.
+        /// </summary>
+        private const int UpgradeButtonTopOffset = 315;
+
+        /// <summary>
+        /// The tower selection buttons top offset.
+        /// </summary>
+        private const int TowerButtonsTopOffset = 150;
+
+        /// <summary>
+        /// The spacing between the tower buttons.
+        /// </summary>
+        private const int TowerButtonsSpacing = 15;
+
+        /// <summary>
+        /// The button to start the next wave of enemies.
+        /// </summary>
+        private GuiButton nextWaveBtn;
+
+        /// <summary>
+        /// The button to set the speed to 100%.
+        /// </summary>
+        private GuiButton speed100Btn;
+
+        /// <summary>
+        /// The button to set the speed to 200%.
+        /// </summary>
+        private GuiButton speed200Btn;
+
+        /// <summary>
+        /// The button to set the speed to 400%.
+        /// </summary>
+        private GuiButton speed400Btn;
+
+        /// <summary>
+        /// The button to upgrade a selected tower.
+        /// </summary>
+        private GuiButton upgradeBtn;
+
+        /// <summary>
+        /// The button to destroy a selected tower.
+        /// </summary>
+        private GuiButton destroyBtn;
+
+        /// <summary>
+        /// The button to start building type one towers.
+        /// </summary>
+        private GuiButton towerOneBtn;
+
+        /// <summary>
+        /// The button to start building type two towers.
+        /// </summary>
+        private GuiButton towerTwoBtn;
+
+        /// <summary>
+        /// The button to start building type three towers.
+        /// </summary>
+        private GuiButton towerThreeBtn;
+
+        /// <summary>
+        /// The button to start building type four towers.
+        /// </summary>
+        private GuiButton towerFourBtn;
+
+        /// <summary>
+        /// The currently selected tower.
+        /// </summary>
+        private Tower selectedTower;
 
         /// <summary>
         /// Prevents a default instance of the <see cref="GuiManager"/> class from being created.
@@ -54,78 +127,100 @@ namespace BlobDefense.Gui
             // Select no tower as a start
             this.SelectedTowerToBuild = -1;
             
+            // Initialize the ingame gui
             this.SetUpInGameGui();
 
             // Hide destroy and upgrade buttons
             this.destroyBtn.IsVisible = false;
             this.upgradeBtn.IsVisible = false;
 
+            // Subscribe to selection events
             EventManager.Instance.TowerWasSelected += this.OnTowerSelected;
             EventManager.Instance.DeselectedTower += this.OnTowerDeselected;
 
             // Stop building a tower, if a tower was selected or a wave started
-            EventManager.Instance.TowerWasSelected += (notUsing) => this.SelectedTowerToBuild = -1;
+            EventManager.Instance.TowerWasSelected += notUsing => this.SelectedTowerToBuild = -1;
             EventManager.Instance.WaveStarted += () => this.SelectedTowerToBuild = -1;
         }
 
+        /// <summary>
+        /// Gets or set the ID for the tower to build.
+        /// When clicking on a tower icon, this gets set to the appropriate value.
+        /// -1 Means no tower.
+        /// </summary>
+        public int SelectedTowerToBuild { get; private set; }
+
+        /// <summary>
+        /// Draws a piece of text.
+        /// </summary>
+        /// <param name="graphics"> The graphics context used to draw the text. </param>
+        /// <param name="text"> The text to write. </param>
+        /// <param name="posX"> The x position of the text. </param>
+        /// <param name="posY"> The y position of the text. </param>
+        ///  <param name="size"> The font size. </param>
+        /// <param name="color"> The color of the text. </param>
+        /// <param name="centerText"> A value indicating whether to center the text or not. </param>
         public void WriteText(Graphics graphics, string text, int posX, int posY, int size, Color color, bool centerText = false)
         {
- 
-            if(centerText)
+            if (centerText)
             {
-                StringFormat stringFormat = new StringFormat();
-                stringFormat.Alignment = StringAlignment.Center;
+                var stringFormat = new StringFormat { Alignment = StringAlignment.Center };
 
+                // Draw centered text
                 graphics.DrawString(
                 text,
-                new Font("Arial", size), new SolidBrush(color),
+                new Font("Arial", size),
+                new SolidBrush(color),
                 posX,
                 posY,
                 stringFormat);
             }
             else
             {
+                // Draw left aligned text
                 graphics.DrawString(
                 text,
-                new Font("Arial", size), new SolidBrush(color),
+                new Font("Arial", size),
+                new SolidBrush(color),
                 posX,
                 posY);
             }
         }
 
+        /// <summary>
+        /// Draws the game over screen.
+        /// </summary>
+        /// <param name="graphics">
+        /// The graphics context used to draw the game over screen.
+        /// </param>
         public void DrawGameOverScreen(Graphics graphics)
         {
+            // Write title
             this.WriteText(graphics, "Game Over", (int)(GameDisplay.FormWidth * 0.5f), 0, 28, Color.Gold, true);
+            
+            // Write stats
             this.WriteText(graphics, "Total kills: " + GameManager.Instance.TotalKills, (int)(GameDisplay.FormWidth * 0.5f), 35, 16, Color.White, true);
             this.WriteText(graphics, "Last wave: " + WaveManager.Instance.CurrentWave, (int)(GameDisplay.FormWidth * 0.5f), 54, 16, Color.White, true);
 
             // Draw leader boards
             ScoreManager.Instance.DrawLeaderBoards(graphics, 85);
-
         }
 
-
+        /// <summary>
+        /// Draws the GUI used while playing.
+        /// </summary>
+        /// <param name="graphics">
+        /// The graphics context used to draw the GUI.
+        /// </param>
         public void DrawInGameGui(Graphics graphics)
         {
-            // Draw buttons
-            this.nextWaveBtn.Draw(graphics);
-            this.speed100Btn.Draw(graphics);
-            this.speed200Btn.Draw(graphics);
-            this.speed400Btn.Draw(graphics);
-            this.towerOneBtn.Draw(graphics);
-            this.towerTwoBtn.Draw(graphics);
-            this.towerThreeBtn.Draw(graphics);
-            this.towerFourBtn.Draw(graphics);
+            // Draw all buttons
+            GuiButton.AllButtons.ForEach(button => button.Draw(graphics));
 
-            // Draw upgrade button
-            this.upgradeBtn.Draw(graphics);
+            // Initalize the pen used to draw selection rectangle around speed buttons
+            var selectedSpeedPen = new Pen(Color.Yellow, 4);
 
-            // Draw destroy button
-            this.destroyBtn.Draw(graphics);
-
-            Pen selectedSpeedPen = new Pen(Color.Yellow, 4);
-
-            // Draw a rectangle around selected speed
+            // Draw a rectangle around selected speed button
             switch ((int)Time.TimeScale)
             {
                 case 1:
@@ -139,7 +234,6 @@ namespace BlobDefense.Gui
                     break;
             }
             
-
             // Draw a selction rectangle around the selected type of tower
             this.DrawTowerButtonSelection(graphics);
             
@@ -149,85 +243,118 @@ namespace BlobDefense.Gui
                 graphics.DrawRectangle(
                     new Pen(Color.Yellow),
                     new Rectangle(
-                        (int)selectedTower.Position.X - (TileEngine.TilesOnSpriteSize / 2),
-                        (int)selectedTower.Position.Y - (TileEngine.TilesOnSpriteSize / 2),
+                        (int)this.selectedTower.Position.X - (TileEngine.TilesOnSpriteSize / 2),
+                        (int)this.selectedTower.Position.Y - (TileEngine.TilesOnSpriteSize / 2),
                         TileEngine.TilesOnSpriteSize,
                         TileEngine.TilesOnSpriteSize));
 
                 // Draw range circle around the tower
-                graphics.DrawEllipse(Pens.Black,
+                graphics.DrawEllipse(
+                    Pens.Black,
                     new RectangleF(
-                        selectedTower.Position.X - (this.selectedTower.ShootRange),
-                        selectedTower.Position.Y - (this.selectedTower.ShootRange),
+                        this.selectedTower.Position.X - this.selectedTower.ShootRange,
+                        this.selectedTower.Position.Y - this.selectedTower.ShootRange,
                         this.selectedTower.ShootRange * 2,
                         this.selectedTower.ShootRange * 2));
 
-                int yPos = TowerOptionsTopOffset;
+                int posY = TowerOptionsTopOffset;
 
                 // Write selected tower
-                graphics.DrawString("Selected tower:",
-                    new Font("Arial", 16), new SolidBrush(Color.White),
+                graphics.DrawString(
+                    "Selected tower:",
+                    new Font("Arial", 16),
+                    new SolidBrush(Color.White),
                     this.nextWaveBtn.PositionAndSize.X,
-                    yPos);
+                    posY);
 
                 // Write level and kills
-                graphics.DrawString("Kills " + this.selectedTower.Kills.ToString(),
-                    new Font("Arial", 16), new SolidBrush(Color.White),
+                graphics.DrawString(
+                    "Kills " + this.selectedTower.Kills.ToString(),
+                    new Font("Arial", 16),
+                    new SolidBrush(Color.White),
                     this.nextWaveBtn.PositionAndSize.X,
-                    (yPos += 20));
+                    posY += 20);
 
                 // Write damage
-                graphics.DrawString("Damage " + ((int)this.selectedTower.AttackDamage).ToString(),
-                    new Font("Arial", 16), new SolidBrush(Color.White),
+                graphics.DrawString(
+                    "Damage " + ((int)this.selectedTower.AttackDamage).ToString(),
+                    new Font("Arial", 16),
+                    new SolidBrush(Color.White),
                     this.nextWaveBtn.PositionAndSize.X,
-                    (yPos += 20));
+                    posY += 20);
 
                 // Write range
-                graphics.DrawString("Range " + ((int)this.selectedTower.ShootRange).ToString(),
-                    new Font("Arial", 16), new SolidBrush(Color.White),
+                graphics.DrawString(
+                    "Range " + ((int)this.selectedTower.ShootRange).ToString(),
+                    new Font("Arial", 16),
+                    new SolidBrush(Color.White),
                     this.nextWaveBtn.PositionAndSize.X,
-                    (yPos += 20));
+                    posY += 20);
 
                 // Write cooldown
-                graphics.DrawString("Cooldown " + this.selectedTower.ShootCooldown.ToString() + " s",
-                    new Font("Arial", 16), new SolidBrush(Color.White),
+                graphics.DrawString(
+                    "Cooldown " + this.selectedTower.ShootCooldown.ToString() + " s",
+                    new Font("Arial", 16),
+                    new SolidBrush(Color.White),
                     this.nextWaveBtn.PositionAndSize.X,
-                    (yPos += 20));
+                    posY);
 
                 // Write upgrade price
-                graphics.DrawString("$" + this.selectedTower.UpgradePrice.ToString(),
-                    new Font("Arial", 16), new SolidBrush(Color.White),
+                graphics.DrawString(
+                    "$" + this.selectedTower.UpgradePrice.ToString(),
+                    new Font("Arial", 16),
+                    new SolidBrush(Color.White),
                     this.upgradeBtn.PositionAndSize.X + this.upgradeBtn.PositionAndSize.Width,
                     this.upgradeBtn.PositionAndSize.Y + 10);
             }
             
             // Draw wave number
-            graphics.DrawString("Wave " + WaveManager.Instance.CurrentWave.ToString(), new Font("Arial", 16), new SolidBrush(Color.White), this.nextWaveBtn.PositionAndSize.X + this.nextWaveBtn.PositionAndSize.Width + 5, nextWaveBtn.PositionAndSize.Y);
+            graphics.DrawString(
+                "Wave " + WaveManager.Instance.CurrentWave.ToString(),
+                new Font("Arial", 16),
+                new SolidBrush(Color.White),
+                this.nextWaveBtn.PositionAndSize.X + this.nextWaveBtn.PositionAndSize.Width + 5,
+                this.nextWaveBtn.PositionAndSize.Y);
 
             // Draw currency amount
-            graphics.DrawString("$" + GameManager.Instance.Currency.ToString(),
-                    new Font("Arial", 16), new SolidBrush(Color.White),
+            graphics.DrawString(
+                "$" + GameManager.Instance.Currency.ToString(),
+                    new Font("Arial", 16),
+                    new SolidBrush(Color.White),
                     this.nextWaveBtn.PositionAndSize.X,
                     this.speed100Btn.PositionAndSize.Y + this.speed100Btn.PositionAndSize.Height + 5);
 
             // Draw amount of lives
-            graphics.DrawString("lives " + GameManager.Instance.Lives.ToString(),
-                    new Font("Arial", 16), new SolidBrush(Color.White),
+            graphics.DrawString(
+                "lives " + GameManager.Instance.Lives.ToString(),
+                    new Font("Arial", 16),
+                    new SolidBrush(Color.White),
                     this.nextWaveBtn.PositionAndSize.X,
                     this.speed100Btn.PositionAndSize.Y + this.speed100Btn.PositionAndSize.Height + 25);
         }
 
-        private void OnTowerSelected(Tower selectedTower)
+        /// <summary>
+        /// Called once when selecting a tower.
+        /// </summary>
+        /// <param name="newSelectedTower">
+        /// The tower which was selected.
+        /// </param>
+        private void OnTowerSelected(Tower newSelectedTower)
         {
-            this.selectedTower = selectedTower;
+            // Set selected tower field
+            this.selectedTower = newSelectedTower;
 
             // Enable buttons
             this.upgradeBtn.IsVisible = true;
             this.destroyBtn.IsVisible = true;
         }
 
+        /// <summary>
+        /// Called once when deselecting a tower.
+        /// </summary>
         private void OnTowerDeselected()
         {
+            // Remove current selection
             this.selectedTower = null;
 
             // Enable buttons
