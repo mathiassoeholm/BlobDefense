@@ -39,9 +39,6 @@
             // Initialize the input manager
             InputManager.Instance.Initialize();
 
-            // Initialize the game manager
-            GameManager.Instance.InitializeManager();
-
             // Set size of the form
             this.ClientSize = new Size((TileEngine.TilesX * TileEngine.TilesOnSpriteSize) + GuiManager.RightPanelWidth, (TileEngine.TilesY * TileEngine.TilesOnSpriteSize));
 

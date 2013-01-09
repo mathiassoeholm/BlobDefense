@@ -100,6 +100,11 @@ namespace BlobDefense
 
         public void RenderTiles(Graphics context, int offsetLeft = 0, int offsetTop = 0)
         {
+            if (this.NodeMap == null)
+            {
+                return;
+            }
+            
             for (int y = 0; y < this.NodeMap.GetLength(1); y++)
             {
                 for (int x = 0; x < this.NodeMap.GetLength(0); x++)
