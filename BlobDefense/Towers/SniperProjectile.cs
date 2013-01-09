@@ -7,6 +7,8 @@ namespace BlobDefense.Towers
 {
     using System.Drawing;
 
+    using BlobDefense.Enemies;
+
     class SniperProjectile : Projectile
     {
         public SniperProjectile(Enemy enemy, PointF spawnPosition, float attackDamage, Tower towerSource)

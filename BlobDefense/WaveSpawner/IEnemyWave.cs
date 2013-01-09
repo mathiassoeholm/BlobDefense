@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace BlobDefense
 {
+    using BlobDefense.Enemies;
+
     interface IEnemyWave
     {
         Enemy SpawnEnemy();

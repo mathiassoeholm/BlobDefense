@@ -10,6 +10,33 @@
         // Mutable settings
         public static string PlayerName = "Player Name";
 
+        #region Enemy Settings
+
+        public const int DefaultEnemyHealthBarWidth = 25;
+        public const int EnemyHealthBarHeight = 3;
+
+        public const float Boss_MoveSpeed = 10;
+        public const float Boss_StartHealth = 10000;
+        public const float Boss_Bounty = 100;
+        public const int Boss_HealthBarWidth = 50;
+
+        public const float FastEnemy_MoveSpeed = 65;
+        public const float FastEnemy_StartHealth = 40;
+        public const float FastEnemy_Bounty = 10;
+
+        public const float PikachuEnemy_MoveSpeed = 18f;
+        public const float PikachuEnemy_StartHealth = 80;
+        public const float PikachuEnemy_Bounty = 10;
+        public const int PikachuEnemy_HealthBarWidth = 35;
+
+        public const float StandardEnemy_MoveSpeed = 25f;
+        public const float StandardEnemy_StartHealth = 40;
+        public const float StandardEnemy_Bounty = 5;
+
+
+
+        #endregion
+
         #region Tower Settings
 
         // STANDARD TOWER - Initial values

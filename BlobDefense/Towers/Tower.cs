@@ -7,6 +7,8 @@ using Extensions;
 
 namespace BlobDefense.Towers
 {
+    using BlobDefense.Enemies;
+
     internal abstract class Tower : GameObject, IUpdateBehaviour, IAnimated
     {
         private DateTime lastShotFired;

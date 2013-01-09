@@ -1,24 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="StandardEnemy.cs" company="Backdoor Fun">
+//   © 2013
+// </copyright>
+// <summary>
+//   Defines the standard enemies animations and settings.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-namespace BlobDefense
+namespace BlobDefense.Enemies
 {
     using System.Drawing;
 
     using BlobDefense.WaveSpawner;
 
-    class StandardEnemy : Enemy
+    /// <summary>
+    /// Defines the standard enemy's animations and settings.
+    /// </summary>
+    internal class StandardEnemy : Enemy
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StandardEnemy"/> class.
+        /// </summary>
         public StandardEnemy()
         {
             // Assign properties for this enemy
-            this.SpriteSheetSource = new Rectangle(0, 53, 16, 22);
-            this.MoveSpeed = 25f;
-            this.StartHealth = 40 * WaveManager.Instance.EnemyDifficulity;
-            this.Bounty = (int)(5 * WaveManager.Instance.EnemyDifficulity);
+            this.SpriteSheetSource = new Rectangle(0, 54, 16, 22);
+            this.MoveSpeed = GameSettings.StandardEnemy_MoveSpeed;
+            this.StartHealth = GameSettings.StandardEnemy_StartHealth * WaveManager.Instance.EnemyDifficulity;
+            this.Bounty = (int)(GameSettings.StandardEnemy_Bounty * WaveManager.Instance.EnemyDifficulity);
 
             this.WalkRightAnimation = new Animation(
                 fps: 6,

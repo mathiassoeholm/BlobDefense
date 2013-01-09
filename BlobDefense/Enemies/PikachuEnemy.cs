@@ -1,24 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="PikachuEnemy.cs" company="Backdoor Fun">
+//   © 2013
+// </copyright>
+// <summary>
+//   Defines the pikachu enemy's animations and settings.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-namespace BlobDefense
+namespace BlobDefense.Enemies
 {
     using System.Drawing;
 
     using BlobDefense.WaveSpawner;
 
-    class PikachuEnemy : Enemy
+    /// <summary>
+    /// Defines the pikachu enemy's animations and settings.
+    /// </summary>
+    internal class PikachuEnemy : Enemy
     {
-        public PikachuEnemy() : base(healthBarWidth: 35)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PikachuEnemy"/> class.
+        /// </summary>
+        public PikachuEnemy() : base(healthBarWidth: GameSettings.PikachuEnemy_HealthBarWidth)
         {
             // Assign properties for this enemy
             this.SpriteSheetSource = new Rectangle(70, 103, 24, 23);
-            this.MoveSpeed = 18f;
-            this.StartHealth = 80 * WaveManager.Instance.EnemyDifficulity;
-            this.Bounty = (int)(10 * WaveManager.Instance.EnemyDifficulity);
+            this.MoveSpeed = GameSettings.PikachuEnemy_MoveSpeed;
+            this.StartHealth = GameSettings.PikachuEnemy_StartHealth * WaveManager.Instance.EnemyDifficulity;
+            this.Bounty = (int)(GameSettings.PikachuEnemy_Bounty * WaveManager.Instance.EnemyDifficulity);
 
             this.WalkRightAnimation = new Animation(
                 fps: 6,
@@ -52,3 +61,4 @@ namespace BlobDefense
         }
     }
 }
+

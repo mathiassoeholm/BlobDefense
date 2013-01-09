@@ -9,6 +9,7 @@ namespace BlobDefense
     using System.Drawing;
     using System.Windows.Forms;
 
+    using BlobDefense.Enemies;
     using BlobDefense.WaveSpawner;
 
     internal class GameLogic : Singleton<GameLogic>

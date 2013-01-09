@@ -8,6 +8,8 @@ namespace BlobDefense.Towers
 {
     using System.Drawing;
 
+    using BlobDefense.Enemies;
+
     internal class StandardProjectile : Projectile
     {
         public StandardProjectile(Enemy enemy, PointF spawnPosition, float attackDamage, Tower towerSource)

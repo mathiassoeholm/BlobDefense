@@ -8,6 +8,8 @@ namespace BlobDefense.Towers
 {
     using System.Drawing;
 
+    using BlobDefense.Enemies;
+
     internal class AgilityProjectile : Projectile
     {
         public AgilityProjectile(Enemy enemy, PointF spawnPosition, float attackDamage, Tower towerSource)

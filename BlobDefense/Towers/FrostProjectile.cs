@@ -8,6 +8,8 @@ namespace BlobDefense.Towers
 {
     using System.Drawing;
 
+    using BlobDefense.Enemies;
+
     internal class FrostProjectile : Projectile
     {
         private readonly float slowDuration;

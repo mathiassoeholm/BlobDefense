@@ -83,10 +83,6 @@ namespace BlobDefense
         /// </summary>
         private ISoundEngine soundEngine;
 
-        /// <summary>
-        /// The combat music sound, we control the state through this instance.
-        /// </summary>
-        private ISound combatMusic;
 
         /// <summary>
         /// Prevents a default instance of the <see cref="AudioManager"/> class from being created.
@@ -105,8 +101,6 @@ namespace BlobDefense
         public void InitializeSoundEngine()
         {
             this.soundEngine = new ISoundEngine();
-            //this.combatMusic = this.soundEngine.Play2D(@"Audio/CombatMusic.ogg", playLooped: true, startPaused: true);
-
         }
 
         private void PlayTowerShotSound(Tower tower)
@@ -154,21 +148,5 @@ namespace BlobDefense
             this.soundEngine.Play2D(sounds[random.Next(0, sounds.Length)]);
         }
 
-        /// <summary>
-        /// Starts playing the combat music from the beginning.
-        /// </summary>
-        public void StartCombatMusic()
-        {
-            this.combatMusic.PlayPosition = 0;
-            this.combatMusic.Paused = false;
-        }
-
-        /// <summary>
-        /// Stops the combat music from playing.
-        /// </summary>
-        public void StopCombatMusic()
-        {
-            this.combatMusic.Paused = true;
-        }
     }
 }

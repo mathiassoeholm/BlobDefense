@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace BlobDefense.Towers
 {
+    using BlobDefense.Enemies;
+
     internal class Projectile : MovingGameObject, IUpdateBehaviour
     {
         protected readonly Enemy enemyTarget;

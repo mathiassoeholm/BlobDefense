@@ -8,6 +8,7 @@ namespace BlobDefense
 {
     using System.Drawing;
 
+    using BlobDefense.Enemies;
     using BlobDefense.Towers;
 
     internal class EventManager : Singleton<EventManager>

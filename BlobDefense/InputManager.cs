@@ -10,6 +10,7 @@ namespace BlobDefense
     using System.Drawing;
     using System.Windows.Forms;
 
+    using BlobDefense.Enemies;
     using BlobDefense.Gui;
     using BlobDefense.Towers;
     using Extensions;

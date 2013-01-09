@@ -8,6 +8,7 @@ namespace BlobDefense.Gui
 {
     using System.Drawing;
 
+    using BlobDefense.Enemies;
     using BlobDefense.HighScore;
     using BlobDefense.Towers;
     using BlobDefense.WaveSpawner;

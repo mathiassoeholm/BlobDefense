@@ -118,7 +118,7 @@ namespace BlobDefense.WaveSpawner
 
                 if (randomNumber < 5)
                 {
-                    new Boss(this.EnemyDifficulity);
+                    new Boss();
                 }
                 else if (randomNumber < 30)
                 {

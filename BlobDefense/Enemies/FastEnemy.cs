@@ -1,24 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="FastEnemy.cs" company="Backdoor Fun">
+//   © 2013
+// </copyright>
+// <summary>
+//   Defines the fast enemy's animations and settings.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-namespace BlobDefense
+namespace BlobDefense.Enemies
 {
     using System.Drawing;
 
     using BlobDefense.WaveSpawner;
 
+    /// <summary>
+    /// Defines the fast enemy's animations and settings.
+    /// </summary>
     internal class FastEnemy : Enemy
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FastEnemy"/> class.
+        /// </summary>
         public FastEnemy() 
         {
             // Assign properties for this enemy
             this.SpriteSheetSource = new Rectangle(0, 131, 15, 23);
-            this.MoveSpeed = 65;
-            this.StartHealth = 40 * WaveManager.Instance.EnemyDifficulity;
-            this.Bounty = (int)(10 * WaveManager.Instance.EnemyDifficulity);
+            this.MoveSpeed = GameSettings.FastEnemy_MoveSpeed;
+            this.StartHealth = GameSettings.FastEnemy_StartHealth * WaveManager.Instance.EnemyDifficulity;
+            this.Bounty = (int)(GameSettings.FastEnemy_Bounty * WaveManager.Instance.EnemyDifficulity);
 
             this.WalkRightAnimation = new Animation(
                 fps: 6,

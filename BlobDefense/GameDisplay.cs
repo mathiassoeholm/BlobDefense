@@ -18,7 +18,6 @@
     {
         private static GameDisplay instance;
 
-        private readonly GameObject goalGraphic;
 
         private int currentFps;
 

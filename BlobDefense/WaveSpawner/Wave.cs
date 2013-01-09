@@ -1,5 +1,7 @@
 ﻿namespace BlobDefense.WaveSpawner
 {
+    using BlobDefense.Enemies;
+
     internal class Wave<T1> : IEnemyWave
         where T1 : Enemy, new()
     {
