@@ -22,6 +22,12 @@ namespace BlobDefense.HighScore
 
         public int CompareTo(HighScore otherScore)
         {
+            if (this.Score == otherScore.Score)
+            {
+                // Return 0 if they are equal
+                return 0;
+            }
+            
             return this.Score > otherScore.Score ? -1 : 1;
         }
     }
