@@ -59,6 +59,7 @@
             this.Controls.Add(this.NameTxt);
             this.Controls.Add(this.PlayBtn);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "GameDisplay";
             this.Text = "Blob Defense";
             this.Load += new System.EventHandler(this.GameDisplay_Load);
