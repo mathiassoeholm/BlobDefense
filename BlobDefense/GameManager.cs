@@ -88,8 +88,6 @@ namespace BlobDefense
 
         public void StartNewGame()
         {
-            this.CurrentGameState = GameState.Playing;
-
             this.Lives = GameSettings.StartLives;
             this.Currency = GameSettings.InitialCurrencyAmount;
             this.TotalKills = 0;
@@ -103,6 +101,8 @@ namespace BlobDefense
 
             // Create a path for the enemies
             GameLogic.Instance.TryCreateNewPath();
+
+            this.CurrentGameState = GameState.Playing;
         }
 
         public void GoToMainMenu()

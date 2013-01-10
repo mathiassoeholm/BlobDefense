@@ -297,7 +297,7 @@ namespace BlobDefense.Gui
                     new Font("Arial", 16),
                     new SolidBrush(Color.White),
                     this.nextWaveBtn.PositionAndSize.X,
-                    posY);
+                    posY += 20);
 
                 // Write upgrade price
                 graphics.DrawString(

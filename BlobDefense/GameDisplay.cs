@@ -33,7 +33,7 @@
             EventManager.Instance.OpenedMainMenu += () => this.PlayBtn.Visible = true;
             EventManager.Instance.OpenedMainMenu += () => this.NameTxt.Visible = true;
 
-            // Initialize sound engine
+            // Initialize sound enginea
             AudioManager.Instance.InitializeSoundEngine();
 
             // Initialize the input manager
@@ -74,19 +74,23 @@
 
         protected override void OnPaint(PaintEventArgs e)
         {
+
             switch (GameManager.Instance.CurrentGameState)
             {
                 case GameState.MainMenu:
-                    return;
+                    break;
                 case GameState.Playing:
                     this.RenderGame(e.Graphics);
                     GuiManager.Instance.DrawInGameGui(e.Graphics);
+                    e.Graphics.DrawString(Time.DeltaTime.ToString(), new Font("Arial", 16), new SolidBrush(Color.Red), 0, 0);
                     break;
                 case GameState.GameOver:
                     GuiManager.Instance.DrawGameOverScreen(e.Graphics);    
                 //ScoreManager.Instance.DrawLeaderBoards(e.Graphics);
                     break;
             }
+
+            
 
             this.Invalidate();
         }

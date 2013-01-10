@@ -43,7 +43,7 @@ namespace BlobDefense
 
         public static void SetDeltaTime()
         {
-            DeltaTime = (float)DateTime.Now.Subtract(lastFrameTime).TotalSeconds;
+            DeltaTime = (float)Math.Max(DateTime.Now.Subtract(lastFrameTime).TotalSeconds, 0.001);
 
             lastFrameTime = DateTime.Now;
         }
