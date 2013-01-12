@@ -30,6 +30,11 @@ namespace BlobDefense.Gui
         public const int RightPanelWidth = 215;
 
         /// <summary>
+        /// The pixel size of the yellow selection rectangles border.
+        /// </summary>
+        private const int SelectionRectangleSize = 4;
+
+        /// <summary>
         /// The universal offset from the left side of the panel.
         /// </summary>
         private const int GuiLeftOffset = 10;
@@ -218,7 +223,7 @@ namespace BlobDefense.Gui
             GuiButton.AllButtons.ForEach(button => button.Draw(graphics));
 
             // Initalize the pen used to draw selection rectangle around speed buttons
-            var selectedSpeedPen = new Pen(Color.Yellow, 4);
+            var selectedSpeedPen = new Pen(Color.Yellow, SelectionRectangleSize);
 
             // Draw a rectangle around selected speed button
             switch ((int)Time.TimeScale)
@@ -414,7 +419,7 @@ namespace BlobDefense.Gui
                 standardImage: upgradeBtnStandard,
                 hoverImage: Image.FromFile(@"Images/UpgradeBtn_Hovered.png"),
                 pressedImage: Image.FromFile(@"Images/UpgradeBtn_Pressed.png"),
-                clickAction: UpgradeSelectedTower);
+                clickAction: this.UpgradeSelectedTower);
 
             // Set up destroy button
             this.destroyBtn = new GuiButton(
@@ -442,7 +447,7 @@ namespace BlobDefense.Gui
 
             // Set up tower three button
             this.towerThreeBtn = new GuiButton(
-                positionAndSize: new Rectangle((TileEngine.TilesX * TileEngine.TilesOnSpriteSize) + GuiLeftOffset + (this.towerOneBtn.PositionAndSize.Width + TowerButtonsSpacing) * 2, TowerButtonsTopOffset, towerThreeBtnStandard.Width, towerThreeBtnStandard.Height),
+                positionAndSize: new Rectangle((TileEngine.TilesX * TileEngine.TilesOnSpriteSize) + GuiLeftOffset + ((this.towerOneBtn.PositionAndSize.Width + TowerButtonsSpacing) * 2), TowerButtonsTopOffset, towerThreeBtnStandard.Width, towerThreeBtnStandard.Height),
                 standardImage: towerThreeBtnStandard,
                 hoverImage: Image.FromFile(@"Images/TowerThreeBtn_Hovered.png"),
                 pressedImage: Image.FromFile(@"Images/TowerThreeBtn_Pressed.png"),
@@ -450,7 +455,7 @@ namespace BlobDefense.Gui
 
             // Set up tower four button
             this.towerFourBtn = new GuiButton(
-                positionAndSize: new Rectangle((TileEngine.TilesX * TileEngine.TilesOnSpriteSize) + GuiLeftOffset + (this.towerOneBtn.PositionAndSize.Width + TowerButtonsSpacing) * 3, TowerButtonsTopOffset, towerFourBtnStandard.Width, towerFourBtnStandard.Height),
+                positionAndSize: new Rectangle((TileEngine.TilesX * TileEngine.TilesOnSpriteSize) + GuiLeftOffset + ((this.towerOneBtn.PositionAndSize.Width + TowerButtonsSpacing) * 3), TowerButtonsTopOffset, towerFourBtnStandard.Width, towerFourBtnStandard.Height),
                 standardImage: towerFourBtnStandard,
                 hoverImage: Image.FromFile(@"Images/TowerFourBtn_Hovered.png"),
                 pressedImage: Image.FromFile(@"Images/TowerFourBtn_Pressed.png"),
@@ -467,7 +472,7 @@ namespace BlobDefense.Gui
 
             Pen pen = new Pen(Color.Yellow, 4);
 
-            int yPos = TowerOptionsTopOffset;
+            int posY = TowerOptionsTopOffset;
 
             // Get hovered node
             MapNode hoveredNode = InputManager.Instance.HovederedMouseNode;
@@ -481,6 +486,7 @@ namespace BlobDefense.Gui
 
             switch (this.SelectedTowerToBuild)
             {
+                // Flame Tower
                 case 0:
                     nameAndPriceTxt = "Flame Tower  $" + GameSettings.StandardTower_BuildPrice.ToString();
                     damageTxt = "Damage " + GameSettings.StandardTower_AttackDamage.ToString();
@@ -489,6 +495,8 @@ namespace BlobDefense.Gui
                     range = GameSettings.StandardTower_ShootRange;
                     selectionRectangle = this.towerOneBtn.PositionAndSize;
                     break;
+
+                // Frost Tower
                 case 1:
                     nameAndPriceTxt = "Frost Tower  $" + GameSettings.FrostTower_BuildPrice.ToString();
                     damageTxt = "Damage " + GameSettings.FrostTower_AttackDamage.ToString();
@@ -497,6 +505,8 @@ namespace BlobDefense.Gui
                     range = GameSettings.FrostTower_ShootRange;
                     selectionRectangle = this.towerTwoBtn.PositionAndSize;
                     break;
+
+                // Sniper Tower
                 case 2:
                     nameAndPriceTxt = "Sniper Tower  $" + GameSettings.SniperTower_BuildPrice.ToString();
                     damageTxt = "Damage " + GameSettings.SniperTower_AttackDamage.ToString();
@@ -505,6 +515,8 @@ namespace BlobDefense.Gui
                     range = GameSettings.SniperTower_ShootRange;
                     selectionRectangle = this.towerThreeBtn.PositionAndSize;
                     break;
+
+                // Agility Tower
                 default:
                     nameAndPriceTxt = "Agility Tower  $" + GameSettings.AgilityTower_BuildPrice.ToString();
                     damageTxt = "Damage " + GameSettings.AgilityTower_AttackDamage.ToString();
@@ -518,27 +530,34 @@ namespace BlobDefense.Gui
             graphics.DrawRectangle(pen, selectionRectangle);
 
             // Write name
-            graphics.DrawString(nameAndPriceTxt,
-                new Font("Arial", 16), new SolidBrush(Color.White),
+            graphics.DrawString(
+                nameAndPriceTxt,
+                new Font("Arial", 16),
+                new SolidBrush(Color.White),
                 this.nextWaveBtn.PositionAndSize.X,
-                yPos);
+                posY);
 
             // Write damage
-            graphics.DrawString(damageTxt,
-                new Font("Arial", 16), new SolidBrush(Color.White),
+            graphics.DrawString(
+                damageTxt,
+                new Font("Arial", 16),
+                new SolidBrush(Color.White),
                 this.nextWaveBtn.PositionAndSize.X,
-                (yPos += 20));
+                posY += 20);
 
             // Write range
-            graphics.DrawString(rangeTxt,
-                new Font("Arial", 16), new SolidBrush(Color.White),
+            graphics.DrawString(
+                rangeTxt,
+                new Font("Arial", 16),
+                new SolidBrush(Color.White),
                 this.nextWaveBtn.PositionAndSize.X,
-                (yPos += 20));
+                posY += 20);
 
             // Draw circle indicating the towers radius
             if (hoveredNode != null)
             {
-                graphics.FillEllipse(new SolidBrush(Color.FromArgb(125, 0, 0, 0)),
+                graphics.FillEllipse(
+                    new SolidBrush(Color.FromArgb(125, 0, 0, 0)),
                     new RectangleF(
                     hoveredNode.Position.X - range,
                     hoveredNode.Position.Y - range,
@@ -547,20 +566,31 @@ namespace BlobDefense.Gui
             }
 
             // Write cooldown
-            graphics.DrawString(cooldownTxt,
-                new Font("Arial", 16), new SolidBrush(Color.White),
+            graphics.DrawString(
+                cooldownTxt,
+                new Font("Arial", 16),
+                new SolidBrush(Color.White),
                 this.nextWaveBtn.PositionAndSize.X,
-                (yPos += 20));
+                posY += 20);
         }
 
+        /// <summary>
+        /// Calls the selected towers destroy method.
+        /// </summary>
         private void DestroySelectedTower()
         {
-            if(this.selectedTower != null)
+            if (this.selectedTower != null)
             {
                 this.selectedTower.Destroy();
             }
         }
 
+        /// <summary>
+        /// Sets the selected tower number.
+        /// </summary>
+        /// <param name="towerToBuild">
+        /// The index number for the tower to build.
+        /// </param>
         private void SelectTowerToBuild(int towerToBuild)
         {
             // Return if there is any enemies, we can't build under a wave
@@ -582,9 +612,11 @@ namespace BlobDefense.Gui
             this.SelectedTowerToBuild = towerToBuild;
         }
 
+        /// <summary>
+        /// Upgrades the selected tower, if you have enough currency.
+        /// </summary>
         private void UpgradeSelectedTower()
         {
-            // TODO Fix crash here
             if (GameManager.Instance.TryBuy(this.selectedTower.UpgradePrice))
             {
                 this.selectedTower.Upgrade();

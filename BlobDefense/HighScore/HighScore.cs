@@ -1,25 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace BlobDefense.HighScore
+﻿namespace BlobDefense.HighScore
 {
+    using System;
+
+    /// <summary>
+    /// Defines a single high score, containing the score and a name.
+    /// </summary>
     [Serializable]
     internal class HighScore : IComparable<HighScore>
     {
-        // Constructor
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HighScore"/> class.
+        /// </summary>
+       /// <param name="name">
+       /// The name of the player.
+       /// </param>
+       /// <param name="score">
+       /// The players score.
+       /// </param>
         public HighScore(string name, int score)
         {
             this.PlayerName = name;
             this.Score = score;
         }
 
-        // Properties
+        /// <summary>
+        /// Gets or sets the players score.
+        /// </summary>
         public int Score { get; set; }
 
+        /// <summary>
+        /// Gets or set the players name.
+        /// </summary>
         public string PlayerName { get; private set; }
 
+        /// <summary>
+        /// Compares two high score objects, when sorted the best player comes first.
+        /// </summary>
+        /// <param name="otherScore">
+        /// The score to compare with.
+        /// </param>
+        /// <returns>
+        /// 1, 0 or -1 based on the score values.
+        /// </returns>
         public int CompareTo(HighScore otherScore)
         {
             if (this.Score == otherScore.Score)

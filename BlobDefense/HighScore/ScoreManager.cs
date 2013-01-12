@@ -1,18 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace BlobDefense.HighScore
+﻿namespace BlobDefense.HighScore
 {
+    using System;
+    using System.Collections.Generic;
     using System.Drawing;
     using System.IO;
+    using System.Linq;
     using System.Runtime.Serialization.Formatters.Binary;
     using System.Windows.Forms;
 
     using BlobDefense.Gui;
 
-    class ScoreManager : Singleton<ScoreManager>
+    /// <summary>
+    /// Handles everything to do with scores and leaderboards.
+    /// </summary>
+    internal class ScoreManager : Singleton<ScoreManager>
     {
         private const int AmountOfScoresToShow = 10;
 
@@ -34,8 +35,12 @@ namespace BlobDefense.HighScore
         }
 
         /// <summary>
-        /// Adds a score to the highscore list, if name exist just change score for player
+        /// Adds a score to the high score list,
+        /// if name exists just change score for player.
         /// </summary>
+        /// <param name="newScore">
+        /// The score gained.
+        /// </param>
         public void AddScore(int newScore)
         {
             HighScore currentPlayerHighScore = this.highScores.FirstOrDefault(highScore => highScore.PlayerName == GameSettings.PlayerName);
