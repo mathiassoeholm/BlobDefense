@@ -29,6 +29,9 @@
             this.LoadScores();
         }
 
+        /// <summary>
+        /// Sorts the list of high scores.
+        /// </summary>
         public void SortScores()
         {
             this.highScores.Sort();
@@ -65,7 +68,7 @@
         }
 
         /// <summary>
-        /// Deserializes score objects in the appdata foler, and adds them to our highscore list
+        /// Deserializes score objects, and adds them to our high score list.
         /// </summary>
         private void LoadScores()
         {
