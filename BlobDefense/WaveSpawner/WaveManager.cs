@@ -63,7 +63,11 @@ namespace BlobDefense.WaveSpawner
         {
             get
             {
-                return this.currentWave + 1;
+                return this.currentWave;
+            }
+            set
+            {
+                this.currentWave = value;
             }
         }
 
@@ -80,7 +84,7 @@ namespace BlobDefense.WaveSpawner
             this.enemiesSpawned = 0;
 
             // Make harder
-            this.EnemyDifficulity *= EnemyDifficulityIncrease;
+            this.EnemyDifficulity = EnemyDifficulityIncrease * (this.currentWave + 1);
 
             EventManager.Instance.WaveStarted.SafeInvoke();
 

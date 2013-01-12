@@ -9,9 +9,13 @@ namespace BlobDefense.Towers
 {
     using BlobDefense.Enemies;
 
+    [Serializable]
     internal abstract class Tower : GameObject, IUpdateBehaviour, IAnimated
     {
         private DateTime lastShotFired;
+
+        [NonSerialized]
+        private Enemy enemyTarget;
 
         public int Kills { get; set; }
 
@@ -23,17 +27,25 @@ namespace BlobDefense.Towers
 
         public Animation CurrentAnimation { get; protected set; }
 
-        protected Animation IdleAnimation { get; set; }
+        protected Enemy EnemyTarget
+        {
+            get
+            {
+                return this.enemyTarget;
+            }
+            set
+            {
+                this.enemyTarget = value;
+            }
+        }
 
-        protected Enemy EnemyTarget { get; set; }
+        protected Animation IdleAnimation { get; set; }
 
         public float ShootCooldown { get; set; }
 
         public float ShootRange { get; set; }
 
         public float AttackDamage { get; set; }
-
-        protected Projectile Projectile { get; set; }
 
         public void Update()
         {

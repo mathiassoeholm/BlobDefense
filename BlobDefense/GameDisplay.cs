@@ -2,6 +2,7 @@
 {
     using System;
     using System.Drawing;
+    using System.IO;
     using System.Linq;
     using System.Windows.Forms;
 
@@ -42,6 +43,8 @@
             // Set size of the form
             this.ClientSize = new Size((TileEngine.TilesX * TileEngine.TilesOnSpriteSize) + GuiManager.RightPanelWidth, (TileEngine.TilesY * TileEngine.TilesOnSpriteSize));
 
+            this.ContinueBtn.Enabled = File.Exists(GameSettings.SaveDataPath + @"\SavedGame.dat");
+
             Time.SetDeltaTime();
 
             this.DoubleBuffered = true;
@@ -78,6 +81,10 @@
             switch (GameManager.Instance.CurrentGameState)
             {
                 case GameState.MainMenu:
+                   // e.Graphics.Clear(this.BackColor);
+                    this.NameTxt.Update();
+                    this.PlayBtn.Update();
+                    this.ContinueBtn.Update();
                     break;
                 case GameState.Playing:
                     this.RenderGame(e.Graphics);
@@ -197,6 +204,14 @@
             graphics.DrawLines(new Pen(Color.Red, 5), GameLogic.EnemyPath.Select(mapNode => mapNode.Position).ToArray());
         }
 
+        private void HideMainMenu()
+        {
+            // Hide main menu controls
+            this.PlayBtn.Visible = false;
+            this.NameTxt.Visible = false;
+            this.ContinueBtn.Visible = false;
+        }
+
         private void GameDisplay_Click(object sender, EventArgs e)
         {
             EventManager.Instance.OnMouseClick.SafeInvoke(MousePosition);
@@ -214,12 +229,7 @@
 
         private void PlayBtn_Click(object sender, EventArgs e)
         {
-            // Hide the cursor
-            //Cursor.Hide();
-
-            // Hide main menu controls
-            this.PlayBtn.Visible = false;
-            this.NameTxt.Visible = false;
+            this.HideMainMenu();
             
             // Start a new game
             GameManager.Instance.StartNewGame();
@@ -234,6 +244,13 @@
         {
             // Fill in the name text field
             this.NameTxt.Text = GameSettings.PlayerName;
+        }
+
+        private void ContinueBtn_Click(object sender, EventArgs e)
+        {
+            this.HideMainMenu();
+            
+            GameManager.Instance.ContinueGame();
         }
     }
 }

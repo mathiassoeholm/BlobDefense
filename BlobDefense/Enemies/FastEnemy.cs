@@ -9,6 +9,7 @@
 
 namespace BlobDefense.Enemies
 {
+    using System;
     using System.Drawing;
 
     using BlobDefense.WaveSpawner;

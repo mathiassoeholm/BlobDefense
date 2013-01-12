@@ -79,6 +79,7 @@
     <Compile Include="HighScore\HighScore.cs" />
     <Compile Include="HighScore\ScoreManager.cs" />
     <Compile Include="InputManager.cs" />
+    <Compile Include="SaveData.cs" />
     <Compile Include="Towers\AgilityTower.cs" />
     <Compile Include="Towers\AgilityProjectile.cs" />
     <Compile Include="Towers\FrostProjectile.cs" />

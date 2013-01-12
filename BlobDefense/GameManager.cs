@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 namespace BlobDefense
 {
     using System.Diagnostics;
+    using System.IO;
+    using System.Runtime.Serialization.Formatters.Binary;
 
     using BlobDefense.HighScore;
     using BlobDefense.Towers;
@@ -25,6 +27,7 @@ namespace BlobDefense
             this.Lives = GameSettings.StartLives;
             EventManager.Instance.EnemyReachedGoal += this.LoseLife;
             EventManager.Instance.EnemyDied += (enemy) => this.TotalKills++;
+            EventManager.Instance.WaveStarted += this.SaveGame;
         }
 
         /// <summary>
@@ -38,9 +41,9 @@ namespace BlobDefense
         public int Lives { get; private set; }
 
         /// <summary>
-        /// Gets the amount of enemies killed.
+        /// Gets or sets the amount of enemies killed.
         /// </summary>
-        public int TotalKills { get; private set; }
+        public int TotalKills { get; set; }
 
 
         /// <summary>
@@ -86,6 +89,21 @@ namespace BlobDefense
             this.Currency += amount;
         }
 
+        public void ContinueGame()
+        {
+            WaveManager.Instance.InitializeWaveManager();
+
+            this.LoadGame();
+
+            // Initialize the game manager
+            GameLogic.Instance.InitializeGameLogic();
+
+            // Create a path for the enemies
+            GameLogic.Instance.TryCreateNewPath();
+
+            this.CurrentGameState = GameState.Playing;
+        }
+
         public void StartNewGame()
         {
             this.Lives = GameSettings.StartLives;
@@ -97,7 +115,7 @@ namespace BlobDefense
             TileEngine.Instance.LoadMapFromXml();
 
             // Initialize the game manager
-            GameLogic.Instance.InitializeGameManager();
+            GameLogic.Instance.InitializeGameLogic();
 
             // Create a path for the enemies
             GameLogic.Instance.TryCreateNewPath();
@@ -110,6 +128,45 @@ namespace BlobDefense
             this.CurrentGameState = GameState.MainMenu;
 
             EventManager.Instance.OpenedMainMenu.SafeInvoke();
+        }
+
+        /// <summary>
+        /// Saves the games state to the save data path.
+        /// </summary>
+        private void SaveGame()
+        {
+            using (var fileStream = new FileStream(GameSettings.SaveDataPath + @"\SavedGame.dat", FileMode.Create, FileAccess.Write))
+            {
+                var formatter = new BinaryFormatter();
+
+                // Save the game
+                formatter.Serialize(fileStream, new SaveData());
+            }
+        }
+
+        /// <summary>
+        /// Saves the games state to the save data path.
+        /// </summary>
+        private void LoadGame()
+        {
+            if (!Directory.Exists(GameSettings.SaveDataPath))
+            {
+                Directory.CreateDirectory(GameSettings.SaveDataPath);
+            }
+
+            using (var fileStream = new FileStream(GameSettings.SaveDataPath + @"\SavedGame.dat", FileMode.OpenOrCreate, FileAccess.Read))
+            {
+                var formatter = new BinaryFormatter();
+
+                fileStream.Position = 0;
+
+                if (fileStream.Length > 0)
+                {
+                    SaveData saveData = (SaveData)formatter.Deserialize(fileStream);
+                    saveData.ApplySaveData();
+                    saveData.Towers.ForEach(tower => tower.InitializeGameObject());
+                }
+            }
         }
 
         private void LoseLife()
@@ -139,7 +196,7 @@ namespace BlobDefense
             GameObject.AllGameObjects.RemoveAll(go => !go.NeverDestroy);
             
             // Save score
-            ScoreManager.Instance.AddScore(WaveManager.Instance.CurrentWave);
+            ScoreManager.Instance.AddScore(WaveManager.Instance.CurrentWave + 1);
 
             // Sort score
             ScoreManager.Instance.SortScores();

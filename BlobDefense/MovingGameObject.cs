@@ -9,6 +9,7 @@ namespace BlobDefense
 {
     using System.Drawing;
 
+    [Serializable]
     internal abstract class MovingGameObject : GameObject
     {
         /// <summary>

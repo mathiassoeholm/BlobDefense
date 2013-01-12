@@ -7,6 +7,7 @@ namespace BlobDefense.Towers
 {
     using System.Drawing;
 
+    [Serializable]
     class SniperTower : Tower
     {
         public SniperTower()

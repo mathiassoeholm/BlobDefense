@@ -205,7 +205,7 @@ namespace BlobDefense.Gui
             
             // Write stats
             this.WriteText(graphics, "Total kills: " + GameManager.Instance.TotalKills, (int)(GameDisplay.FormWidth * 0.5f), 35, 16, Color.White, true);
-            this.WriteText(graphics, "Last wave: " + WaveManager.Instance.CurrentWave, (int)(GameDisplay.FormWidth * 0.5f), 54, 16, Color.White, true);
+            this.WriteText(graphics, "Last wave: " + WaveManager.Instance.CurrentWave + 1, (int)(GameDisplay.FormWidth * 0.5f), 54, 16, Color.White, true);
 
             // Draw leader boards
             ScoreManager.Instance.DrawLeaderBoards(graphics, 85);
@@ -315,7 +315,7 @@ namespace BlobDefense.Gui
             
             // Draw wave number
             graphics.DrawString(
-                "Wave " + WaveManager.Instance.CurrentWave.ToString(),
+                "Wave " + (WaveManager.Instance.CurrentWave + 1).ToString(),
                 new Font("Arial", 16),
                 new SolidBrush(Color.White),
                 this.nextWaveBtn.PositionAndSize.X + this.nextWaveBtn.PositionAndSize.Width + 5,

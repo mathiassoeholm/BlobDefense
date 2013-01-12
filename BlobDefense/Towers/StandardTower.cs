@@ -8,6 +8,7 @@ namespace BlobDefense.Towers
 {
     using System.Drawing;
 
+    [Serializable]
     internal class StandardTower : Tower
     {
         public StandardTower()

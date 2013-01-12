@@ -3,6 +3,7 @@ using System.Drawing;
 
 namespace BlobDefense
 {
+    [Serializable]
     class Animation
     {
         /// <summary>

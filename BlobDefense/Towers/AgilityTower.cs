@@ -8,6 +8,7 @@ namespace BlobDefense.Towers
 {
     using System.Drawing;
 
+    [Serializable]
     internal class AgilityTower : Tower
     {
         public AgilityTower()

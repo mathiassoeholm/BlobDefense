@@ -9,6 +9,7 @@ namespace BlobDefense
     using System.Drawing;
     using AStar;
 
+    [Serializable]
     public class MapNode : IPathNode<MapNode>, IComparable<MapNode>
     {
         public MapNode()

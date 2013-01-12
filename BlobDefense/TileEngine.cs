@@ -25,9 +25,9 @@ namespace BlobDefense
         public List<Tile> tilesTypes { get; private set; }
 
         /// <summary>
-        /// A two dimensional map of tile indexes, rendered to the screen.
+        /// Gets or sets a two dimensional map of tile indexes, rendered to the screen.
         /// </summary>
-        public MapNode[,] NodeMap { get; private set; }
+        public MapNode[,] NodeMap { get; set; }
 
         /// <summary>
         /// Prevents a default instance of the <see cref="TileEngine"/> class from being created.

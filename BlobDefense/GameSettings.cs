@@ -1,5 +1,7 @@
 ﻿namespace BlobDefense
 {
+    using System;
+
     public static class GameSettings
     {
 
@@ -7,8 +9,7 @@
 
         public const int InitialCurrencyAmount = 100;
 
-        // Mutable settings
-        public static string PlayerName = "Player Name";
+        public static readonly string SaveDataPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
 
         #region Enemy Settings
 
@@ -96,5 +97,8 @@
         public const int SniperTower_UpgradePrice_Upgrade = 2;
 
         #endregion
+
+        // Mutable settings
+        public static string PlayerName = "Player Name";
     }
 }

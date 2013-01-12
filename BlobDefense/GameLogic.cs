@@ -56,7 +56,7 @@ namespace BlobDefense
             return true;
         }
 
-        public void InitializeGameManager()
+        public void InitializeGameLogic()
         {
             // Connect nodes for the AStar
             Astar<MapNode>.ConnectNodes(TileEngine.Instance.NodeMap);

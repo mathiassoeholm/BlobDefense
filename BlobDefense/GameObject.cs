@@ -5,9 +5,12 @@
     using System.Drawing;
     using System.Drawing.Drawing2D;
 
+    using BlobDefense.Towers;
+
     /// <summary>
     /// Base class for all entities in the game.
     /// </summary>
+    [Serializable]
     public class GameObject : IComparable<GameObject>
     {
         /// <summary>
@@ -16,20 +19,7 @@
         /// </summary>
         public GameObject()
         {
-            // Initialize a new list if it is null
-            AllGameObjects = AllGameObjects ?? new List<GameObject>();
-
-            // Initialize a new queue if it is null
-            GameObjectsToDestroy = GameObjectsToDestroy ?? new Queue<GameObject>();
-
-            // Initialize a new queue if it is null
-            NewGameObjects = NewGameObjects ?? new List<GameObject>();
-
-            // Load image if not set yet
-            SpriteSheet = SpriteSheet ?? Image.FromFile(@"Images\SpriteSheet.png");
-
-            // This game object will be added to the game after the current fram
-            NewGameObjects.Add(this);
+           this.InitializeGameObject();
         }
 
         /// <summary>
@@ -77,7 +67,6 @@
         /// </summary>
         public float Rotation { get; set; }
 
-
         /// <summary>
         /// Gets or sets a value indicating whether to draw from the center,
         /// no matter what else was specified to the render method.
@@ -124,6 +113,28 @@
 
             // Resort the game objects by depth
             AllGameObjects.Sort();
+        }
+
+        /// <summary>
+        /// This is automaticly called by the constructor, if for some reason it isn't
+        /// you can call it manually.
+        /// </summary>
+        public void InitializeGameObject()
+        {
+            // Initialize a new list if it is null
+            AllGameObjects = AllGameObjects ?? new List<GameObject>();
+
+            // Initialize a new queue if it is null
+            GameObjectsToDestroy = GameObjectsToDestroy ?? new Queue<GameObject>();
+
+            // Initialize a new queue if it is null
+            NewGameObjects = NewGameObjects ?? new List<GameObject>();
+
+            // Load image if not set yet
+            SpriteSheet = SpriteSheet ?? Image.FromFile(@"Images\SpriteSheet.png");
+
+            // This game object will be added to the game after the current fram
+            NewGameObjects.Add(this);
         }
 
         /// <summary>
