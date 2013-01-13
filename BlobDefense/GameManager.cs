@@ -93,6 +93,8 @@ namespace BlobDefense
         {
             WaveManager.Instance.InitializeWaveManager();
 
+            this.Currency = 0;
+
             this.LoadGame();
 
             // Initialize the game manager

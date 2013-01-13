@@ -27,7 +27,7 @@ namespace BlobDefense.Gui
         /// <summary>
         /// The pixel width of the GUI panel, positioned to the right.
         /// </summary>
-        public const int RightPanelWidth = 215;
+        public const int RightPanelWidth = 240;
 
         /// <summary>
         /// The pixel size of the yellow selection rectangles border.

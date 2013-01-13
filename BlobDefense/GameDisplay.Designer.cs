@@ -69,7 +69,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.ClientSize = new System.Drawing.Size(679, 441);
+            this.ClientSize = new System.Drawing.Size(704, 441);
             this.Controls.Add(this.ContinueBtn);
             this.Controls.Add(this.NameTxt);
             this.Controls.Add(this.PlayBtn);
