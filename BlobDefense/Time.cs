@@ -28,6 +28,14 @@ namespace BlobDefense
             }
         }
 
+        public static float RealDeltaTime
+        {
+            get
+            {
+                return deltaTime / timeScale;
+            }
+        }
+
         public static float TimeScale
         {
             get

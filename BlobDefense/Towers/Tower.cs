@@ -49,7 +49,7 @@ namespace BlobDefense.Towers
         public int UpgradePrice { get; protected set; }
 
         /// <summary>
-        /// Gets or sets the build price.
+        /// Gets or sets the initial build price.
         /// </summary>
         public int BuildPrice { get; protected set; }
 
@@ -58,26 +58,45 @@ namespace BlobDefense.Towers
         /// </summary>
         public Animation CurrentAnimation { get; protected set; }
 
+        /// <summary>
+        /// Gets or sets the shoot cool down in seconds.
+        /// </summary>
+        public float ShootCooldown { get; set; }
+
+        /// <summary>
+        /// Gets or sets the shoot range in pixels.
+        /// </summary>
+        public float ShootRange { get; set; }
+
+        /// <summary>
+        /// Gets or sets the attack damage.
+        /// </summary>
+        public float AttackDamage { get; set; }
+
+        /// <summary>
+        /// Gets or sets the the enemy to shoot.
+        /// </summary>
         protected Enemy EnemyTarget
         {
             get
             {
                 return this.enemyTarget;
             }
+
             set
             {
                 this.enemyTarget = value;
             }
         }
 
+        /// <summary>
+        /// Gets or sets the idle animation.
+        /// </summary>
         protected Animation IdleAnimation { get; set; }
 
-        public float ShootCooldown { get; set; }
-
-        public float ShootRange { get; set; }
-
-        public float AttackDamage { get; set; }
-
+        /// <summary>
+        /// Called once per frame.
+        /// </summary>
         public void Update()
         {
             // Check if another shot is ready
@@ -113,12 +132,13 @@ namespace BlobDefense.Towers
             }
         }
 
+        /// <summary>
+        /// Destroys the tower and frees the node.
+        /// </summary>
         public override void Destroy()
         {
             // Free the node
-            TileEngine.Instance.NodeMap[
-                (int)this.Position.X / TileEngine.TilesOnSpriteSize, (int)this.Position.Y / TileEngine.TilesOnSpriteSize]
-                .IsBlocked = false;
+            TileEngine.Instance.NodeMap[(int)this.Position.X / TileEngine.TilesOnSpriteSize, (int)this.Position.Y / TileEngine.TilesOnSpriteSize].IsBlocked = false;
 
             // Recreate path
             GameLogic.Instance.TryCreateNewPath();
@@ -126,14 +146,29 @@ namespace BlobDefense.Towers
             // Deselect tower
             EventManager.Instance.DeselectedTower.SafeInvoke();
             
+            // Destroy the tower
             base.Destroy();
         }
 
+        /// <summary>
+        /// Increments the towers level.
+        /// </summary>
         public virtual void Upgrade()
         {
             this.Level++;        
         }
 
+        /// <summary>
+        /// Runs the current animation.
+        /// </summary>
+        public void RunAnimation()
+        {
+            this.CurrentAnimation.RunAnimation();
+        }
+
+        /// <summary>
+        /// Invokes the shoot event and resets the cool down timer.
+        /// </summary>
         protected virtual void ShootTarget()
         {
             // Invoke shoot event
@@ -141,11 +176,6 @@ namespace BlobDefense.Towers
             
             // Set time for last shot, used to check cooldown
             this.lastShotFired = DateTime.Now;
-        }
-
-        public void RunAnimation()
-        {
-            this.CurrentAnimation.RunAnimation();
         }
     }
 }

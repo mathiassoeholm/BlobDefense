@@ -27,8 +27,8 @@ namespace BlobDefense.Enemies
             // Assign properties for this enemy
             this.SpriteSheetSource = new Rectangle(70, 103, 24, 23);
             this.MoveSpeed = GameSettings.PikachuEnemy_MoveSpeed;
-            this.StartHealth = GameSettings.PikachuEnemy_StartHealth * WaveManager.Instance.EnemyDifficulity;
-            this.Bounty = (int)(GameSettings.PikachuEnemy_Bounty * WaveManager.Instance.EnemyDifficulity);
+            this.StartHealth = GameSettings.PikachuEnemy_StartHealth * WaveManager.Instance.EnemyDifficulty;
+            this.Bounty = (int)(GameSettings.PikachuEnemy_Bounty * WaveManager.Instance.EnemyDifficulty);
 
             this.WalkRightAnimation = new Animation(
                 fps: 6,

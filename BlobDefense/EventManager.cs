@@ -1,16 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="EventManager.cs" company="Backdoor Fun">
+//   © 2013
+// </copyright>
+// <summary>
+//   Contains events that can be invoked or subscribed to, helps decoupling classes.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace BlobDefense
 {
+    using System;
     using System.Drawing;
 
     using BlobDefense.Enemies;
     using BlobDefense.Towers;
 
+    /// <summary>
+    /// Contains events that can be invoked or subscribed to, helps decoupling classes.
+    /// </summary>
     internal class EventManager : Singleton<EventManager>
     {
         /// <summary>
@@ -20,14 +27,29 @@ namespace BlobDefense
         { 
         }
 
+        /// <summary>
+        /// Gets or sets the opened main menu delegate.
+        /// </summary>
         public Action OpenedMainMenu { get; set; }
 
+        /// <summary>
+        /// Gets or sets the tower shot delegate.
+        /// </summary>
         public Action<Tower> TowerShot { get; set; }
 
+        /// <summary>
+        /// Gets or sets the enemy died delegate.
+        /// </summary>
         public Action<Enemy> EnemyDied { get; set; }
 
+        /// <summary>
+        /// Gets or sets the placed a tower delegate.
+        /// </summary>
         public Action PlacedATower { get; set; }
 
+        /// <summary>
+        /// Gets or sets the lost the game delegate.
+        /// </summary>
         public Action LostTheGame { get; set; }
 
         /// <summary>

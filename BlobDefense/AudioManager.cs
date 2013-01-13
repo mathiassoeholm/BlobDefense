@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="AudioManager.cs" company="ClearCut Games/Mathias">
-//   © 2012
+// <copyright file="AudioManager.cs" company="Backdoor Fun">
+//   © 2013
 // </copyright>
 // <summary>
 //   Keeps track of all audio files and is responsible for playing them.
@@ -83,7 +83,6 @@ namespace BlobDefense
         /// </summary>
         private ISoundEngine soundEngine;
 
-
         /// <summary>
         /// Prevents a default instance of the <see cref="AudioManager"/> class from being created.
         /// </summary>
@@ -103,6 +102,35 @@ namespace BlobDefense
             this.soundEngine = new ISoundEngine();
         }
 
+        /// <summary>
+        /// Plays a 2D sound once.
+        /// </summary>
+        /// <param name="sound">
+        /// The path of the sound to be played.
+        /// </param>
+        public void PlaySoundOnce(string sound)
+        {
+            this.soundEngine.Play2D(sound);
+        }
+
+        /// <summary>
+        /// Plays a random of the specified sounds.
+        /// </summary>
+        /// <param name="sounds">
+        /// The sound paths to pick a random from.
+        /// </param>
+        public void PlayRandomSoundOnce(params string[] sounds)
+        {
+            var random = new Random();
+            this.soundEngine.Play2D(sounds[random.Next(0, sounds.Length)]);
+        }
+
+        /// <summary>
+        /// Plays the matching sound for a specified tower.
+        /// </summary>
+        /// <param name="tower">
+        /// The tower which shot the bullet.
+        /// </param>
         private void PlayTowerShotSound(Tower tower)
         {
            if (tower is AgilityTower)
@@ -119,6 +147,12 @@ namespace BlobDefense
            }
         }
 
+        /// <summary>
+        /// Plays a death sound.
+        /// </summary>
+        /// <param name="enemy">
+        /// The enemy that died.
+        /// </param>
         private void PlayEnemyDeathSound(Enemy enemy)
         {
             if (enemy is Boss)
@@ -130,23 +164,5 @@ namespace BlobDefense
                 this.PlayRandomSoundOnce(DeathSound, DeathSound2, DeathSound3);
             }
         }
-
-        /// <summary>
-        /// Plays a 2D sound once.
-        /// </summary>
-        /// <param name="sound">
-        /// The path of the sound to be played.
-        /// </param>
-        public void PlaySoundOnce(string sound)
-        {
-            this.soundEngine.Play2D(sound);
-        }
-
-        public void PlayRandomSoundOnce(params string[] sounds)
-        {
-            Random random = new Random();
-            this.soundEngine.Play2D(sounds[random.Next(0, sounds.Length)]);
-        }
-
     }
 }

@@ -1,13 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ExtensionMethods.cs" company="Backdoor Fun">
+//   © 2013
+// </copyright>
+// <summary>
+//   Contains methods that extends various types.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace Extensions
 {
+    using System;
     using System.Drawing;
 
+    /// <summary>
+    /// Contains methods that extends various types.
+    /// </summary>
     public static class ExtensionMethods
     {
         /// <summary>
@@ -17,9 +24,9 @@ namespace Extensions
         /// The number to convert.
         /// </param>
         /// <returns>
-        /// The anlge in degrees.
+        /// The angle in degrees.
         /// </returns>
-        public static Double RadiansToDegrees(this Double number)
+        public static double RadiansToDegrees(this double number)
         {
             return number * 57.324f;
         }
@@ -70,7 +77,7 @@ namespace Extensions
         public static PointF Normalized(this PointF pointF)
         {
             // Do nothing if it is a zero vector
-            if(pointF.X == 0 && pointF.Y == 0)
+            if (pointF.X == 0 && pointF.Y == 0)
             {
                 return pointF;
             }

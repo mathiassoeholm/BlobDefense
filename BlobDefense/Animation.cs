@@ -1,10 +1,22 @@
-﻿using System;
-using System.Drawing;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Animation.cs" company="Backdoor Fun">
+//   © 2013
+// </copyright>
+// <summary>
+//   Defines an 2D animation for a game object contained on a sprite sheet.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace BlobDefense
 {
+    using System;
+    using System.Drawing;
+
+    /// <summary>
+    /// Defines an 2D animation for a game object contained on a sprite sheet.
+    /// </summary>
     [Serializable]
-    class Animation
+    internal class Animation
     {
         /// <summary>
         /// The amount of seconds between each frame.
@@ -31,7 +43,14 @@ namespace BlobDefense
         /// </summary>
         private DateTime lastFrameChange;
 
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Animation"/> class.
+        /// </summary>
+        /// <param name="fps"> The frames per second for the animation. </param>
+        /// <param name="animatedObject"> The animated game object. </param>
+        /// <param name="frameCount"> The amount of frames. </param>
+        /// <param name="firstFrame"> A rectangle defining the size and position for the first frame. </param>
+        /// <param name="tileDirection"> The animations tile direction on the sprite sheet. </param>
         public Animation(int fps, GameObject animatedObject, int frameCount, Rectangle firstFrame, TileDirection tileDirection)
         {
             // Assign class members
@@ -60,19 +79,9 @@ namespace BlobDefense
             }
         }
 
-        public Animation(int fps, GameObject animatedObject, params Rectangle[] frameSources)
-        {
-            // Assign class members
-            this.frameSources = frameSources;
-            this.animatedObject = animatedObject;
-            
-            // Calculate the time duration between each frame.
-            this.frameDeltaTime = 1f / fps;
-
-            // We changed frame, so next frame will be in 'frame delta' seconds
-            this.lastFrameChange = DateTime.Now;
-        }
-
+        /// <summary>
+        /// Runs the animation.
+        /// </summary>
         public void RunAnimation()
         {
             // Check if it is time to change frame

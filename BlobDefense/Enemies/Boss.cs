@@ -27,8 +27,8 @@ namespace BlobDefense.Enemies
             // Assign properties for this enemy
             this.SpriteSheetSource = new Rectangle(199, 0, 67, 71);
             this.MoveSpeed = GameSettings.Boss_MoveSpeed;
-            this.StartHealth = GameSettings.Boss_StartHealth * WaveManager.Instance.EnemyDifficulity;
-            this.Bounty = (int)(GameSettings.Boss_Bounty * WaveManager.Instance.EnemyDifficulity);
+            this.StartHealth = GameSettings.Boss_StartHealth * WaveManager.Instance.EnemyDifficulty;
+            this.Bounty = (int)(GameSettings.Boss_Bounty * WaveManager.Instance.EnemyDifficulty);
             this.DepthLevel = 4;
 
             this.WalkRightAnimation = new Animation(

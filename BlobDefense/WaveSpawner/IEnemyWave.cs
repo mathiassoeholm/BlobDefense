@@ -1,14 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="IEnemyWave.cs" company="Backdoor Fun">
+//   © 2013
+// </copyright>
+// <summary>
+//   The EnemyWave interface, implemented by all wave types.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-namespace BlobDefense
+namespace BlobDefense.WaveSpawner
 {
     using BlobDefense.Enemies;
 
-    interface IEnemyWave
+    /// <summary>
+    /// The EnemyWave interface, implemented by all wave types.
+    /// </summary>
+    internal interface IEnemyWave
     {
         Enemy SpawnEnemy();
     }

@@ -4,6 +4,10 @@
 
     public static class GameSettings
     {
+        /// <summary>
+        /// The enemy difficulity increase.
+        /// </summary>
+        public const float EnemyDifficulityIncrease = 1.05f;
 
         public const int StartLives = 20;
 

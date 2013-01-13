@@ -1,17 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="GameLogic.cs" company="Backdoor Fun">
+//   © 2013
+// </copyright>
+// <summary>
+//   Responsible of running the games primary logic.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace BlobDefense
 {
+    using System.Collections.Generic;
     using System.Drawing;
-    using System.Windows.Forms;
 
     using BlobDefense.Enemies;
-    using BlobDefense.WaveSpawner;
 
+    /// <summary>
+    /// Responsible of running the games primary logic.
+    /// </summary>
     internal class GameLogic : Singleton<GameLogic>
     {
         /// <summary>
@@ -21,14 +26,23 @@ namespace BlobDefense
         {
         }
 
-        public static List<MapNode> EnemyPath { get; set; } 
+        /// <summary>
+        /// Gets or sets the enemy path.
+        /// </summary>
+        public static List<MapNode> EnemyPath { get; set; }
 
+        /// <summary>
+        /// Gets the start node.
+        /// </summary>
         public MapNode StartNode { get; private set; }
 
+        /// <summary>
+        /// Gets the goal node.
+        /// </summary>
         public MapNode GoalNode { get; private set; }
 
         /// <summary>
-        /// Tries to create a new path, if unsucessful the current path remains unchanged.
+        /// Tries to create a new path, if unsuccessful the current path remains unchanged.
         /// </summary>
         /// <returns>
         /// A value indicating whether a new path would be blocked or not.
@@ -56,6 +70,9 @@ namespace BlobDefense
             return true;
         }
 
+        /// <summary>
+        /// Initialized the games logic.
+        /// </summary>
         public void InitializeGameLogic()
         {
             // Connect nodes for the AStar
@@ -66,12 +83,18 @@ namespace BlobDefense
             this.GoalNode = TileEngine.Instance.NodeMap[TileEngine.TilesX - 2, 0];
 
             // Set up goal graphic
-            GameObject goalGraphic = new GameObject();
+            var goalGraphic = new GameObject();
             goalGraphic.SpriteSheetSource = new Rectangle(128, 0, 72, 83);
             goalGraphic.DepthLevel = 10;
             goalGraphic.Position = new PointF(GoalNode.Position.X, goalGraphic.SpriteSheetSource.Height / 2);
         }
 
+        /// <summary>
+        /// Called once per frame, runs logic for all game objects.
+        /// </summary>
+        /// <param name="graphicsContext">
+        /// The graphics context, used to render game objects.
+        /// </param>
         public void RunLogic(Graphics graphicsContext)
         {
             foreach (GameObject gameObject in GameObject.AllGameObjects)
@@ -99,6 +122,7 @@ namespace BlobDefense
                     }
                 }
 
+                // Break out of the loop, if whe are not playing anymore
                 if (GameManager.Instance.CurrentGameState != GameState.Playing)
                 {
                     break;
