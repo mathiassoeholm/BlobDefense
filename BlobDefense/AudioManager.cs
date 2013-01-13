@@ -139,13 +139,11 @@ namespace BlobDefense
         /// </param>
         public void PlaySoundOnce(string sound)
         {
-            return;
             this.soundEngine.Play2D(sound);
         }
 
         public void PlayRandomSoundOnce(params string[] sounds)
         {
-            return;
             Random random = new Random();
             this.soundEngine.Play2D(sounds[random.Next(0, sounds.Length)]);
         }
