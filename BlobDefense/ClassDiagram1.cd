@@ -1,138 +1,354 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="BlobDefense.Animation">
-    <Position X="9" Y="3.5" Width="1.5" />
+  <Class Name="BlobDefense.Animation" Collapsed="true">
+    <Position X="30.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAgAgEAAAAAAAAAAAAAAAAAAABIAAEAAAAAAAAA=</HashCode>
       <FileName>Animation.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BlobDefense.Enemy">
-    <Position X="2.75" Y="6.5" Width="1.5" />
+  <Class Name="BlobDefense.AudioManager" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAkACAAABAAACABAAAAAIhAAAAAAAAAAAACA=</HashCode>
-      <FileName>Enemy.cs</FileName>
+      <HashCode>AAIAAAAQwAAIAAIQACAAAAAIQhAAAAAAAAAAAAAQEgA=</HashCode>
+      <FileName>AudioManager.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BlobDefense.EventManager" Collapsed="true">
+    <Position X="9.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgQAAAIAAAAAAgIAAAAAAAABAAAAAAIAIgAAAAADQAA=</HashCode>
+      <FileName>EventManager.cs</FileName>
+    </TypeIdentifier>
   </Class>
   <Class Name="BlobDefense.GameDisplay" Collapsed="true">
-    <Position X="8.75" Y="0.5" Width="1.5" />
+    <Position X="34" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AEACAAADACAAEgAAAACAoAACAAAAAAAIAABAAAAAACA=</HashCode>
+      <HashCode>IECAQAAABCAgAAgJAQKAAIACEABAAACIACQAACAGACA=</HashCode>
       <FileName>GameDisplay.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BlobDefense.GameLogic" Collapsed="true">
-    <Position X="0.5" Y="1.75" Width="1.5" />
+    <Position X="14" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <HashCode>AAACAAAAAQAAAEAAAAAAAAAAAAAAAAQAAAAAAAAAQEA=</HashCode>
       <FileName>GameLogic.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BlobDefense.GameObject" Collapsed="true">
-    <Position X="1.75" Y="3.5" Width="1.5" />
+  <Class Name="BlobDefense.GameManager" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAEAQAQgAAAAAEAAAABAAAQAADAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAgAAAAwgAAAAAQAMAgACAIAAAACAAAAEAAQAAE=</HashCode>
+      <FileName>GameManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlobDefense.GameObject" Collapsed="true">
+    <Position X="14.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAEAQIQgAAACAEAAIABAAAQCADABAAAAABA=</HashCode>
       <FileName>GameObject.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
+  <Class Name="BlobDefense.GameSettings" Collapsed="true">
+    <Position X="35.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IRFqACDCimFIBACAAMIIAEogEAAcEREBDkQCoAfAMAA=</HashCode>
+      <FileName>GameSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlobDefense.InputManager" Collapsed="true">
+    <Position X="11.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQEAAAAAAAAAQAAAAAAEAIAAAAAAAAAIAAAAAACAAA=</HashCode>
+      <FileName>InputManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="BlobDefense.Keyboard" Collapsed="true">
-    <Position X="5.25" Y="1.5" Width="1.5" />
+    <Position X="34" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AEAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAQAAAAAA=</HashCode>
       <FileName>Keyboard.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BlobDefense.MapNode" Collapsed="true">
-    <Position X="7" Y="1.5" Width="1.5" />
+  <Class Name="BlobDefense.MapNode" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="35.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAIQAAAAAQgAAAAQAEAACACAEAAIAAAAAAAYAA=</HashCode>
+      <HashCode>AAAAAAAIQAAAAAQgAAAAQAEAACACAkAAIAAAAAAAYAA=</HashCode>
       <FileName>MapNode.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
+    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="BlobDefense.MovingGameObject" Collapsed="true">
-    <Position X="2.75" Y="4.75" Width="1.5" />
+    <Position X="9" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAIAAABAAAAAAEBAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>MovingGameObject.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BlobDefense.Program" Collapsed="true">
-    <Position X="8.75" Y="1.5" Width="1.5" />
+    <Position X="30.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
       <FileName>Program.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="BlobDefense.SaveData" Collapsed="true">
+    <Position X="34" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAEACAAACAAAAAEAAACAAAAAACAAAAAAAACAA=</HashCode>
+      <FileName>SaveData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="BlobDefense.Singleton&lt;T&gt;" Collapsed="true">
-    <Position X="1.75" Y="0.5" Width="1.5" />
+    <Position X="9.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAAABAAAAAQAAAAAAAAAA=</HashCode>
       <FileName>Singleton.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BlobDefense.StandardEnemy">
-    <Position X="6.25" Y="9.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>StandardEnemy.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="BlobDefense.Tile" Collapsed="true">
-    <Position X="0.5" Y="4.75" Width="1.5" />
+    <Position X="28" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
       <FileName>Tile.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BlobDefense.TileEngine" Collapsed="true">
-    <Position X="2.75" Y="1.75" Width="1.5" />
+    <Position X="16.25" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BAAAAAIIAAAAAICABAAAAAAAAAAAAMIBCAABAACAAQA=</HashCode>
+      <HashCode>AAACAAIIAAAAAICAAAAAAAAAAAAAAEIBCACBAACAAQA=</HashCode>
       <FileName>TileEngine.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BlobDefense.Time" Collapsed="true">
-    <Position X="8.75" Y="2.5" Width="1.5" />
+    <Position X="30.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAIAAAAAAABAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAIAAEAAAABABAAAAAQAAAAAAAQAAAAAAgAAAA=</HashCode>
       <FileName>Time.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Extensions.ExtensionMethods" Collapsed="true">
-    <Position X="7" Y="0.5" Width="1.5" />
+  <Class Name="BlobDefense.Enemies.Boss" Collapsed="true">
+    <Position X="1" Y="7.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAAAEAAAAAAAYAAAAAAAAAAAAAACAAAAAAABAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enemies\Boss.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlobDefense.Enemies.Enemy" Collapsed="true">
+    <Position X="4.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAABAAAkAGAAAhAABCABAABBAOhAgAAIAAgICABCA=</HashCode>
+      <FileName>Enemies\Enemy.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BlobDefense.Enemies.FastEnemy" Collapsed="true">
+    <Position X="3.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enemies\FastEnemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlobDefense.Enemies.PikachuEnemy">
+    <Position X="5.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enemies\PikachuEnemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlobDefense.Enemies.StandardEnemy" Collapsed="true">
+    <Position X="7.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enemies\StandardEnemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Extensions.ExtensionMethods" Collapsed="true">
+    <Position X="32.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAYAAAEAAAAAAAaAAAAAAIAAAAAAACAAAAAAABAAAAA=</HashCode>
       <FileName>ExtensionMethods.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="BlobDefense.Gui.GuiButton" Collapsed="true">
+    <Position X="30.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAgBAAAAAAAEgAIAAAAAAAAAAAAQACAAAAADAgAAgA=</HashCode>
+      <FileName>Gui\GuiButton.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlobDefense.Gui.GuiManager" Collapsed="true">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ECgEAAAAIAABQIEAQAASAAASAAAAgICIAA4AAARQAJA=</HashCode>
+      <FileName>Gui\GuiManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlobDefense.HighScore.HighScore" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="32.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>HighScore\HighScore.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="BlobDefense.HighScore.ScoreManager" Collapsed="true">
+    <Position X="7.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQBAABAAAAAAEAAAAAAAAAAAAAAAABAAAgAAQAAAA=</HashCode>
+      <FileName>HighScore\ScoreManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="BlobDefense.Properties.Resources" Collapsed="true">
-    <Position X="5.25" Y="2.5" Width="1.5" />
+    <Position X="32.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="BlobDefense.Properties.Settings" Collapsed="true">
-    <Position X="7" Y="2.5" Width="1.5" />
+    <Position X="35.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
+  <Class Name="BlobDefense.Towers.AgilityProjectile" Collapsed="true">
+    <Position X="14.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Towers\AgilityProjectile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlobDefense.Towers.AgilityTower" Collapsed="true">
+    <Position X="19" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Towers\AgilityTower.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlobDefense.Towers.FrostProjectile" Collapsed="true">
+    <Position X="10" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABAIAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Towers\FrostProjectile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlobDefense.Towers.FrostTower" Collapsed="true">
+    <Position X="23.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAgAAAIAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Towers\FrostTower.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlobDefense.Towers.Projectile" Collapsed="true">
+    <Position X="13.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAQAAEBAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Towers\Projectile.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BlobDefense.Towers.SniperProjectile" Collapsed="true">
+    <Position X="12.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Towers\SniperProjectile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlobDefense.Towers.SniperTower" Collapsed="true">
+    <Position X="25.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Towers\SniperTower.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlobDefense.Towers.StandardProjectile" Collapsed="true">
+    <Position X="16.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Towers\StandardProjectile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlobDefense.Towers.StandardTower" Collapsed="true">
+    <Position X="21.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Towers\StandardTower.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlobDefense.Towers.Tower" Collapsed="true">
+    <Position X="22.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAUAAIAAAEAAAAkACEAwAAAAAABAgAABAAAIEAAACCA=</HashCode>
+      <FileName>Towers\Tower.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BlobDefense.WaveSpawner.Wave&lt;T1&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="32.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAQAAA=</HashCode>
+      <FileName>WaveSpawner\Wave.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="BlobDefense.WaveSpawner.Wave&lt;T1, T2&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="34" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAACAAAAAAAABAAAAAAAAQAAA=</HashCode>
+      <FileName>WaveSpawner\Wave.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="BlobDefense.WaveSpawner.Wave&lt;T1, T2, T3&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="35.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAACIAAAAAAABAAAAAAAAQAAA=</HashCode>
+      <FileName>WaveSpawner\Wave.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="BlobDefense.WaveSpawner.WaveManager" Collapsed="true">
+    <Position X="18.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAIAAAACAAAAAAAAAEAAQAAgAEAAAAAFBQBIQAAA=</HashCode>
+      <FileName>WaveSpawner\WaveManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Interface Name="BlobDefense.IAnimated" Collapsed="true">
-    <Position X="5.25" Y="3.75" Width="1.5" />
+    <Position X="30.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
       <FileName>IAnimated.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="BlobDefense.IUpdateBehaviour" Collapsed="true">
-    <Position X="7" Y="3.75" Width="1.5" />
+    <Position X="34" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IUpdateBehaviour.cs</FileName>
     </TypeIdentifier>
   </Interface>
+  <Interface Name="BlobDefense.WaveSpawner.IEnemyWave" Collapsed="true">
+    <Position X="32.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>WaveSpawner\IEnemyWave.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="BlobDefense.TileDirection" Collapsed="true">
+    <Position X="32.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAA=</HashCode>
+      <FileName>Enumerations.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="BlobDefense.GameState" Collapsed="true">
+    <Position X="30.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enumerations.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
