@@ -91,7 +91,6 @@
     <Compile Include="Towers\StandardTower.cs" />
     <Compile Include="Towers\Tower.cs" />
     <Compile Include="WaveSpawner\IEnemyWave.cs" />
-    <Compile Include="MouseCursor.cs" />
     <Compile Include="Enemies\Enemy.cs" />
     <Compile Include="Enemies\FastEnemy.cs" />
     <Compile Include="GameLogic.cs" />

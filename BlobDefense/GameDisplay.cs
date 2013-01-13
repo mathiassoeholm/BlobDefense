@@ -113,7 +113,7 @@ namespace BlobDefense
         /// </param>
         protected override void OnPaint(PaintEventArgs e)
         {
-            // Check the game state, befor we render anything
+            // Check the game state, before we render anything
             switch (GameManager.Instance.CurrentGameState)
             {
                 case GameState.MainMenu:

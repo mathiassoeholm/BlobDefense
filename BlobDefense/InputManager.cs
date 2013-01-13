@@ -1,22 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="InputManager.cs" company="Backdoor Fun">
+//   © 2013
+// </copyright>
+// <summary>
+//   Processes input from the player.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace BlobDefense
 {
-    using System.Diagnostics;
     using System.Drawing;
-    using System.Windows.Forms;
+    using System.Linq;
 
     using BlobDefense.Enemies;
     using BlobDefense.Gui;
     using BlobDefense.Towers;
+
     using Extensions;
 
+    /// <summary>
+    /// Processes input from the player.
+    /// </summary>
     internal class InputManager : Singleton<InputManager>
     {
+        /// <summary>
+        /// The currently hovered button.
+        /// </summary>
         private GuiButton hoveredButton;
 
         /// <summary>
@@ -33,7 +42,8 @@ namespace BlobDefense
         {
             get
             {
-                Point coordinates = new Point(GameDisplay.MousePosition.X / TileEngine.TilesOnSpriteSize, GameDisplay.MousePosition.Y / TileEngine.TilesOnSpriteSize);
+                // Get the coordinates
+                var coordinates = new Point(GameDisplay.MousePosition.X / TileEngine.TilesOnSpriteSize, GameDisplay.MousePosition.Y / TileEngine.TilesOnSpriteSize);
 
                 if (coordinates.X < TileEngine.Instance.NodeMap.GetLength(0)
                     && coordinates.Y < TileEngine.Instance.NodeMap.GetLength(1)
@@ -49,6 +59,9 @@ namespace BlobDefense
             }
         }
 
+        /// <summary>
+        /// Initializes the input manager, by subscribing to various events.
+        /// </summary>
         public void Initialize()
         {
             EventManager.Instance.OnMouseClick += this.ProcesClick;
@@ -58,6 +71,7 @@ namespace BlobDefense
 
         /// <summary>
         /// Called once per frame.
+        /// Sets buttons state.
         /// </summary>
         /// <param name="position">
         /// The current mouse position.
@@ -84,12 +98,19 @@ namespace BlobDefense
                 }
             }
 
-            if(!didHoverOnAButton)
+            if (!didHoverOnAButton)
             {
                 this.hoveredButton = null;
             }
         }
 
+        /// <summary>
+        /// Called when mouse button is released.
+        /// If a button is hovered, its click event is called.
+        /// </summary>
+        /// <param name="position">
+        /// The position.
+        /// </param>
         private void OnMouseUp(Point position)
         {
             if (this.hoveredButton != null)
@@ -99,6 +120,13 @@ namespace BlobDefense
             }
         }
 
+        /// <summary>
+        /// Called once when the mouse button is pressed down.
+        /// Sets the state of a potential hovered button to pressed.
+        /// </summary>
+        /// <param name="position">
+        /// The position.
+        /// </param>
         private void OnMouseDown(Point position)
         {
             if (this.hoveredButton != null)
@@ -107,6 +135,12 @@ namespace BlobDefense
             }
         }
 
+        /// <summary>
+        /// Called when clicked, performs appropriate action based on mouse position.
+        /// </summary>
+        /// <param name="position">
+        /// The mouse position.
+        /// </param>
         private void ProcesClick(Point position)
         {
             MapNode clickedNode = this.HovederedMouseNode;
@@ -163,7 +197,16 @@ namespace BlobDefense
             }
         }
 
-        private void PlaceTower<T>(MapNode clickedNode) where T : Tower, new()
+        /// <summary>
+        /// Places a tower on the specified map node if legal.
+        /// </summary>
+        /// <param name="clickedNode">
+        /// The clicked map node.
+        /// </param>
+        /// <typeparam name="TTower">
+        /// The type of tower to build
+        /// </typeparam>
+        private void PlaceTower<TTower>(MapNode clickedNode) where TTower : Tower, new()
         {
             // Return if there is any enemies, we can't build under a wave
             if (GameObject.AllGameObjects.Any(g => g is Enemy))
@@ -172,7 +215,7 @@ namespace BlobDefense
             }
             
             // Instantiate the tower
-            T tower = new T { Position = clickedNode.Position };
+            var tower = new TTower { Position = clickedNode.Position };
 
             // Block the node
             clickedNode.IsBlocked = true;

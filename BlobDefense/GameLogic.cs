@@ -114,7 +114,7 @@ namespace BlobDefense
                 }
 
                 // Don't render tiles, they are handled elsewhere
-                if (!(gameObject is Tile) && !(gameObject is MouseCursor))
+                if (!(gameObject is Tile))
                 {
                     gameObject.Render(graphicsContext, true);
 

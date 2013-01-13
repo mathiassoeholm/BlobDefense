@@ -1,12 +1,12 @@
-﻿namespace BlobDefense
+﻿                /////////////////////////////////////////////////////////////////////////////////////
+                // Source: http://www.sanity-free.com/132/generic_singleton_pattern_in_csharp.html //
+                /////////////////////////////////////////////////////////////////////////////////////
+
+namespace BlobDefense
 {
     using System;
     using System.Reflection;
 
-    /// <summary>
-    /// http://www.sanity-free.com/132/generic_singleton_pattern_in_csharp.html
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
     public class Singleton<T> where T : class
     {
         static object SyncRoot = new object();

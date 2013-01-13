@@ -63,7 +63,7 @@ namespace MapMaker
                 // Use buffer for rendering of game
                 TileEngine.Instance.RenderTiles(buffer.Graphics, 1, 2);
 
-                TileEngine.Instance.tilesTypes[selectedTileType].Render(17, 11, buffer.Graphics);
+                TileEngine.Instance.TilesTypes[selectedTileType].Render(17, 11, buffer.Graphics);
 
                 foreach (MapNode mapNode in TileEngine.Instance.NodeMap)
                 {
@@ -118,7 +118,7 @@ namespace MapMaker
                     {
                         // Change tile type
                         this.selectedTileType++;
-                        this.selectedTileType %= TileEngine.Instance.tilesTypes.Count;
+                        this.selectedTileType %= TileEngine.Instance.TilesTypes.Count;
                     }
 
                     lockSelection = true;
@@ -132,7 +132,7 @@ namespace MapMaker
 
                         if (this.selectedTileType < 0)
                         {
-                            this.selectedTileType = TileEngine.Instance.tilesTypes.Count - 1;
+                            this.selectedTileType = TileEngine.Instance.TilesTypes.Count - 1;
                         }
                     }
 

@@ -1,33 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="TileEngine.cs" company="Backdoor Fun">
+//   © 2013
+// </copyright>
+// <summary>
+//   Contains the node map and tile information, responsible for rendering the background.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace BlobDefense
 {
+    using System;
+    using System.Collections.Generic;
     using System.Drawing;
-    using System.Drawing.Imaging;
     using System.IO;
     using System.Xml.Serialization;
-    using System.Linq;
 
+    /// <summary>
+    /// Contains the node map and tile information, responsible for rendering the background.
+    /// </summary>
     public class TileEngine : Singleton<TileEngine>
     {
+        /// <summary>
+        /// The amount of tiles on x.
+        /// </summary>
         public const int TilesX = 15;
+
+        /// <summary>
+        /// The amount of tiles on y.
+        /// </summary>
         public const int TilesY = 15;
 
+        /// <summary>
+        /// The amount of tiles on the sprite sheet in x.
+        /// </summary>
         public const int TilesOnSpriteSheetX = 8;
+
+        /// <summary>
+        /// The amount of tiles on the sprite sheet in y.
+        /// </summary>
         public const int TilesOnSpriteSheetY = 8;
 
+        /// <summary>
+        /// the width and height of a single tile on the sprite sheet in pixels.
+        /// </summary>
         public const int TilesOnSpriteSize = 32;
-        
-        /// <summary>
-        /// Gets the fifferent kinds of tiles, each kind of tile is automatically added by the Tile class.
-        /// </summary>
-        public List<Tile> tilesTypes { get; private set; }
-
-        /// <summary>
-        /// Gets or sets a two dimensional map of tile indexes, rendered to the screen.
-        /// </summary>
-        public MapNode[,] NodeMap { get; set; }
 
         /// <summary>
         /// Prevents a default instance of the <see cref="TileEngine"/> class from being created.
@@ -35,8 +51,9 @@ namespace BlobDefense
         private TileEngine()
         {
             this.NodeMap = new MapNode[TilesX, TilesY];
-            this.tilesTypes = new List<Tile>(TilesOnSpriteSheetX * TilesOnSpriteSheetY);
+            this.TilesTypes = new List<Tile>(TilesOnSpriteSheetX * TilesOnSpriteSheetY);
 
+            // Add all possible tile types
             for (int y = 0; y < TilesOnSpriteSheetY; y++)
             {
                 for (int x = 0; x < TilesOnSpriteSheetX; x++)
@@ -46,16 +63,24 @@ namespace BlobDefense
                     tile.SpriteSheetSource = new Rectangle(x * TilesOnSpriteSize, y * TilesOnSpriteSize, TilesOnSpriteSize, TilesOnSpriteSize);
 
                     // Add the new tile type
-                    this.AddTileType(tile);
+                    this.TilesTypes.Add(tile);
                 }
             }
         }
 
-        public void AddTileType(Tile tile)
-        {
-            this.tilesTypes.Add(tile);
-        }
+        /// <summary>
+        /// Gets the different kinds of tiles, each kind of tile is automatically added.
+        /// </summary>
+        public List<Tile> TilesTypes { get; private set; }
 
+        /// <summary>
+        /// Gets or sets a two dimensional map of tile indexes, rendered to the screen.
+        /// </summary>
+        public MapNode[,] NodeMap { get; set; }
+
+        /// <summary>
+        /// Generates a completely random map from the tile types.
+        /// </summary>
         public void GenerateRandomMap()
         {
             var random = new Random();
@@ -64,15 +89,19 @@ namespace BlobDefense
             {
                 for (int y = 0; y < this.NodeMap.GetLength(1); y++)
                 {
-                    this.NodeMap[x, y] = new MapNode { TileType = random.Next(0, this.tilesTypes.Count) };
+                    this.NodeMap[x, y] = new MapNode { TileType = random.Next(0, this.TilesTypes.Count) };
                 }
             }
         }
 
+        /// <summary>
+        /// Sets the entire map to a specific kind of tile.
+        /// </summary>
+        /// <param name="i">
+        /// The tile ID.
+        /// </param>
         public void SetAllTilesTo(int i)
         {
-            var random = new Random();
-
             for (int x = 0; x < this.NodeMap.GetLength(0); x++)
             {
                 for (int y = 0; y < this.NodeMap.GetLength(1); y++)
@@ -82,23 +111,55 @@ namespace BlobDefense
             }
         }
 
+        /// <summary>
+        /// Toggles the is blocked property of a specified node.
+        /// </summary>
+        /// <param name="x">
+        /// The x node map index.
+        /// </param>
+        /// <param name="y">
+        /// The y node map index.
+        /// </param>
         public void ToggleBlockedTile(int x, int y)
         {
             this.NodeMap[x, y].IsBlocked = !this.NodeMap[x, y].IsBlocked;
         }
 
+        /// <summary>
+        /// Changes the a specified nodes tile type.
+        /// </summary>
+        /// <param name="x">
+        /// The x node map index.
+        /// </param>
+        /// <param name="y">
+        /// The y node map index.
+        /// </param>
+        /// <param name="tileType">
+        /// The new tile type ID.
+        /// </param>
         public void ChangeTile(int x, int y, uint tileType)
         {
-            if (tilesTypes.Count <= tileType)
+            if (this.TilesTypes.Count <= tileType)
             {
                 return;
             }
             
             this.NodeMap[x, y].TileType = (int)tileType;
-            
         }
 
-        public void RenderTiles(Graphics context, int offsetLeft = 0, int offsetTop = 0)
+        /// <summary>
+        /// Renders the node map to the screen, with each nodes tile type.
+        /// </summary>
+        /// <param name="graphics">
+        /// The graphics object used to render the tiles.
+        /// </param>
+        /// <param name="offsetLeft">
+        /// The optional left offset in pixels.
+        /// </param>
+        /// <param name="offsetTop">
+        /// The optional top offset in pixels.
+        /// </param>
+        public void RenderTiles(Graphics graphics, int offsetLeft = 0, int offsetTop = 0)
         {
             if (this.NodeMap == null)
             {
@@ -110,11 +171,14 @@ namespace BlobDefense
                 for (int x = 0; x < this.NodeMap.GetLength(0); x++)
                 {
                     // Render the tile
-                    this.tilesTypes[this.NodeMap[x, y].TileType].Render(x + offsetLeft, y + offsetTop, context);
+                    this.TilesTypes[this.NodeMap[x, y].TileType].Render(x + offsetLeft, y + offsetTop, graphics);
                 }
             }
         }
 
+        /// <summary>
+        /// Saves the map to a XML file.
+        /// </summary>
         public void SaveMapToXml()
         {
             // If the file does not exist, create one
@@ -150,6 +214,9 @@ namespace BlobDefense
             }
         }
 
+        /// <summary>
+        /// Loads the node map from an XML file.
+        /// </summary>
         public void LoadMapFromXml()
         {
             // If the file does not exist, generate a random map and save it

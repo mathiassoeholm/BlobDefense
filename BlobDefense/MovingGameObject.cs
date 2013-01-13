@@ -1,14 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Extensions;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="MovingGameObject.cs" company="Backdoor Fun">
+//   © 2013
+// </copyright>
+// <summary>
+//   Extends the base game object class, adding the ability to move.
+//   Defines the base for all moving game objects.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace BlobDefense
 {
+    using System;
     using System.Drawing;
 
+    using Extensions;
+
+    /// <summary>
+    /// Extends the base game object class, adding the ability to move.
+    /// Defines the base for all moving game objects.
+    /// </summary>
     [Serializable]
     internal abstract class MovingGameObject : GameObject
     {
@@ -56,6 +66,9 @@ namespace BlobDefense
             this.Position = newPosition;
         }
 
+        /// <summary>
+        /// Called when hitting the move target.
+        /// </summary>
         protected abstract void OnTargetHit();
     }
 }

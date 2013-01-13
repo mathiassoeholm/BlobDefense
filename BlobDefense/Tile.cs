@@ -1,19 +1,21 @@
-﻿namespace BlobDefense
-{
-    using System;
-    using System.Drawing;
-    using System.Xml;
-    using System.Xml.Schema;
-    using System.Xml.Serialization;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Tile.cs" company="Backdoor Fun">
+//   © 2013
+// </copyright>
+// <summary>
+//   Defines a tile, which is a special game object using index position to render instead of pixels.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
+namespace BlobDefense
+{
+    using System.Drawing;
+
+    /// <summary>
+    /// Defines a tile, which is a special game object using tile map coordinates to render instead of pixels.
+    /// </summary>
     public class Tile : GameObject
     {
-        public Tile()
-        {
-            // Add this kind of tile to the list of tiles.
-            // TileEngine.Instance.AddTileType(this);
-        }
-
         /// <summary>
         /// Renders the tile using tile map coordinates.
         /// </summary>
