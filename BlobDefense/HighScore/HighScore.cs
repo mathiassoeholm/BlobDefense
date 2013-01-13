@@ -1,4 +1,13 @@
-﻿namespace BlobDefense.HighScore
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="HighScore.cs" company="Backdoor Fun">
+//   © 2013
+// </copyright>
+// <summary>
+//   Defines a single high score, containing the score and a name.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace BlobDefense.HighScore
 {
     using System;
 

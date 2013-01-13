@@ -29,7 +29,7 @@ namespace BlobDefense.Towers
         protected override void OnTargetHit()
         {
             // Slow the enemy
-            this.enemyTarget.Slow(this.slowAmount, this.slowDuration);
+            this.EnemyTarget.Slow(this.slowAmount, this.slowDuration);
             
             base.OnTargetHit();
         }

@@ -1,23 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Projectile.cs" company="Backdoor Fun">
+//   © 2013
+// </copyright>
+// <summary>
+//   Defines the base for all projectiles.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace BlobDefense.Towers
 {
+    using System;
+    using System.Drawing;
+
     using BlobDefense.Enemies;
 
+    /// <summary>
+    /// Defines the base for all projectiles.
+    /// </summary>
     internal class Projectile : MovingGameObject, IUpdateBehaviour
     {
-        protected readonly Enemy enemyTarget;
+        /// <summary>
+        /// The enemy to follow.
+        /// </summary>
+        protected readonly Enemy EnemyTarget;
+
+        /// <summary>
+        /// The attack damage.
+        /// </summary>
         private readonly float attackDamage;
+
+        /// <summary>
+        /// The tower that spawned this projectile.
+        /// </summary>
         private readonly Tower towerSource;
 
-        public Projectile(Enemy enemy, float attackDamage, Tower towerSource)
+        public Projectile(Enemy enemy, float attackDamage, Tower towerSource, PointF spawnPosition)
         {
-            this.enemyTarget = enemy;
-            this.CurrentTarget = this.enemyTarget.Position;
+            this.Position = spawnPosition;
+            this.EnemyTarget = enemy;
+            this.CurrentTarget = this.EnemyTarget.Position;
             this.attackDamage = attackDamage;
             this.towerSource = towerSource;
 
@@ -27,7 +48,7 @@ namespace BlobDefense.Towers
         protected override void OnTargetHit()
         {
             // Give damage to enemy
-            if (this.enemyTarget.TakeDamage(this.attackDamage))
+            if (this.EnemyTarget.TakeDamage(this.attackDamage))
             {
                 // Plus one kill to the tower
                 this.towerSource.Kills++;
@@ -39,14 +60,14 @@ namespace BlobDefense.Towers
 
         public void Update()
         {
-            if (GameObject.AllGameObjects.Contains(this.enemyTarget))
+            if (GameObject.AllGameObjects.Contains(this.EnemyTarget))
             {
-                this.CurrentTarget = this.enemyTarget.Position;
+                this.CurrentTarget = this.EnemyTarget.Position;
 
                 this.Rotation =
                     (float)
                     Math.Atan2(
-                        this.Position.Y - this.enemyTarget.Position.Y, this.Position.X - this.enemyTarget.Position.X)
+                        this.Position.Y - this.EnemyTarget.Position.Y, this.Position.X - this.EnemyTarget.Position.X)
                     * 57.324f; // 180 / Pi
             }
             //else

@@ -80,7 +80,6 @@
             switch (GameManager.Instance.CurrentGameState)
             {
                 case GameState.MainMenu:
-                   // e.Graphics.Clear(this.BackColor);
                     this.NameTxt.Update();
                     this.PlayBtn.Update();
                     this.ContinueBtn.Update();

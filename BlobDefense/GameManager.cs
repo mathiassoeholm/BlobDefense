@@ -45,7 +45,6 @@ namespace BlobDefense
         /// </summary>
         public int TotalKills { get; set; }
 
-
         /// <summary>
         /// Gets or sets the current game state.
         /// </summary>
