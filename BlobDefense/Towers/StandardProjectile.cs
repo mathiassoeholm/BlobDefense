@@ -1,8 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="StandardProjectile.cs" company="Backdoor Fun">
+//   © 2013
+// </copyright>
+// <summary>
+//   Defines a projectile with normal speed, used by the standard tower.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace BlobDefense.Towers
 {
@@ -10,8 +13,18 @@ namespace BlobDefense.Towers
 
     using BlobDefense.Enemies;
 
+    /// <summary>
+    /// Defines a projectile with normal speed, used by the standard tower.
+    /// </summary>
     internal class StandardProjectile : Projectile
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StandardProjectile"/> class.
+        /// </summary>
+        /// <param name="enemy"> The enemy to follow. </param>
+        /// <param name="spawnPosition"> The spawn position. </param>
+        /// <param name="attackDamage"> The attack damage. </param>
+        /// <param name="towerSource"> The tower that spawned this projectile. </param>
         public StandardProjectile(Enemy enemy, PointF spawnPosition, float attackDamage, Tower towerSource)
             : base(enemy, attackDamage, towerSource, spawnPosition)
         {

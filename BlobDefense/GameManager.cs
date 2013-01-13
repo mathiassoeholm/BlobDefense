@@ -36,9 +36,9 @@ namespace BlobDefense
         public int Currency { get; private set; }
 
         /// <summary>
-        /// Gets the amount of lives that player has left.
+        /// Gets or sets the amount of lives that player has left.
         /// </summary>
-        public int Lives { get; private set; }
+        public int Lives { get; set; }
 
         /// <summary>
         /// Gets or sets the amount of enemies killed.

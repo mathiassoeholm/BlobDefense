@@ -22,6 +22,8 @@ namespace BlobDefense
             this.Currency = GameManager.Instance.Currency;
             this.CurrentWave = WaveManager.Instance.CurrentWave - 1;
             this.TotalKills = GameManager.Instance.TotalKills;
+            this.Lives = GameManager.Instance.Lives;
+            this.PlayerName = GameSettings.PlayerName;
         }
         
         public List<Tower> Towers { get; set; }
@@ -34,12 +36,18 @@ namespace BlobDefense
 
         public int TotalKills { get; set; }
 
+        public int Lives { get; set; }
+
+        public string PlayerName { get; set; }
+
         public void ApplySaveData()
         {
             WaveManager.Instance.CurrentWave = this.CurrentWave;
             GameManager.Instance.GiveCurrency(this.Currency);
             TileEngine.Instance.NodeMap = this.NodeMap;
             GameManager.Instance.TotalKills = this.TotalKills;
+            GameManager.Instance.Lives = this.Lives;
+            GameSettings.PlayerName = this.PlayerName;
         }
     }
 }

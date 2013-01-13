@@ -80,7 +80,7 @@ namespace BlobDefense.WaveSpawner
             }
 
             this.currentWave++;
-            this.enemiesToSpawn++;
+            this.enemiesToSpawn = this.currentWave + 10;
             this.enemiesSpawned = 0;
 
             // Make harder

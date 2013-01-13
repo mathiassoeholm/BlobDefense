@@ -57,7 +57,7 @@ namespace BlobDefense.Gui
         /// <summary>
         /// The upgrade button top offset.
         /// </summary>
-        private const int UpgradeButtonTopOffset = 315;
+        private const int UpgradeButtonTopOffset = 350;
 
         /// <summary>
         /// The tower selection buttons top offset.
@@ -272,9 +272,17 @@ namespace BlobDefense.Gui
                     this.nextWaveBtn.PositionAndSize.X,
                     posY);
 
-                // Write level and kills
+                // Write kills
                 graphics.DrawString(
                     "Kills " + this.selectedTower.Kills.ToString(),
+                    new Font("Arial", 16),
+                    new SolidBrush(Color.White),
+                    this.nextWaveBtn.PositionAndSize.X,
+                    posY += 20);
+
+                // Write levels
+                graphics.DrawString(
+                    "Level " + (this.selectedTower.Level + 1).ToString(),
                     new Font("Arial", 16),
                     new SolidBrush(Color.White),
                     this.nextWaveBtn.PositionAndSize.X,

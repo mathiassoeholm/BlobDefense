@@ -1,30 +1,61 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Extensions;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Tower.cs" company="Backdoor Fun">
+//   © 2013
+// </copyright>
+// <summary>
+//   Defines the base for all towers.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace BlobDefense.Towers
 {
+    using System;
+    using System.Linq;
+
     using BlobDefense.Enemies;
 
+    using Extensions;
+
+    /// <summary>
+    /// Defines the base for all towers.
+    /// </summary>
     [Serializable]
     internal abstract class Tower : GameObject, IUpdateBehaviour, IAnimated
     {
+        /// <summary>
+        /// The point in time where we fired a projectile last.
+        /// </summary>
         private DateTime lastShotFired;
 
+        /// <summary>
+        /// The enemy to shoot.
+        /// </summary>
         [NonSerialized]
         private Enemy enemyTarget;
 
+        /// <summary>
+        /// Gets or sets the amount of kills performed by this tower.
+        /// </summary>
         public int Kills { get; set; }
 
+        /// <summary>
+        /// Gets the towers current level
+        /// </summary>
         public int Level { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the upgrade price.
+        /// </summary>
         public int UpgradePrice { get; protected set; }
 
+        /// <summary>
+        /// Gets or sets the build price.
+        /// </summary>
         public int BuildPrice { get; protected set; }
 
+        /// <summary>
+        /// Gets or sets the current animation.
+        /// </summary>
         public Animation CurrentAnimation { get; protected set; }
 
         protected Enemy EnemyTarget
