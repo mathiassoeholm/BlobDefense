@@ -1,21 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="GameManager.cs" company="Backdoor Fun">
+//   © 2013
+// </copyright>
+// <summary>
+//   Takes care of managing the games overall state.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace BlobDefense
 {
-    using System.Diagnostics;
+    using System;
     using System.IO;
     using System.Runtime.Serialization.Formatters.Binary;
 
     using BlobDefense.HighScore;
-    using BlobDefense.Towers;
     using BlobDefense.WaveSpawner;
 
     using Extensions;
 
+    /// <summary>
+    /// Takes care of managing the games overall state.
+    /// </summary>
     internal class GameManager : Singleton<GameManager>
     {
         /// <summary>
@@ -23,10 +28,13 @@ namespace BlobDefense
         /// </summary>
         private GameManager()
         {
+            // Set initial currency and lives
             this.Currency = GameSettings.InitialCurrencyAmount;
             this.Lives = GameSettings.StartLives;
+
+            // Subscribe to events
             EventManager.Instance.EnemyReachedGoal += this.LoseLife;
-            EventManager.Instance.EnemyDied += (enemy) => this.TotalKills++;
+            EventManager.Instance.EnemyDied += enemy => this.TotalKills++;
             EventManager.Instance.WaveStarted += this.SaveGame;
         }
 
@@ -88,28 +96,16 @@ namespace BlobDefense
             this.Currency += amount;
         }
 
-        public void ContinueGame()
-        {
-            WaveManager.Instance.InitializeWaveManager();
-
-            this.Currency = 0;
-
-            this.LoadGame();
-
-            // Initialize the game manager
-            GameLogic.Instance.InitializeGameLogic();
-
-            // Create a path for the enemies
-            GameLogic.Instance.TryCreateNewPath();
-
-            this.CurrentGameState = GameState.Playing;
-        }
-
+        /// <summary>
+        /// Starts a new game from the beginning.
+        /// </summary>
         public void StartNewGame()
         {
             this.Lives = GameSettings.StartLives;
             this.Currency = GameSettings.InitialCurrencyAmount;
             this.TotalKills = 0;
+
+            // Initialize the wave manager
             WaveManager.Instance.InitializeWaveManager();
 
             // Load the tile map
@@ -124,6 +120,32 @@ namespace BlobDefense
             this.CurrentGameState = GameState.Playing;
         }
 
+        /// <summary>
+        /// Continues the game from a save data file.
+        /// </summary>
+        public void ContinueGame()
+        {
+            // Initialize the wave manager
+            WaveManager.Instance.InitializeWaveManager();
+
+            // Reset the currency
+            this.Currency = 0;
+
+            // Load the game
+            this.LoadGame();
+
+            // Initialize the game manager
+            GameLogic.Instance.InitializeGameLogic();
+
+            // Create a path for the enemies
+            GameLogic.Instance.TryCreateNewPath();
+
+            this.CurrentGameState = GameState.Playing;
+        }
+
+        /// <summary>
+        /// Changes the games state to be in the main menu.
+        /// </summary>
         public void GoToMainMenu()
         {
             this.CurrentGameState = GameState.MainMenu;
@@ -146,7 +168,7 @@ namespace BlobDefense
         }
 
         /// <summary>
-        /// Saves the games state to the save data path.
+        /// Loads the games state from the save data path.
         /// </summary>
         private void LoadGame()
         {
@@ -170,6 +192,9 @@ namespace BlobDefense
             }
         }
 
+        /// <summary>
+        /// Subtracts a life and stops the game if necessary.
+        /// </summary>
         private void LoseLife()
         {
             if (this.CurrentGameState != GameState.Playing)
@@ -185,6 +210,9 @@ namespace BlobDefense
             }
         }
 
+        /// <summary>
+        /// Stops the game and goes to the game over screen.
+        /// </summary>
         private void EndGame()
         {
             // Stop the wave

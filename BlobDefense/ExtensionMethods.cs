@@ -18,6 +18,20 @@ namespace Extensions
     public static class ExtensionMethods
     {
         /// <summary>
+        /// Divides by two and returns the new value.
+        /// </summary>
+        /// <param name="number">
+        /// The number to divide by two.
+        /// </param>
+        /// <returns>
+        /// The number divided by two.
+        /// </returns>
+        public static int DividedByTwo(this int number)
+        {
+            return (int)(number * 0.5f);
+        }
+
+        /// <summary>
         /// Converts a radian value to degrees.
         /// </summary>
         /// <param name="number">

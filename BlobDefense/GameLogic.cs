@@ -14,6 +14,8 @@ namespace BlobDefense
 
     using BlobDefense.Enemies;
 
+    using Extensions;
+
     /// <summary>
     /// Responsible of running the games primary logic.
     /// </summary>
@@ -86,7 +88,7 @@ namespace BlobDefense
             var goalGraphic = new GameObject();
             goalGraphic.SpriteSheetSource = new Rectangle(128, 0, 72, 83);
             goalGraphic.DepthLevel = 10;
-            goalGraphic.Position = new PointF(GoalNode.Position.X, goalGraphic.SpriteSheetSource.Height / 2);
+            goalGraphic.Position = new PointF(this.GoalNode.Position.X, goalGraphic.SpriteSheetSource.Height.DividedByTwo());
         }
 
         /// <summary>

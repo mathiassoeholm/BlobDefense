@@ -1,14 +1,23 @@
-﻿namespace BlobDefense
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="GameObject.cs" company="Backdoor Fun">
+//   © 2013
+// </copyright>
+// <summary>
+//   Base class for all visible objects in the game.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace BlobDefense
 {
     using System;
     using System.Collections.Generic;
     using System.Drawing;
     using System.Drawing.Drawing2D;
 
-    using BlobDefense.Towers;
+    using Extensions;
 
     /// <summary>
-    /// Base class for all entities in the game.
+    /// Base class for all visible objects in the game.
     /// </summary>
     [Serializable]
     public class GameObject : IComparable<GameObject>
@@ -23,12 +32,7 @@
         }
 
         /// <summary>
-        /// Gameobjects with higher values gets renderes on top of gameobjects with lower values
-        /// </summary>
-        public int DepthLevel { get; set; }
-
-        /// <summary>
-        /// Gets the sprite sheet used for all game objects
+        /// Gets the sprite sheet used for all game objects.
         /// </summary>
         public static Image SpriteSheet { get; private set; }
 
@@ -46,6 +50,12 @@
         /// Gets a list containing game objects which will be added to the game.
         /// </summary>
         public static List<GameObject> NewGameObjects { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the depth level.
+        /// Game objects with higher values gets rendered on top of game objects with lower values.
+        /// </summary>
+        public int DepthLevel { get; set; }
 
         /// <summary>
         /// Gets or sets the position of the game object in pixel coordinates.
@@ -96,6 +106,9 @@
             }
         }
 
+        /// <summary>
+        /// Adds all new game objects to the game objects list.
+        /// </summary>
         public static void AddAllNewGameObjects()
         {
             if (NewGameObjects.Count == 0)
@@ -116,7 +129,7 @@
         }
 
         /// <summary>
-        /// This is automaticly called by the constructor, if for some reason it isn't
+        /// This is automatically called by the constructor, if for some reason it isn't
         /// you can call it manually.
         /// </summary>
         public void InitializeGameObject()
@@ -172,7 +185,7 @@
             {
                 using (var m = new Matrix())
                 {
-                    m.RotateAt(Rotation, Position);
+                    m.RotateAt(this.Rotation, this.Position);
                     context.Transform = m;
                 }
             }
@@ -180,23 +193,32 @@
             context.DrawImage(
                 image: this.AlternativeImage == null ? SpriteSheet : AlternativeImage,
                 destRect: new Rectangle(
-                    (int)(centerPivot ? this.Position.X - (this.SpriteSheetSource.Width / 2) : this.Position.X),
-                    (int)(centerPivot ? this.Position.Y - (this.SpriteSheetSource.Height / 2) : this.Position.Y),
-                    (int)this.SpriteSheetSource.Width,
-                    (int)this.SpriteSheetSource.Height),
+                    (int)(centerPivot ? this.Position.X - this.SpriteSheetSource.Width.DividedByTwo() : this.Position.X),
+                    (int)(centerPivot ? this.Position.Y - this.SpriteSheetSource.Height.DividedByTwo() : this.Position.Y),
+                    this.SpriteSheetSource.Width,
+                    this.SpriteSheetSource.Height),
                 srcX: this.SpriteSheetSource.X,
                 srcY: this.SpriteSheetSource.Y,
                 srcWidth: this.SpriteSheetSource.Width,
                 srcHeight: this.SpriteSheetSource.Height,
                 srcUnit: GraphicsUnit.Pixel);
 
-            // Rotate back
+            // Rotate back to 0
             if (this.Rotation != 0)
             {
                 context.ResetTransform();
             }
         }
 
+        /// <summary>
+        /// Compares to game objects depth level, to decide which one is rendered on top.
+        /// </summary>
+        /// <param name="other">
+        /// The other game object to compare with.
+        /// </param>
+        /// <returns>
+        /// The -1, 0 or 1 based on the depth levels.
+        /// </returns>
         public int CompareTo(GameObject other)
         {
             if (this.DepthLevel == other.DepthLevel)
