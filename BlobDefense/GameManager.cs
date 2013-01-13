@@ -201,6 +201,11 @@ namespace BlobDefense
             // Sort score
             ScoreManager.Instance.SortScores();
 
+            // Delete the save data
+            File.Delete(GameSettings.SaveDataPath + @"\SavedGame.dat");
+
+            EventManager.Instance.LostTheGame.SafeInvoke();
+
             this.CurrentGameState = GameState.GameOver;
         }
     }

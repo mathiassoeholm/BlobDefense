@@ -31,10 +31,9 @@
             instance = this;
 
             // Subscribe to open menu event
-            EventManager.Instance.OpenedMainMenu += () => this.PlayBtn.Visible = true;
-            EventManager.Instance.OpenedMainMenu += () => this.NameTxt.Visible = true;
-
-            // Initialize sound enginea
+            EventManager.Instance.OpenedMainMenu += this.ShowMainMenu;
+            
+            // Initialize sound engine
             AudioManager.Instance.InitializeSoundEngine();
 
             // Initialize the input manager
@@ -43,7 +42,7 @@
             // Set size of the form
             this.ClientSize = new Size((TileEngine.TilesX * TileEngine.TilesOnSpriteSize) + GuiManager.RightPanelWidth, (TileEngine.TilesY * TileEngine.TilesOnSpriteSize));
 
-            this.ContinueBtn.Enabled = File.Exists(GameSettings.SaveDataPath + @"\SavedGame.dat");
+            this.ContinueBtn.Visible = File.Exists(GameSettings.SaveDataPath + @"\SavedGame.dat");
 
             Time.SetDeltaTime();
 
@@ -210,6 +209,14 @@
             this.PlayBtn.Visible = false;
             this.NameTxt.Visible = false;
             this.ContinueBtn.Visible = false;
+        }
+
+        private void ShowMainMenu()
+        {
+            // Hide main menu controls
+            this.PlayBtn.Visible = true;
+            this.NameTxt.Visible = true;
+            this.ContinueBtn.Visible = File.Exists(GameSettings.SaveDataPath + @"\SavedGame.dat");
         }
 
         private void GameDisplay_Click(object sender, EventArgs e)

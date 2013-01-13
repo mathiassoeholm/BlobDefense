@@ -40,7 +40,7 @@
             this.PlayBtn.Name = "PlayBtn";
             this.PlayBtn.Size = new System.Drawing.Size(269, 95);
             this.PlayBtn.TabIndex = 0;
-            this.PlayBtn.Text = "PLAY";
+            this.PlayBtn.Text = "NEW  GAME";
             this.PlayBtn.UseVisualStyleBackColor = true;
             this.PlayBtn.Click += new System.EventHandler(this.PlayBtn_Click);
             // 

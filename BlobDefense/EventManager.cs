@@ -28,6 +28,8 @@ namespace BlobDefense
 
         public Action PlacedATower { get; set; }
 
+        public Action LostTheGame { get; set; }
+
         /// <summary>
         /// Gets or sets the wave started delegate.
         /// </summary>

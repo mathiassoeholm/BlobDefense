@@ -20,7 +20,7 @@ namespace BlobDefense
             this.Towers = GameObject.AllGameObjects.OfType<Tower>().ToList();
             this.NodeMap = TileEngine.Instance.NodeMap;
             this.Currency = GameManager.Instance.Currency;
-            this.CurrentWave = WaveManager.Instance.CurrentWave;
+            this.CurrentWave = WaveManager.Instance.CurrentWave - 1;
             this.TotalKills = GameManager.Instance.TotalKills;
         }
         
