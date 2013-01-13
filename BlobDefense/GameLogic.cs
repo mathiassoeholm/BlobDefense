@@ -12,6 +12,8 @@ namespace BlobDefense
     using System.Collections.Generic;
     using System.Drawing;
 
+    using AStar;
+
     using BlobDefense.Enemies;
 
     using Extensions;

@@ -1,4 +1,8 @@
-﻿using System;
+﻿                /////////////////////////////////////////////////////////////////////////////////////////////
+                // Source: http://visualstudiomagazine.com/articles/2012/11/01/priority-queues-with-c.aspx //
+                /////////////////////////////////////////////////////////////////////////////////////////////
+
+using System;
 using System.Collections.Generic;
 
 public class PriorityQueue<T> where T : IComparable<T>
