@@ -11,6 +11,20 @@ namespace Extensions
     public static class ExtensionMethods
     {
         /// <summary>
+        /// Converts a radian value to degrees.
+        /// </summary>
+        /// <param name="number">
+        /// The number to convert.
+        /// </param>
+        /// <returns>
+        /// The anlge in degrees.
+        /// </returns>
+        public static Double RadiansToDegrees(this Double number)
+        {
+            return number * 57.324f;
+        }
+        
+        /// <summary>
         /// Invokes an action if it is not null, otherwise it does nothing.
         /// </summary>
         /// <param name="action">

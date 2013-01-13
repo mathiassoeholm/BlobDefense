@@ -40,6 +40,8 @@
 
         #region Tower Settings
 
+        public const int ProjectileDepthLevel = 5;
+
         // STANDARD TOWER - Initial values
         public const float StandardTower_CoolDown = 0.8f;
         public const float StandardTower_ShootRange = 70f;
