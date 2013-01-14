@@ -18,11 +18,11 @@ namespace BlobDefense
     {
         public const float EnemyDifficulityIncrease = 1.10f;
 
-        public const float BountyIncrease = 1.05f;
+        public const float BountyIncrease = 1.07f;
 
         public const int StartLives = 20;
 
-        public const int InitialCurrencyAmount = 140;
+        public const int InitialCurrencyAmount = 200;
 
         public static readonly string SaveDataPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
 
@@ -32,7 +32,7 @@ namespace BlobDefense
         public const int EnemyHealthBarHeight = 3;
 
         public const float Boss_MoveSpeed = 10;
-        public const float Boss_StartHealth = 10000;
+        public const float Boss_StartHealth = 9000;
         public const float Boss_Bounty = 100;
         public const int Boss_HealthBarWidth = 50;
 
