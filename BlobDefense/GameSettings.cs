@@ -16,11 +16,13 @@ namespace BlobDefense
     /// </summary>
     public static class GameSettings
     {
-        public const float EnemyDifficulityIncrease = 1.05f;
+        public const float EnemyDifficulityIncrease = 1.10f;
+
+        public const float BountyIncrease = 1.05f;
 
         public const int StartLives = 20;
 
-        public const int InitialCurrencyAmount = 100;
+        public const int InitialCurrencyAmount = 140;
 
         public static readonly string SaveDataPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
 
@@ -35,16 +37,16 @@ namespace BlobDefense
         public const int Boss_HealthBarWidth = 50;
 
         public const float FastEnemy_MoveSpeed = 65;
-        public const float FastEnemy_StartHealth = 40;
-        public const float FastEnemy_Bounty = 10;
+        public const float FastEnemy_StartHealth = 60;
+        public const float FastEnemy_Bounty = 5;
 
         public const float PikachuEnemy_MoveSpeed = 18f;
-        public const float PikachuEnemy_StartHealth = 80;
+        public const float PikachuEnemy_StartHealth = 100;
         public const float PikachuEnemy_Bounty = 10;
         public const int PikachuEnemy_HealthBarWidth = 35;
 
         public const float StandardEnemy_MoveSpeed = 25f;
-        public const float StandardEnemy_StartHealth = 40;
+        public const float StandardEnemy_StartHealth = 70;
         public const float StandardEnemy_Bounty = 5;
 
 
@@ -71,7 +73,7 @@ namespace BlobDefense
         // FROST TOWER - Initial values
         public const float FrostTower_CoolDown = 2;
         public const float FrostTower_ShootRange = 40;
-        public const float FrostTower_AttackDamage = 2;
+        public const float FrostTower_AttackDamage = 3;
         public const float FrostTower_SlowDuration = 2;
         public const float FrostTower_SlowAmount = 0.5f;
         public const int FrostTower_BuildPrice = 50;
@@ -87,7 +89,7 @@ namespace BlobDefense
         // AGILITY TOWER - Initial values
         public const float AgilityTower_CoolDown = 0.2f;
         public const float AgilityTower_ShootRange = 90;
-        public const float AgilityTower_AttackDamage = 2;
+        public const float AgilityTower_AttackDamage = 3;
 
         public const int AgilityTower_BuildPrice = 40;
         public const int AgilityTower_UpgradePrice = 20;
@@ -101,7 +103,7 @@ namespace BlobDefense
         // SNIPER TOWER - Initial values
         public const float SniperTower_CoolDown = 3f;
         public const float SniperTower_ShootRange = 150;
-        public const float SniperTower_AttackDamage = 40;
+        public const float SniperTower_AttackDamage = 35;
         public const int SniperTower_BuildPrice = 45;
         public const int SniperTower_UpgradePrice = 25;
 

@@ -97,7 +97,7 @@ namespace BlobDefense.WaveSpawner
             // Set up custom waves
             this.waves = new List<IEnemyWave>
                 {
-                    new Wave<StandardEnemy>(10),
+                    new Wave<FastEnemy>(10),
                     new Wave<StandardEnemy, PikachuEnemy>(10, 5),
                     new Wave<StandardEnemy, PikachuEnemy>(10, 10),
                     new Wave<FastEnemy>(15),

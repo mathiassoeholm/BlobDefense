@@ -1,15 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="SniperTower.cs" company="Backdoor Fun">
+//   © 2013
+// </copyright>
+// <summary>
+//   Defines a slow tower with high attack damage.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace BlobDefense.Towers
 {
+    using System;
     using System.Drawing;
 
+    /// <summary>
+    /// Defines a slow tower with high attack damage.
+    /// </summary>
     [Serializable]
-    class SniperTower : Tower
+    internal class SniperTower : Tower
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SniperTower"/> class.
+        /// </summary>
         public SniperTower()
         {
             // Assign tower properties
@@ -31,6 +42,9 @@ namespace BlobDefense.Towers
             this.CurrentAnimation = this.IdleAnimation;
         }
 
+        /// <summary>
+        /// Upgrades the tower.
+        /// </summary>
         public override void Upgrade()
         {
             base.Upgrade();
@@ -41,7 +55,10 @@ namespace BlobDefense.Towers
             this.ShootCooldown *= GameSettings.SniperTower_ShootCoolDown_Upgrade;
             this.UpgradePrice *= GameSettings.SniperTower_UpgradePrice_Upgrade;
         }
-        
+
+        /// <summary>
+        /// Fires a projectile at the enemy target.
+        /// </summary>
         protected override void ShootTarget()
         {
             // Create a new projectile

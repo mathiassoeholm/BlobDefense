@@ -1,22 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="FrostTower.cs" company="Backdoor Fun">
+//   © 2013
+// </copyright>
+// <summary>
+//   Defines a tower that slows enemies on hit.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace BlobDefense.Towers
 {
+    using System;
     using System.Drawing;
 
+    /// <summary>
+    /// Defines a tower that slows enemies on hit.
+    /// </summary>
     [Serializable]
     internal class FrostTower : Tower
     {
         /// <summary>
+        /// This value is multiplied with the enemies move speed.
+        /// </summary>
+        private readonly float slowAmount;
+
+        /// <summary>
         /// How long the enemy is slowed in seconds.
         /// </summary>
         private float slowDuration;
-        private readonly float slowAmount;
-        
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FrostTower"/> class.
+        /// </summary>
         public FrostTower()
         {
             // Assign tower properties
@@ -40,6 +54,9 @@ namespace BlobDefense.Towers
             this.CurrentAnimation = this.IdleAnimation;
         }
 
+        /// <summary>
+        /// Upgrades the tower.
+        /// </summary>
         public override void Upgrade()
         {
             base.Upgrade();
@@ -51,7 +68,10 @@ namespace BlobDefense.Towers
             this.UpgradePrice *= GameSettings.FrostTower_UpgradePrice_Upgrade;
             this.slowDuration *= GameSettings.FrostTower_SlowDuration_Upgrade;
         }
-        
+
+        /// <summary>
+        /// Fires a projectile at the enemy target.
+        /// </summary>
         protected override void ShootTarget()
         {
             // Create a new projectile
