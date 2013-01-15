@@ -119,7 +119,9 @@ namespace BlobDefense
                 case GameState.MainMenu:
                     this.NameTxt.Update();
                     this.PlayBtn.Update();
+                    this.ToggleStoryBtn.Update();
                     this.ContinueBtn.Update();
+                    this.StoryLbl.Update();
                     break;
                 case GameState.Playing:
                     this.RenderGame(e.Graphics);
@@ -272,6 +274,7 @@ namespace BlobDefense
             this.PlayBtn.Visible = false;
             this.NameTxt.Visible = false;
             this.ContinueBtn.Visible = false;
+            this.ToggleStoryBtn.Visible = false;
         }
 
         /// <summary>
@@ -283,6 +286,7 @@ namespace BlobDefense
             this.PlayBtn.Visible = true;
             this.NameTxt.Visible = true;
             this.ContinueBtn.Visible = File.Exists(GameSettings.SaveDataPath + @"\SavedGame.dat");
+            this.ToggleStoryBtn.Visible = true;
         }
 
         private void PlayBtn_Click(object sender, EventArgs e)
@@ -328,6 +332,31 @@ namespace BlobDefense
         private void GameDisplay_MouseDown(object sender, MouseEventArgs e)
         {
             EventManager.Instance.OnMouseDown.SafeInvoke(MousePosition);
+        }
+
+        private void ToggleStoryBtn_Click(object sender, EventArgs e)
+        {
+            bool isShowingStory = this.ToggleStoryBtn.Text != "The Story";
+
+            this.ToggleStoryBtn.Text = isShowingStory ? "The Story" : "Back";
+
+            if (isShowingStory)
+            {
+                // Show the main menu
+                this.ShowMainMenu();
+
+                // Hide story
+                this.StoryLbl.Visible = false;
+            }
+            else
+            {
+                // Hide main menu except the toggle story button
+                this.HideMainMenu();
+                this.ToggleStoryBtn.Visible = true;
+
+                // Show story
+                this.StoryLbl.Visible = true;
+            }
         }
     }
 }
