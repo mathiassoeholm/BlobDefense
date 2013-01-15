@@ -16,9 +16,9 @@ namespace BlobDefense
     /// </summary>
     public static class GameSettings
     {
-        public const float EnemyDifficulityIncrease = 1.10f;
+        public const float EnemyDifficulityIncrease = 1.18f;
 
-        public const float BountyIncrease = 1.07f;
+        public const float BountyIncrease = 1.01f;
 
         public const int StartLives = 20;
 
@@ -32,21 +32,21 @@ namespace BlobDefense
         public const int EnemyHealthBarHeight = 3;
 
         public const float Boss_MoveSpeed = 10;
-        public const float Boss_StartHealth = 9000;
+        public const float Boss_StartHealth = 8000;
         public const float Boss_Bounty = 100;
         public const int Boss_HealthBarWidth = 50;
 
         public const float FastEnemy_MoveSpeed = 65;
-        public const float FastEnemy_StartHealth = 60;
+        public const float FastEnemy_StartHealth = 70;
         public const float FastEnemy_Bounty = 5;
 
         public const float PikachuEnemy_MoveSpeed = 18f;
-        public const float PikachuEnemy_StartHealth = 100;
+        public const float PikachuEnemy_StartHealth = 110;
         public const float PikachuEnemy_Bounty = 10;
         public const int PikachuEnemy_HealthBarWidth = 35;
 
         public const float StandardEnemy_MoveSpeed = 25f;
-        public const float StandardEnemy_StartHealth = 70;
+        public const float StandardEnemy_StartHealth = 80;
         public const float StandardEnemy_Bounty = 5;
 
 
