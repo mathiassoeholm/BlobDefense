@@ -166,7 +166,7 @@ namespace BlobDefense
             InputManager.Instance.Update(MousePosition);
 
             // Write fps
-            this.WriteFps(graphics);
+            // this.WriteFps(graphics);
         }
 
         /// <summary>
